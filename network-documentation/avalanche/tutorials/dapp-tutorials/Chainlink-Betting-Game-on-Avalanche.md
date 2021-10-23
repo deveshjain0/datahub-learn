@@ -7,9 +7,9 @@ This is a blockchain based betting game where  you can bet on the outcome of a d
 
 
 # Requirements 
-Node.js 
-Chainlink Oracles
-Metamask 
+- Node.js 
+- Chainlink Oracles
+- Metamask 
 
 # Main game function
 
@@ -17,16 +17,16 @@ Look  at out chart so basically the user makes a bet directly to to our smart co
 
 In this tutorial, we go through:
 
-. The Chainlink request & receive cycle
-. Using the LINK token
-. How to use request & receive with Chainlink Oracles
-. Consuming random numbers with Chainlink VRF in smart contracts
+- The Chainlink request & receive cycle
+- Using the LINK token
+- How to use request & receive with Chainlink Oracles
+- Consuming random numbers with Chainlink VRF in smart contracts
 
 ## 1. Request & Receive
 Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, your contract should inherit from VRFConsumerBase and define two required functions
 
-. `requestRandomness`, which makes the initial request for randomness.
-. `fulfillRandomness`, which is the function that receives and does something with verified randomness.
+- `requestRandomness`, which makes the initial request for randomness.
+- `fulfillRandomness`, which is the function that receives and does something with verified randomness.
 
 If the result of randomness is stored on-chain, any actor could see the value and predict the outcome. Instead, randomness must be requested from an oracle, which generates a number and a cryptographic proof then returns that result to the contract that requested it. This sequence is what's known as the [Request and Receive](https://docs.chain.link/docs/architecture-request-model/) cycle.
 
@@ -34,9 +34,7 @@ If the result of randomness is stored on-chain, any actor could see the value an
 
 In return for providing this service of generating a random number, Oracles need to be paid in Matic. This is paid by the contract that requests the randomness, and payment occurs during the request.
 
-## 3. Interacting with Chainlink Oracles
-
-## 4. Using Chainlink VRFLink to this section
+## 3. Interacting with Chainlink VRF
 
 Chainlink VRF (Verifiable Random Function) is a provably-fair and verifiable source of randomness designed for smart contracts. Smart contract developers can use Chainlink VRF as a tamper-proof random number generator (RNG) to build reliable smart contracts for any applications which rely on unpredictable outcomes:
 . Blockchain games and NFTs
@@ -50,7 +48,7 @@ The contract will have the following functions:
 . house: To see the assigned house of an address
 
 
-## 4a. Importing VRFConsumerBase
+### 3a. Importing VRFConsumerBase
 Chainlink maintains a library of contracts that make consuming data from oracles easier. For Chainlink VRF, we use a contract called VRFConsumerBase, which needs to be imported and extended from.
 
 ```cpp
@@ -64,7 +62,7 @@ contract BettingGame is VRFConsumerBase {
 }
 ```
 
-## 4b. Contract variables
+### 3b. Contract variables
 The contract will store a number of things. Firstly, it needs to store variables which tell the oracle what it is requesting. Each oracle job has a unique Key Hash, which is used to identify tasks that it should perform. The contract will store the Key Hash that identifies Chainlink VRF, and the fee amount, to use in the request.
 
 ```cpp 
@@ -85,7 +83,7 @@ address payable public admin;
 mapping(uint256 => Game) public games;
 ```
 
-## 4d. rollDice functionLink to this section
+### 3d. rollDice functionLink to this section
 rollDice must do a few things:
 
 It needs to check if the contract has enough LINK to pay the oracle.
@@ -94,7 +92,7 @@ Request randomness
 Store the requestId and roller address.
 Emit an event to signal that the die is rolling.
 
-# 4e. fulfillRandomness functionLink to this section
+### 3e. fulfillRandomness functionLink to this section
 This is a special function defined within the VRFConsumerBase contract that ours extends from. It is the function that the coordinator sends the result back to, so we need to implement some functionality here to deal with the result.
 
 It should:
@@ -110,10 +108,6 @@ It should:
   }
 ```
 
-
-
-
-
 # How to use chainlink 
 
 Chainlink is an external data provider for the blockchain,so its an oracle service which means that it provides real-world data to smart contacts. 
@@ -125,7 +119,6 @@ In this chainlink is use to provide cryptocurrency prices to smart contracts lik
  After installation go to your terminal typing 
 
 node -v 
-
 
 # Metamask 
 
@@ -185,9 +178,5 @@ Once its done you can see the application loaded in your browser here . This sho
 You can see your account that you’re connected with here in the top right hand corner 
 Betting game application on top left hand corner 
 And here it is our little dice game and we can play the game ,well first we have got the max bet that’s the exact amount of ethereum cryptocurrency thar we send to the smart contract. And the balance is your current wallet balance of your account which is connected to the metamask 
- 
+
 Lets bet the 0.5 ethereum, then lets playing.
-
-
-
-
