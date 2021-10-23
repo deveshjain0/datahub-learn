@@ -1,4 +1,4 @@
-# Chainlink Betting Game on Avalanche
+# Chainlink Betting Game on Matic
 
 # Introduction 
 This is a blockchain based betting game where  you can bet on the outcome of a dice roll with cryptocurrency and if you guessed right then you  double your money this game is powered by ethereum smart contacts thats run on the blockchain and we’re going to use the chainlink protocol to implement randomness for our dice roll. 
@@ -37,15 +37,15 @@ In return for providing this service of generating a random number, Oracles need
 ## 3. Interacting with Chainlink VRF
 
 Chainlink VRF (Verifiable Random Function) is a provably-fair and verifiable source of randomness designed for smart contracts. Smart contract developers can use Chainlink VRF as a tamper-proof random number generator (RNG) to build reliable smart contracts for any applications which rely on unpredictable outcomes:
-. Blockchain games and NFTs
-. Random assignment of duties and resources (e.g. randomly assigning judges to cases)
-. Choosing a representative sample for consensus mechanisms
+- Blockchain games and NFTs
+- Random assignment of duties and resources (e.g. randomly assigning judges to cases)
+- Choosing a representative sample for consensus mechanisms
 
 When rolling the dice, it will accept an address variable to track which address is assigned to each house.
 The contract will have the following functions:
-. rollDice: This submits a randomness request to Chainlink VRF
-. fulfillRandomness: The function that is used by the Oracle to send the result back to
-. house: To see the assigned house of an address
+- rollDice: This submits a randomness request to Chainlink VRF
+- fulfillRandomness: The function that is used by the Oracle to send the result back to
+- house: To see the assigned house of an address
 
 
 ### 3a. Importing VRFConsumerBase
