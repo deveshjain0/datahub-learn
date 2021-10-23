@@ -1,23 +1,128 @@
 # Chainlink Betting Game on Avalanche
 
-#Introduction 
+# Introduction 
 This is a blockchain based betting game where  you can bet on the outcome of a dice roll with cryptocurrency and if you guessed right then you  double your money this game is powered by ethereum smart contacts thats run on the blockchain and we’re going to use the chainlink protocol to implement randomness for out dice roll. 
-
-
-
-
-
-
-
-#Begain with
 
  Here is the application will work when the user will connect to their web browser with metamask they’ll talk to a front-end application built in react.js and then application will talk directly to the ethereum blockchain and on the blockchain we’ll create a smart contract that implements the betting game and that’s going to use the chainlink protocol which of course talked to the chainlink smart contacts. So the user flow is here is that they make a bet to directly to our smart contacts with the funded application ,if they guess the number right thet will win twice the amount of cryptocurrency that they bet.
 
 
-# requirements 
+# Requirements 
 Node.js 
 Chainlink
 Metamask 
+
+# main game function (photo)
+
+Look  at out chart so basically the user makes a bet directly to to our smart contract by calling the game function and what they do is they bet on a dice roll and so they bet the low value or the high value which is going to be either one through three or three to six . They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not then they lose the cryptocurrency.  
+
+In this tutorial, we go through:
+
+. The Chainlink request & receive cycle
+. Using the LINK token
+. How to use request & receive with Chainlink Oracles
+. Consuming random numbers with Chainlink VRF in smart contracts
+
+# 1. Request & Receive
+Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, your contract should inherit from VRFConsumerBase and define two required functions
+
+. requestRandomness, which makes the initial request for randomness.
+. fulfillRandomness, which is the function that receives and does something with verified randomness.
+
+If the result of randomness is stored on-chain, any actor could see the value and predict the outcome. Instead, randomness must be requested from an oracle, which generates a number and a cryptographic proof then returns that result to the contract that requested it. This sequence is what's known as the [Request and Receive](https://docs.chain.link/docs/architecture-request-model/) cycle.
+
+# 2. Using ETHERIUM
+
+In return for providing this service of generating a random number, Oracles need to be paid in ETHERIUM. This is paid by the contract that requests the randomness, and payment occurs during the request.
+
+# 3. Interacting with Chainlink Oracles
+
+# 4. Using Chainlink VRFLink to this section
+
+Chainlink VRF (Verifiable Random Function) is a provably-fair and verifiable source of randomness designed for smart contracts. Smart contract developers can use Chainlink VRF as a tamper-proof random number generator (RNG) to build reliable smart contracts for any applications which rely on unpredictable outcomes:
+. Blockchain games and NFTs
+. Random assignment of duties and resources (e.g. randomly assigning judges to cases)
+. Choosing a representative sample for consensus mechanisms
+
+When rolling the dice, it will accept an address variable to track which address is assigned to each house.
+The contract will have the following functions:
+. rollDice: This submits a randomness request to Chainlink VRF
+. fulfillRandomness: The function that is used by the Oracle to send the result back to
+. house: To see the assigned house of an address
+
+
+# 4a. Importing VRFConsumerBase
+Chainlink maintains a library of contracts that make consuming data from oracles easier. For Chainlink VRF, we use a contract called VRFConsumerBase, which needs to be imported and extended from.
+```cpp
+pragma solidity 0.6.6;
+
+import "https://raw.githubusercontent.com/smartcontractkit/chainlink/master/evm-contracts/src/v0.6/VRFConsumerBase.sol";
+import "https://github.com/smartcontractkit/chainlink/blob/master/evm-contracts/src/v0.6/interfaces/AggregatorV3Interface.sol"; /* !UPDATE, import aggregator contract */
+
+contract BettingGame is VRFConsumerBase {
+
+}
+```
+
+4b. Contract variables
+The contract will store a number of things. Firstly, it needs to store variables which tell the oracle what it is requesting. Each oracle job has a unique Key Hash, which is used to identify tasks that it should perform. The contract will store the Key Hash that identifies Chainlink VRF, and the fee amount, to use in the request.
+
+```cpp 
+
+uint256 internal fee;
+uint256 public randomResult;
+
+```
+
+These will be initialized in the constructor.
+
+For the contract to keep track of addresses that roll the dice, the contract will need to use mappings. Mappings are unique key => value pair data structures that act like hash tables.
+
+```cpp 
+uint256 public gameId;
+uint256 public lastGameId;
+address payable public admin;
+mapping(uint256 => Game) public games;
+```
+
+# 4d. rollDice functionLink to this section
+rollDice must do a few things:
+
+It needs to check if the contract has enough LINK to pay the oracle.
+Check if the roller has already rolled since each roller can only ever be assigned to a single house.
+Request randomness
+Store the requestId and roller address.
+Emit an event to signal that the die is rolling.
+
+# havent got its code in .sol
+
+# 4e. fulfillRandomness functionLink to this section
+This is a special function defined within the VRFConsumerBase contract that ours extends from. It is the function that the coordinator sends the result back to, so we need to implement some functionality here to deal with the result.
+
+It should:
+
+. Transform the result to a number between 1 and 20 inclusively.
+. Assign the transformed value to the address in the s_results mapping variable.
+. Emit a DiceLanded event.
+
+```cpp
+  function getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
+    require(LINK.balanceOf(address(this)) > fee, "Error, not enough LINK - fill contract with faucet");
+    return requestRandomness(keyHash, fee, userProvidedSeed);
+  }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -79,9 +184,7 @@ We’re going to use the rinkeby test network, in order to do that
 In metamask. You have to make sure that you’re connected to the rinkeby test network. 
 
 
-#main game function 
-
-Look  at out chart so basically the user makes a bet directly to to our smart contract by calling the game function and what they do is they bet on a dice roll and so they bet the low value or the high value which is going to be either one through three or three to six . They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not then they lose the cryptocurrency.   
+ 
 
 
 
