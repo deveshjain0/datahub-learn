@@ -1,7 +1,7 @@
 # Chainlink Betting Game on Avalanche
 
 # Introduction 
-This is a blockchain based betting game where  you can bet on the outcome of a dice roll with cryptocurrency and if you guessed right then you  double your money this game is powered by ethereum smart contacts thats run on the blockchain and we’re going to use the chainlink protocol to implement randomness for out dice roll. 
+This is a blockchain based betting game where  you can bet on the outcome of a dice roll with cryptocurrency and if you guessed right then you  double your money this game is powered by ethereum smart contacts thats run on the blockchain and we’re going to use the chainlink protocol to implement randomness for our dice roll. 
 
  Here is the application will work when the user will connect to their web browser with metamask they’ll talk to a front-end application built in react.js and then application will talk directly to the ethereum blockchain and on the blockchain we’ll create a smart contract that implements the betting game and that’s going to use the chainlink protocol which of course talked to the chainlink smart contacts. So the user flow is here is that they make a bet to directly to our smart contacts with the funded application ,if they guess the number right thet will win twice the amount of cryptocurrency that they bet.
 
@@ -13,7 +13,7 @@ Metamask
 
 # main game function (photo)
 
-Look  at out chart so basically the user makes a bet directly to to our smart contract by calling the game function and what they do is they bet on a dice roll and so they bet the low value or the high value which is going to be either one through three or three to six . They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not then they lose the cryptocurrency.  
+Look  at out chart so basically the user makes a bet directly to to our smart contract by calling the game function and what they do is they bet on a dice roll and so they bet the low value or the high value which is going to be either one to three or three to six . They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not then they lose the cryptocurrency.  
 
 In this tutorial, we go through:
 
