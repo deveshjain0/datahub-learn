@@ -25,8 +25,8 @@ In this tutorial, we go through:
 # 1. Request & Receive
 Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, your contract should inherit from VRFConsumerBase and define two required functions
 
-. requestRandomness, which makes the initial request for randomness.
-. fulfillRandomness, which is the function that receives and does something with verified randomness.
+. `requestRandomness`, which makes the initial request for randomness.
+. `fulfillRandomness`, which is the function that receives and does something with verified randomness.
 
 If the result of randomness is stored on-chain, any actor could see the value and predict the outcome. Instead, randomness must be requested from an oracle, which generates a number and a cryptographic proof then returns that result to the contract that requested it. This sequence is what's known as the [Request and Receive](https://docs.chain.link/docs/architecture-request-model/) cycle.
 
@@ -52,6 +52,7 @@ The contract will have the following functions:
 
 # 4a. Importing VRFConsumerBase
 Chainlink maintains a library of contracts that make consuming data from oracles easier. For Chainlink VRF, we use a contract called VRFConsumerBase, which needs to be imported and extended from.
+
 ```cpp
 pragma solidity 0.6.6;
 
@@ -63,7 +64,7 @@ contract BettingGame is VRFConsumerBase {
 }
 ```
 
-4b. Contract variables
+# 4b. Contract variables
 The contract will store a number of things. Firstly, it needs to store variables which tell the oracle what it is requesting. Each oracle job has a unique Key Hash, which is used to identify tasks that it should perform. The contract will store the Key Hash that identifies Chainlink VRF, and the fee amount, to use in the request.
 
 ```cpp 
