@@ -8,12 +8,12 @@ This is a blockchain based betting game where  you can bet on the outcome of a d
 
 # Requirements 
 Node.js 
-Chainlink
+Chainlink Oracles
 Metamask 
 
-# main game function (photo)
+# Main game function
 
-Look  at out chart so basically the user makes a bet directly to to our smart contract by calling the game function and what they do is they bet on a dice roll and so they bet the low value or the high value which is going to be either one to three or three to six . They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not then they lose the cryptocurrency.  
+Look  at out chart so basically the user makes a bet directly to to our smart contract by calling the game function and what they do is they bet on a dice roll and so they bet the low value or the high value which is going to be either one to three or three to six. They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not then they lose the cryptocurrency.  
 
 In this tutorial, we go through:
 
@@ -22,7 +22,7 @@ In this tutorial, we go through:
 . How to use request & receive with Chainlink Oracles
 . Consuming random numbers with Chainlink VRF in smart contracts
 
-# 1. Request & Receive
+## 1. Request & Receive
 Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, your contract should inherit from VRFConsumerBase and define two required functions
 
 . `requestRandomness`, which makes the initial request for randomness.
@@ -30,13 +30,13 @@ Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, y
 
 If the result of randomness is stored on-chain, any actor could see the value and predict the outcome. Instead, randomness must be requested from an oracle, which generates a number and a cryptographic proof then returns that result to the contract that requested it. This sequence is what's known as the [Request and Receive](https://docs.chain.link/docs/architecture-request-model/) cycle.
 
-# 2. Using ETHERIUM
+## 2. Using Matic
 
-In return for providing this service of generating a random number, Oracles need to be paid in ETHERIUM. This is paid by the contract that requests the randomness, and payment occurs during the request.
+In return for providing this service of generating a random number, Oracles need to be paid in Matic. This is paid by the contract that requests the randomness, and payment occurs during the request.
 
-# 3. Interacting with Chainlink Oracles
+## 3. Interacting with Chainlink Oracles
 
-# 4. Using Chainlink VRFLink to this section
+## 4. Using Chainlink VRFLink to this section
 
 Chainlink VRF (Verifiable Random Function) is a provably-fair and verifiable source of randomness designed for smart contracts. Smart contract developers can use Chainlink VRF as a tamper-proof random number generator (RNG) to build reliable smart contracts for any applications which rely on unpredictable outcomes:
 . Blockchain games and NFTs
@@ -50,7 +50,7 @@ The contract will have the following functions:
 . house: To see the assigned house of an address
 
 
-# 4a. Importing VRFConsumerBase
+## 4a. Importing VRFConsumerBase
 Chainlink maintains a library of contracts that make consuming data from oracles easier. For Chainlink VRF, we use a contract called VRFConsumerBase, which needs to be imported and extended from.
 
 ```cpp
@@ -64,7 +64,7 @@ contract BettingGame is VRFConsumerBase {
 }
 ```
 
-# 4b. Contract variables
+## 4b. Contract variables
 The contract will store a number of things. Firstly, it needs to store variables which tell the oracle what it is requesting. Each oracle job has a unique Key Hash, which is used to identify tasks that it should perform. The contract will store the Key Hash that identifies Chainlink VRF, and the fee amount, to use in the request.
 
 ```cpp 
@@ -85,7 +85,7 @@ address payable public admin;
 mapping(uint256 => Game) public games;
 ```
 
-# 4d. rollDice functionLink to this section
+## 4d. rollDice functionLink to this section
 rollDice must do a few things:
 
 It needs to check if the contract has enough LINK to pay the oracle.
@@ -93,8 +93,6 @@ Check if the roller has already rolled since each roller can only ever be assign
 Request randomness
 Store the requestId and roller address.
 Emit an event to signal that the die is rolling.
-
-# havent got its code in .sol
 
 # 4e. fulfillRandomness functionLink to this section
 This is a special function defined within the VRFConsumerBase contract that ours extends from. It is the function that the coordinator sends the result back to, so we need to implement some functionality here to deal with the result.
@@ -116,60 +114,48 @@ It should:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-#how to use chainlink 
+# How to use chainlink 
 
 Chainlink is an external data provider for the blockchain,so its an oracle service which means that it provides real-world data to smart contacts. 
 
 In this chainlink is use to provide cryptocurrency prices to smart contracts like exchanges
  We focus on today is chainlink ability to provide randomness to smart contracts which is an essential feature for gaming there are some inherent 
 
-# node.js 
+# Node.js 
  After installation go to your terminal typing 
 
 node -v 
 
 
-# metamask 
+# Metamask 
 
 Google metamask web extension
 
-# download github to terminal 
+# Clone github to terminal 
 
 Open Terminal then type 
-
-Git clone “link” 
-
+```
+git clone “link”
+```
 
 After downloading. Then, type in terminal 
+```
+cd chainlink_betting_game 
+```
 
-Cd chainlink_betting_game 
-
-For install all dependencies for the projects with npm 
+To install all dependencies for the projects with `npm`
 
 In terminal.          
-
-Npm  install 
-
+```
+npm  install 
+```
 
 Once all your dependencies install go ahead and open up a project text editor 
 
 
 All the code is going to be inside the source directory (src).   Contact directory for the smart contracts that we’ll put on the ethereum blockchain 
 
-So bettingame.sol.  Is going to be the main smart contract that we’re going to use for this tutorial 
+So `Bettingame.sol`.  Is going to be the main smart contract that we’re going to use for this tutorial 
 
 Components directory is for the application code written,this is the main app component like navbar.js and main.js and app.js 
 
@@ -184,19 +170,14 @@ We’re going to use the rinkeby test network, in order to do that
 
 In metamask. You have to make sure that you’re connected to the rinkeby test network. 
 
-
- 
-
-
-
 Open terminal. 
-
-Cd chainlink_betting_game 
-
-Then   Type 
-
-Npm run start 
-
+```
+cd chainlink_betting_game 
+```
+Then Type 
+```
+npm run start 
+```
 This will run the web server
 
 Once its done you can see the application loaded in your browser here . This should be automatically popup. 
@@ -205,7 +186,7 @@ You can see your account that you’re connected with here in the top right hand
 Betting game application on top left hand corner 
 And here it is our little dice game and we can play the game ,well first we have got the max bet that’s the exact amount of ethereum cryptocurrency thar we send to the smart contract. And the balance is your current wallet balance of your account which is connected to the metamask 
  
-Lets bet the 0.5 ethereum, then lets playing…….
+Lets bet the 0.5 ethereum, then lets playing.
 
 
 
