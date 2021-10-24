@@ -22,6 +22,7 @@ In this tutorial, we go through:
 
 ## 1. Request & Receive
 
+The request and receive cycle describes how a smart contract requests data from an oracle and receives the response in a separate transaction. 
 Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, your contract should inherit from VRFConsumerBase and define two required functions
 
 - `requestRandomness`, which makes the initial request for randomness.
