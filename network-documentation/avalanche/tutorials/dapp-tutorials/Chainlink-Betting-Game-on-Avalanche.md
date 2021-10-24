@@ -3,7 +3,7 @@
 # Introduction 
 This is a blockchain based betting game where you can bet on the outcome of a dice roll with cryptocurrency and if you guess right, then you double your money. This game is powered by ethereum smart contacts that run on the blockchain. And we're going to use the chainlink protocol to implement randomness for our dice roll. 
 
-here is the application will work when the user connects to their web browser with metamask, they'll talk to a front-end application built in react.js and the application will talk directly to the ethereum blockchain and on the blockchain, we'll create a smart contract that implements the betting game and that's going to use the chainlink protocol which of course talked to the chainlink smart contacts. So the user flow is here. Is that they make a bet to directly with our smart contacts with the funded application. If they guess the number right, they will win twice the amount of cryptocurrency that they bet. 
+Here is the application will work when the user connects to their web browser with metamask, they'll talk to a front-end application built in react.js and the application will talk directly to the ethereum blockchain and on the blockchain, we'll create a smart contract that implements the betting game and that's going to use the chainlink protocol which of course talked to the chainlink smart contacts. So the user flow is here. Is that they make a bet to directly with our smart contacts with the funded application. If they guess the number right, they will win twice the amount of cryptocurrency that they bet. 
 
 # Requirements 
 - Node.js 
@@ -14,15 +14,14 @@ here is the application will work when the user connects to their web browser wi
 
  Look at the chart, so basically the user makes a bet directly on our smart contract by calling the game function and what they do is they bet on a dice roll. And so they bet the lowest value or the highest value, which is going to be either one to three or three to six. They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not, then they lose the cryptocurrency. 
 
-
 In this tutorial, we go through:
-
 - The Chainlink request & receive cycle
 - Using the LINK token
 - How to use request & receive with Chainlink Oracles
 - Consuming random numbers with Chainlink VRF in smart contracts
 
 ## 1. Request & Receive
+
 Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, your contract should inherit from VRFConsumerBase and define two required functions
 
 - `requestRandomness`, which makes the initial request for randomness.
@@ -36,7 +35,8 @@ In return for providing this service of generating a random number, Oracles need
 
 ## 3. Interacting with Chainlink VRF
 
-Chainlink VRF (Verifiable Random Function) is a provably-fair and verifiable source of randomness designed for smart contracts. Smart contract developers can use Chainlink VRF as a tamper-proof random number generator (RNG) to build reliable smart contracts for any applications which rely on unpredictable outcomes:
+The Chainlink VRF (Verifiable Random Function) provides a fair and verifiable source of randomness for smart contracts. Developers of smart contracts may utilise Chainlink VRF as a tamper-proof random number generator (RNG) to build reliable smart contracts for any application which rely on unpredictable outcomes:
+
 - Blockchain games and NFTs
 - Random assignment of duties and resources (e.g. randomly assigning judges to cases)
 - Choosing a representative sample for consensus mechanisms
@@ -49,7 +49,7 @@ The contract will have the following functions:
 
 
 ### 3a. Importing VRFConsumerBase
-Chainlink maintains a library of contracts that make consuming data from oracles easier. For Chainlink VRF, we use a contract called VRFConsumerBase, which needs to be imported and extended from.
+Chainlink maintains a contract library that simplifies oracle data consumption. We use VRFConsumerBase for Chainlink VRF, which need to be imported and expanded from.
 
 ```cpp
 pragma solidity 0.6.6;
@@ -63,7 +63,8 @@ contract BettingGame is VRFConsumerBase {
 ```
 
 ### 3b. Contract variables
-The contract will store a number of things. Firstly, it needs to store variables which tell the oracle what it is requesting. Each oracle job has a unique Key Hash, which is used to identify tasks that it should perform. The contract will store the Key Hash that identifies Chainlink VRF, and the fee amount, to use in the request.
+
+A number of items will be stored in the contract. To begin, it must store variables that tell the oracle about the request. Each Oracle job has its own Key Hash, which is used to identify which tasks it should perform. To use in the request, the contract will store the Key Hash that identifies Chainlink VRF, as well as the fee amount.
 
 ```cpp 
 
@@ -74,7 +75,7 @@ uint256 public randomResult;
 
 These will be initialized in the constructor.
 
-For the contract to keep track of addresses that roll the dice, the contract will need to use mappings. Mappings are unique key => value pair data structures that act like hash tables.
+The contract will need to employ mappings to keep track of the addresses that roll the dice. Mappings are unique key => value pair data structures that act like hash tables.
 
 ```cpp 
 uint256 public gameId;
@@ -84,10 +85,10 @@ mapping(uint256 => Game) public games;
 ```
 
 ### 3c. fulfillRandomness functionLink to this section
+
 This is a special function defined within the VRFConsumerBase contract that ours extends from. It is the function that the coordinator sends the result back to, so we need to implement some functionality here to deal with the result.
 
 It should:
-
 . Transform the result to a number between 1 and 20 inclusively.
 . Assign the transformed value to the address in the s_results mapping variable.
 . Emit a DiceLanded event.
@@ -99,6 +100,7 @@ It should:
   }
 ```
 ### 3d. Random Number Consumer
+
 Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, your contract should inherit from VRFConsumerBase.
 
  1. requestRandomness, which makes the initial request for randomness.
@@ -119,6 +121,7 @@ Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, y
     verdict(randomResult);
   }
   ```
+  
 # How to use chainlink 
 
 Chainlink is an external data provider for the blockchain,so its an oracle service which means that it provides real-world data to smart contacts. 
