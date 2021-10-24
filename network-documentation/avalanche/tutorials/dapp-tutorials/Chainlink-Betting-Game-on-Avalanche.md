@@ -1,10 +1,9 @@
 # Chainlink Betting Game on Matic
 
 # Introduction 
-This is a blockchain based betting game where  you can bet on the outcome of a dice roll with cryptocurrency and if you guessed right then you  double your money this game is powered by ethereum smart contacts thats run on the blockchain and we’re going to use the chainlink protocol to implement randomness for our dice roll. 
+This is a blockchain based betting game where you can bet on the outcome of a dice roll with cryptocurrency and if you guess right, then you double your money. This game is powered by ethereum smart contacts that run on the blockchain. And we're going to use the chainlink protocol to implement randomness for our dice roll. 
 
- Here is the application will work when the user will connect to their web browser with metamask they’ll talk to a front-end application built in react.js and then application will talk directly to the ethereum blockchain and on the blockchain we’ll create a smart contract that implements the betting game and that’s going to use the chainlink protocol which of course talked to the chainlink smart contacts. So the user flow is here is that they make a bet to directly to our smart contacts with the funded application ,if they guess the number right thet will win twice the amount of cryptocurrency that they bet.
-
+here is the application will work when the user connects to their web browser with metamask, they'll talk to a front-end application built in react.js and the application will talk directly to the ethereum blockchain and on the blockchain, we'll create a smart contract that implements the betting game and that's going to use the chainlink protocol which of course talked to the chainlink smart contacts. So the user flow is here. Is that they make a bet to directly with our smart contacts with the funded application. If they guess the number right, they will win twice the amount of cryptocurrency that they bet. 
 
 # Requirements 
 - Node.js 
@@ -13,7 +12,8 @@ This is a blockchain based betting game where  you can bet on the outcome of a d
 
 # Main game function
 
-Look  at out chart so basically the user makes a bet directly to to our smart contract by calling the game function and what they do is they bet on a dice roll and so they bet the low value or the high value which is going to be either one to three or three to six. They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not then they lose the cryptocurrency.  
+ Look at the chart, so basically the user makes a bet directly on our smart contract by calling the game function and what they do is they bet on a dice roll. And so they bet the lowest value or the highest value, which is going to be either one to three or three to six. They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not, then they lose the cryptocurrency. 
+
 
 In this tutorial, we go through:
 
@@ -83,16 +83,7 @@ address payable public admin;
 mapping(uint256 => Game) public games;
 ```
 
-### 3d. rollDice functionLink to this section
-rollDice must do a few things:
-
-It needs to check if the contract has enough LINK to pay the oracle.
-Check if the roller has already rolled since each roller can only ever be assigned to a single house.
-Request randomness
-Store the requestId and roller address.
-Emit an event to signal that the die is rolling.
-
-### 3e. fulfillRandomness functionLink to this section
+### 3c. fulfillRandomness functionLink to this section
 This is a special function defined within the VRFConsumerBase contract that ours extends from. It is the function that the coordinator sends the result back to, so we need to implement some functionality here to deal with the result.
 
 It should:
@@ -107,7 +98,27 @@ It should:
     return requestRandomness(keyHash, fee, userProvidedSeed);
   }
 ```
+### 3d. Random Number Consumer
+Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, your contract should inherit from VRFConsumerBase.
 
+ 1. requestRandomness, which makes the initial request for randomness.
+
+   ```cpp
+  function getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
+    require(LINK.balanceOf(address(this)) > fee, "Error, not enough LINK - fill contract with faucet");
+    return requestRandomness(keyHash, fee, userProvidedSeed);
+  }
+```
+ 2. fulfillRandomness, which is the function that receives and does something with verified randomness.
+
+   ```cpp
+  function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
+    randomResult = randomness;
+
+    //send final random value to the verdict();
+    verdict(randomResult);
+  }
+  ```
 # How to use chainlink 
 
 Chainlink is an external data provider for the blockchain,so its an oracle service which means that it provides real-world data to smart contacts. 
