@@ -1,213 +1,288 @@
 # Introduction
 
-Continuing the theme of transfers of tokens, in this tutorial, we are going to learn how to programmatically transfer ERC-20 tokens from the C-chain to an ETH wallet.
+Continuing with the theme of token transfers, in this tutorial we are going to learn how to programmatically transfer ERC-20 tokens from the Avalanche C-Chain to a Metamask wallet.
 
-## Transfer of ERC-20 tokens from C-chain to ETH address
+# Prerequisites
 
-Simply put, ERC-20 tokens are the tokens that meet the technical standards of the Ethereum blockchain. So, they natively reside on the Ethereum blockchain. Thanks to the C-chain's full Ethereum compatibility, one can transfer ERC-20 token using the Avalanche-Ethereum bridge, which can be found [here](https://aeb.xyz/#/transfer).
+* [Create an Avalanche wallet](https://wallet.avax.network/create)
+* [Fund your Avalanche wallet with the FUJI Faucet](https://docs.avax.network/build/tutorials/platform/fuji-workflow#get-a-drip-from-the-fuji-faucet)
+* [Transfer FUJI Avax tokens from X-Chain to C-Chain](https://docs.avax.network/build/tutorials/platform/transfer-avax-between-x-chain-and-c-chain)
+* Having an integrated development environment, such as [Visual Studio Code](https://code.visualstudio.com/download)
+* Familiarity with the use of a DEX such as Pangolin and [the concept of token swap](https://www.youtube.com/watch?v=kNQp4t03lOQ)
 
-For the purpose of this tutorial, we are going to assume that you already have ERC-20 tokens \(PNG and GRT\) on the C-chain of your Avalanche wallet, as shown below \(I transferred these tokens for the sake of learning how to do it\). This module will walk you through transferring PNG tokens from an Avalanche C-chain address to an ETH address.
+# Requirements
 
-![example](https://i.imgur.com/P09Vl07.png)
+* [NodeJS](https://nodejs.org/en)
+* [Ethers](https://docs.ethers.io/v5/) , which you can install with `npm install ethers`
+* Install [Metamask extension](https://metamask.io/download.html) in your browser.
+* [Configure your Metamask to add Avalanche FUJI testnet](https://docs.avax.network/build/tutorials/smart-contracts/deploy-a-smart-contract-on-avalanche-using-remix-and-metamask#step-1-setting-up-metamask)  
 
-Similar to the previous C-chain to ETH address transfer of AVAX token transfer tutorial, we will start by installing some Ethereum libraries. In addition to installing web3 and ethers, we are going to install ethereumjs-tx, which is a module for creating, manipulating, and signing Ethereum transactions.
+# Getting started
 
-```
-npm install ethereumjs-tx
-npm install web3
-npm install ethers
-```
+For the purpose of this tutorial, I have created an ERC-20 token named AVAXDATAHUB and created an AVAXDATAHUB - AVAX liquidity pool on [Pangolin](https://app.pangolin.exchange/#/swap) on the Fuji testnet. Pangolin is a decentralized exchange built on Avalanche and it is compatible with the Fuji testnet as well, for testing purposes. 
 
-If web3 and ethers are already installed from the previous tutorial, you can skip the last two commands.
+We will go on Pangolin and swap AVAX for some AVAXDATAHUB tokens. The token contract address is `0x6089f3b5f97eCDc8d31f317C7b442580E4258ef7`. 
 
-After installing the libraries, we need to import them in order to use the libraries to interact with the Avalanche C chain
+Go on [Pangolin](https://app.pangolin.exchange/#/swap) and swap AVAX on your Metamask for some AVAXDATAHUB, as outlined in the image below.
+
+![AVAXDATAHUB](https://i.imgur.com/CCUNU5z.png) 
+
+After the swap, go back to Metamask, click on "Add Token" and type in the contract address as shown in the image below. Without manually adding the AVAXDATAHUB token, it will not show up on your Metamask.
+
+![AVAXDATAHUB_IN_METAMASK](https://i.imgur.com/K8YgMrY.png)
+
+The AVAXDATAHUB tokens you got from Pangolin should now show up on your Metamask wallet, as shown below (8.979 AVAXDATAHUB tokens).
+
+![FROM_PANGOLIN](https://i.imgur.com/o9JE1kJ.png)
+
+For the sake of the tutorial, let's send some of those AVAXDATAHUB tokens from Metamask to your Avalanche private wallet. Refer to the image below if you are confused about how to do this.
+
+![send_to_avax_wallet](https://i.imgur.com/NC7HDqh.png)
+
+In the image above, it is shown that 4 AVAXDATAHUB tokens have been sent to the C-Chain of the Avalanche wallet. 
+
+However, when logging into your Avalanche wallet, you will not be able to see the tokens yet. 
+
+![not_shown](https://i.imgur.com/LwPWIlo.png)
+
+In order to view those tokens, you have to add the token contract address.
+
+Click on "Add Token" below the coin list of the wallet and type in the AVAXDATAHUB contract address, then the rest of the information should automatically be loaded, as shown in the image below.
+
+![contract_address_typed](https://i.imgur.com/r8aglQ9.png)
+
+Then, you should be able to see the tokens show up on your list, as shown in the image below.
+
+![avaxdatahub_added](https://i.imgur.com/VlDuDn8.png)
+
+What we have done up to this point has taught you that any ERC-20 token can be stored on the C-Chain of your Avalanche wallet. 
+
+## Transfer of ERC-20 tokens from C-Chain to ETH address
+
+We are going to create a new file called `ERC20_fromC_to_ETH_address.js` in the root directory of your project. Once you create a .js file under the specified name, we will type in the following blocks of code in. 
+
+First, we need to import the `ethers` library to interact with the Avalanche C chain
 
 ```javascript
-var Tx = require('ethereumjs-tx').Transaction
-var Web3 = require('web3')
-const { ethers } = require('ethers')
+const { ethers } = require('ethers');
 ```
 
 The mnemonic key from your AVAX wallet needs to go between the quotation marks below. This is later used to extract the C chain wallet address.
 
 ```javascript
-let mnemonic = "";
+const mnemonic = "";
 ```
 
 The code below is pointing to AVAX mainnet.
 
 ```javascript
-const web3 = new Web3(new Web3.providers.HttpProvider("https://api.avax.network/ext/bc/C/rpc"))
+const provider = new ethers.providers.JsonRpcProvider('https://api.avax-test.network/ext/bc/C/rpc');
 ```
 
-The private key is needed to execute a transfer later on. With the mnemonic phrase provided earlier, we can obtain the private key to your AVAX wallet in the ETH address format.
+With the mnemonic phrase provided earlier, we can extract the corresponding ETH wallet private key. With this, we can unlock the Avalanche C-Chain wallet and sign transactions, which is accomplished with the code below.
 
 ```javascript
-const wallet = new ethers.Wallet.fromMnemonic(mnemonic);
-eth_privatekey = wallet.privateKey;
+const walletMnemonic = new ethers.Wallet.fromMnemonic(mnemonic);
+const pvtKey  = walletMnemonic.privateKey;
+const wallet = new ethers.Wallet(pvtKey, provider);
 ```
-
-Up to this point, except for the introduction of ethereumjs-tx, it has been a repeat of AVAX C-chain to ETH address transfer tutorial.
-
-Now comes the new learning material. Transferring tokens from one wallet to another is a transaction. In order to perform a transaction \(as in, signing a transaction using the ethereumjs-tx module\), certain information needs to be provided. The token address \(also known as contract address\) of the ERC-20 token \(Pangolin in this case\) needs to be provided. So, we are going to store the contract address and the ticker below. The token ticker is not needed but we are adding it for our own use. A lot of the token contract addresses for Avalanche can be found [here](https://github.com/pangolindex/tokenlists/blob/main/aeb.tokenlist.json).
+Transferring tokens from one wallet to another is a transaction. In order to perform a transaction, certain information needs to be provided. The token address \(also known as contract address\) of the ERC-20 token \(AVAXDATAHUB in this case\) needs to be provided. So, we are going to store the contract address and the ticker below. The token ticker is not needed, but we are adding it for our own use. A lot of the token contract addresses for Avalanche can be found [here](https://github.com/pangolindex/tokenlists/blob/main/aeb.tokenlist.json).
 
 ```javascript
-const tokenAddress = "0x60781C2586D68229fde47564546784ab3fACA982"  
-const token_name = "PNG"
+const tknAddr = "0x6089f3b5f97eCDc8d31f317C7b442580E4258ef7";  
+const token_name = "AVAXDATAHUB";
 ```
-
-Another piece of information needed is the wallet from which the ERC-20 tokens are to be transferred from.
-
-```javascript
-var myAddress =  wallet.address
-```
-
 Logically, we also need provide the destination address. Put the destination address between the quotation marks.
 
 ```javascript
-var toAddress = ""
+const toAddr = "";
 ```
 
-Below is where we set the number of tokens to be transferred. We have currently set it to 1 token \(1e18\).
+Another piece needed for issuing a transaction is what's called the ABI. The Contract Application Binary Interface \(ABI\) is the standard way to interact with contracts in the Ethereum ecosystem. The format of the ABI is provided [here](https://docs.ethers.io/v5/getting-started/#getting-started--contracts).
+
 
 ```javascript
-var amount = web3.utils.toHex(1e18)
+const tknAbi = [
+  // Some details about the token
+  "function name() view returns (string)",
+  "function symbol() view returns (string)",
+
+  // Get the account balance
+  "function balanceOf(address) view returns (uint)",
+
+  // Send some of your tokens to someone else
+  "function transfer(address to, uint amount)",
+
+  // An event triggered whenever anyone transfers to someone else
+  "event Transfer(address indexed from, address indexed to, uint amount)"
+  ];
 ```
 
-```javascript
-async function main() {
-```
-
-In signing a transaction using ethereumjs-tx, it is very important to provide the number of transactions that have occurred up to this point, associated with the address from which the tokens will be transferred. That number is called `nonce`.
-
-To store the nonce from `await web3.eth.getTransactionCount`, because the output of the function is a promise, it needs to be wrapped in an async function \(Javascript\). `pending` as part of the argument will ensure that the operation waits until pending transactions are complete.
+Although it is not necessary to print the AVAXDATAHUB balance of the destination wallet address to perform a transfer, we will show here how to read the balance of a certain token. 
 
 ```javascript
-    async function nonce_funct () {                                                                      
-        var nonce = await web3.eth.getTransactionCount(myAddress, 'pending');
-        return num_transact
-    }
-```
+const getBalance = async () => {
+  // Create Contract object connected to provider
+  const tknContract = new ethers.Contract(tknAddr, tknAbi, provider);
 
-Now, we can store the output of the `await web3.eth.getTransactionCount` to use `nonce` for the transfer later. We will print this number just as a test.
+  // Get balance as BigNumber and convert to Number
+  const balanceBigNum = await tknContract.balanceOf(toAddr);
+  const balanceNum = Number(ethers.utils.formatEther(balanceBigNum));
 
-```javascript
-    var nonce_ = await nonce_funct(); 
-    console.log("nonce numb", nonce);
-```
+  // Set precision and convert to string
+  const precision = 4;
+  const balanceStr = balanceNum.toFixed(precision).toString();
 
-The output of the code above is supposed to look like the image below.
-
-![output\_nonce](https://i.imgur.com/YAWtBLe.png)
-
-For my wallet, the number of transactions that have happened before was 6.
-
-Additionally, the `transaction.sign` function we will use later requires the private key of the Avalanche wallet with the first two digits of the key removed and converted into the hex format. So, we will massage it into the proper form.
-
-```javascript
-    var privateKey = new Buffer.from( eth_privatekey.substring(2), 'hex')
-```
-
-Another piece needed for issuing a transaction is what's called the ABI. The Contract Application Binary Interface \(ABI\) is the standard way to interact with contracts in the Ethereum ecosystem. The format of the ABI is provided [here](https://etherscan.io/address/0x86fa049857e0209aa7d9e616f7eb3b3b78ecfdb0#code).
-
-```javascript
-    var abiArray = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"stop","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"guy","type":"address"},{"name":"wad","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"owner_","type":"address"}],"name":"setOwner","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"src","type":"address"},{"name":"dst","type":"address"},{"name":"wad","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"dst","type":"address"},{"name":"wad","type":"uint128"}],"name":"push","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"name_","type":"bytes32"}],"name":"setName","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"wad","type":"uint128"}],"name":"mint","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"src","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"stopped","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"authority_","type":"address"}],"name":"setAuthority","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"src","type":"address"},{"name":"wad","type":"uint128"}],"name":"pull","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"wad","type":"uint128"}],"name":"burn","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"dst","type":"address"},{"name":"wad","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"start","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"authority","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"src","type":"address"},{"name":"guy","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"inputs":[{"name":"symbol_","type":"bytes32"}],"payable":false,"type":"constructor"},{"anonymous":true,"inputs":[{"indexed":true,"name":"sig","type":"bytes4"},{"indexed":true,"name":"guy","type":"address"},{"indexed":true,"name":"foo","type":"bytes32"},{"indexed":true,"name":"bar","type":"bytes32"},{"indexed":false,"name":"wad","type":"uint256"},{"indexed":false,"name":"fax","type":"bytes"}],"name":"LogNote","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"authority","type":"address"}],"name":"LogSetAuthority","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"}],"name":"LogSetOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}]
-    // var abiArray = JSON.parse('[{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"stop","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"guy","type":"address"},{"name":"wad","type":"uint256"}],"name":"approve","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"owner_","type":"address"}],"name":"setOwner","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"src","type":"address"},{"name":"dst","type":"address"},{"name":"wad","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"dst","type":"address"},{"name":"wad","type":"uint128"}],"name":"push","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"name_","type":"bytes32"}],"name":"setName","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"wad","type":"uint128"}],"name":"mint","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"src","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"stopped","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"authority_","type":"address"}],"name":"setAuthority","outputs":[],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"src","type":"address"},{"name":"wad","type":"uint128"}],"name":"pull","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"wad","type":"uint128"}],"name":"burn","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"bytes32"}],"payable":false,"type":"function"},{"constant":false,"inputs":[{"name":"dst","type":"address"},{"name":"wad","type":"uint256"}],"name":"transfer","outputs":[{"name":"","type":"bool"}],"payable":false,"type":"function"},{"constant":false,"inputs":[],"name":"start","outputs":[],"payable":false,"type":"function"},{"constant":true,"inputs":[],"name":"authority","outputs":[{"name":"","type":"address"}],"payable":false,"type":"function"},{"constant":true,"inputs":[{"name":"src","type":"address"},{"name":"guy","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"type":"function"},{"inputs":[{"name":"symbol_","type":"bytes32"}],"payable":false,"type":"constructor"},{"anonymous":true,"inputs":[{"indexed":true,"name":"sig","type":"bytes4"},{"indexed":true,"name":"guy","type":"address"},{"indexed":true,"name":"foo","type":"bytes32"},{"indexed":true,"name":"bar","type":"bytes32"},{"indexed":false,"name":"wad","type":"uint256"},{"indexed":false,"name":"fax","type":"bytes"}],"name":"LogNote","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"authority","type":"address"}],"name":"LogSetAuthority","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"}],"name":"LogSetOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"}]', 'utf-8')
-    var contractAddress = tokenAddress
-```
-
-`new web3.eth.Contract` creates a new contract instance with all its methods and events defined in its json interface object \([source](https://web3js.readthedocs.io/en/v1.2.1/web3-eth-contract.html)\). We can think of it as a way to pack the ABI, contract address and token source address in a convenient form.
-
-```javascript
-    var contract = new web3.eth.Contract(abiArray, contractAddress, {from: myAddress})
-```
-
-One last item needed, prior to issuing a transaction, and thereby transferring the ERC-20 token, is calculating a recent gas price. We will use `await web3.eth.getGasPrice()` function and wrap it in an async function, similar to what we did for `nonce` above.
-
-```javascript
-    async function gas() {                                      
-        let gas_p = await web3.eth.getGasPrice();
-        //console.log(abc);
-        return gas_p
-    }
-    var gas_price = await gas(); // here the data will be return.
-    console.log("gasprice as a number",gas_price);
-```
-
-The output of the code above is supposed to look like the image below.
-
-![output\_nonce](https://i.imgur.com/ekZYGl0.png)
-
-At the time of writing this tutorial, the gas fee for Avalanche was fixed at 225 Gwei. 1 Gwei is 1,000,000,000. So, the number makes sense.
-
-Although it is not needed to know the balance of the Pangolin tokens before attempting a transfer, we will print the balance in your Avalanche wallet. `PNG_getBalance()` is defined at the very bottom of the tutorial as an async function.
-
-```javascript
-    PNG_getBalance().then(function (result) {            
-        console.log(result +" " + token_name);
-    });
-```
-
-As you saw in the first image I showed, I had roughly 15.289 PNG tokens, which is consistent with the output of the printed balance shown below.
-
-![output\_nonce](https://i.imgur.com/gxgheEl.png)
-
-We have gathered all the information needed to issue a new transaction \(transfer\). We will pack all that in the proper form and name it `rawTransaction`.
-
-```javascript
-    var rawTransaction = {"from":myAddress, "gasPrice":web3.utils.toHex(gas_price),"gasLimit":web3.utils.toHex(210000),"to":contractAddress,"value":"0x0","data":contract.methods.transfer(toAddress, amount).encodeABI(),"nonce":web3.utils.toHex(nonce)}
-```
-
-We will feed `rawTransaction` as the argument of the new transaction `new Tx` below and sign the transaction by `transaction.sign`, which requires the private key we have defined earlier. Then, the transaction needs to be announced to the Avalanche blockchain via `web3.eth.sendSignedTransaction`. Remember that we are interacting with the Avalanche blockchain via ETH tools because the C-chain is an instance of the Ethereum Virtual Machine.
-
-```javascript
-    var transaction = new Tx(rawTransaction)
-    transaction.sign(privateKey)
-    web3.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'))
+  return balanceStr;
 }
 ```
 
-It is good practice to have what we have below to catch a possible error in the main function.
+Now, we are going to define the `sendToken` function, which will execute a transfer of 1 AVAXDATAHUB token from the C-Chain of the Avalanche wallet to the ETH destination address.
 
 ```javascript
-main().catch((err) => {
-    console.log("We have encountered an error!")
-    console.error(err)
-})
+const sendToken = async () => {
+  if (provider === null || wallet === null) {
+    console.error("Encountered null object, unable to send token.");
+    return;
+  } 
 
-async function PNG_getBalance() {
-    let minABI = [
-        // balanceOf
-        {
-          "constant":true,
-          "inputs":[{"name":"_owner","type":"address"}],
-          "name":"balanceOf",
-          "outputs":[{"name":"balance","type":"uint256"}],
-          "type":"function"
-        },
-        // decimals
-        {
-          "constant":true,
-          "inputs":[],
-          "name":"decimals",
-          "outputs":[{"name":"","type":"uint8"}],
-          "type":"function"
-        }
-      ];
-    let contract = new web3.eth.Contract(minABI,tokenAddress);  
-    balance = await contract.methods.balanceOf(wallet.address).call();
-    converted_balance = web3.utils.fromWei(balance, 'ether') 
-    return converted_balance;
-  }
+  // Create Contract object connected to wallet
+  const tknContract = new ethers.Contract(tknAddr, tknAbi, wallet);
+
+  // Specify amount to send (e.g. 1 ERC20 token)
+  const amt = ethers.utils.parseEther("1.0");
+
+  // Send amount to destination
+  const tx = tknContract.transfer(toAddr, amt);
+
+  return tx;
+}
 ```
 
-Remember that `ether` in `convrted_balance` above is just to massage the balance in a more presentable form. \(1 ether = 10^9 Gwei\)
+Now that we have the functions to read the balance and execute a transfer, we are ready to implement them. The code below reads the balance before and after the transfer of 1 AVAXDATAHUB token. 
+
+```javascript
+getBalance()
+  .then(initBalance => {
+    console.log("Initial destination balance: ", initBalance);
+
+    // Send ERC20 token from AVAX wallet C-Chain to ETH address
+    sendToken()
+      .then(_tx => {
+        console.log("Transfer successful!");
+      })
+      .catch(console.error);
+  })
+.catch(console.error);
+```
+
+At this point, you have gone through the entire script.
+
+The finished script should look as follows:
+
+```javascript
+const { ethers } = require('ethers');
+const mnemonic = "";
+const provider = new ethers.providers.JsonRpcProvider('https://api.avax-test.network/ext/bc/C/rpc');
+
+const walletMnemonic = new ethers.Wallet.fromMnemonic(mnemonic);
+const pvtKey  = walletMnemonic.privateKey;
+const wallet = new ethers.Wallet(pvtKey, provider);
+
+const tknAddr = "0x6089f3b5f97eCDc8d31f317C7b442580E4258ef7";  
+const token_name = "AVAXDATAHUB";
+const toAddr = "";
+
+const tknAbi = [
+  // Some details about the token
+  "function name() view returns (string)",
+  "function symbol() view returns (string)",
+
+  // Get the account balance
+  "function balanceOf(address) view returns (uint)",
+
+  // Send some of your tokens to someone else
+  "function transfer(address to, uint amount)",
+
+  // An event triggered whenever anyone transfers to someone else
+  "event Transfer(address indexed from, address indexed to, uint amount)"
+  ];
+
+const getBalance = async () => {
+  // Create Contract object connected to provider
+  const tknContract = new ethers.Contract(tknAddr, tknAbi, provider);
+
+  // Get balance as BigNumber and convert to Number
+  const balanceBigNum = await tknContract.balanceOf(toAddr);
+  const balanceNum = Number(ethers.utils.formatEther(balanceBigNum));
+
+  // Set precision and convert to string
+  const precision = 4;
+  const balanceStr = balanceNum.toFixed(precision).toString();
+
+  return balanceStr;
+}
+
+const sendToken = async () => {
+  if (provider === null || wallet === null) {
+    console.error("Encountered null object, unable to send token.");
+    return;
+  } 
+
+  // Create Contract object connected to wallet
+  const tknContract = new ethers.Contract(tknAddr, tknAbi, wallet);
+
+  // Specify amount to send (e.g. 1 ERC20 token)
+  const amt = ethers.utils.parseEther("1.0");
+
+  // Send amount to destination
+  const tx = tknContract.transfer(toAddr, amt);
+
+  return tx;
+}
+
+getBalance()
+  .then(initBalance => {
+    console.log("Initial destination balance: ", initBalance);
+
+    // Send ERC20 token from AVAX wallet C-Chain to ETH address
+    sendToken()
+      .then(_tx => {
+        console.log("Transfer successful!");
+      })
+      .catch(console.error);
+  })
+.catch(console.error);
+```
+
+To run the script `ERC20_fromC_to_ETH_address.js`, type `node ERC20_fromC_to_ETH_address.js` and run it in your terminal (node before the file name is the way to invoke the NodeJS runtime environment).
+
+The output of the script in the terminal should look similar to what is shown below.
+
+![example_output](https://i.imgur.com/i0ysO5Q.png)
+
+You can confirm the result by looking at the change of the balance on Metamask as well.
+
+As you can see in the image below, the balance did change from 4.97 to 5.97.
+
+![metamask_balance](https://i.imgur.com/CTIA5eu.png)
+
+# Troubleshooting
+
+## Transaction Failure
+
+If you have enough AVAX on the C-Chain but not enough AVAXDATAHUB token (or any ERC20 token that you intend to transfer), you may end up getting an error in the terminal. Such an error message would be as shown below.
+
+![example](https://i.imgur.com/eB5ERwh.png)
+
+Although the error message says something along the lines of gas cost estimate issues, the issue is not having sufficient balance of AVAXDATAHUB. Make sure that you have enough ERC20 token balance on the C-Chain of your AVAX wallet.
+
+Conversely, if you have enough AVAXDATAHUB balance, but not enough AVAX token to pay for the transaction, the same error message is produced. Similarily, make sure that you have sufficient AVAX balance to pay for the transaction. 
 
 # Conclusion
 
-That’s it! This tutorial has taught you how to transfer ERC-20 tokens from the C-chain to an ETH wallet. Remember that the C-chain uses the Ethereum Virtual Machine and is compatible with all of the key Ethereum tools.
+This tutorial has taught you how to transfer ERC-20 tokens from the C-Chain to a Metamask wallet. Note that the C-Chain uses the Ethereum Virtual Machine and is compatible with all of the key Ethereum tools.
 
 # About the Author
 
 This tutorial was created by [Seongwoo Oh](https://github.com/blackwidoq). He is a student and an Avalanche novice.
-

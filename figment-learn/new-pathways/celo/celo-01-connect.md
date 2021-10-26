@@ -7,7 +7,7 @@ We are now all set up with our application and we can start writing some JavaScr
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/celo/connect.ts`, complete the code of the function and try to establish your first connection to the celo network. 
+In `pages/api/celo/connect.ts`, implement the function and try to establish your first connection to the Celo network. You must replace any instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -28,7 +28,7 @@ In `pages/api/celo/connect.ts`, complete the code of the function and try to est
 * [**To start working with ContractKit you need a kit instance**](https://docs.celo.org/developer-guide/sdk-code-reference/summary-2/modules/_kit_#functions) 
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -38,6 +38,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const url = getSafeUrl();
@@ -49,8 +50,9 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
-* First, we create a new `kit` instance.
-* Next, using `web3.eth` we can access a proxy of the [**web3.js - Ethereum Javascript API**](https://web3js.readthedocs.io/en/v1.4.0/)
+
+* First, we create a new `kit` instance. This is our connection to Celo, which we will use throughout the Pathway.
+* Next, using `web3.eth` we can access a proxy of the [**web3.js - Ethereum Javascript API**](https://web3js.readthedocs.io/en/v3.0.0-rc.5/)
 * Finally, calling the `getNodeInfo` method we can query the node to return a slice of the protocol version.
 
 ------------------------
@@ -65,6 +67,6 @@ Congratulations, you have successfully made a function that can connect to the C
 
 -----------------------------
 
-# Next
+# Conclusion
 
 In this tutorial you’ve learned how to use the ContractKit package and DataHub to connect to the Celo node. You also had a chance to run one simple query to test that connection.

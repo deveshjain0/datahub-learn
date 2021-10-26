@@ -1,8 +1,8 @@
-With some protocols, different networks (testnet, mainnet, etc) have different tokens names. For example with Polkadot, the mainnet token is *DOT* and the testnet token is *WND*. In the Solana world, the token is always called **SOL**, no matter what network (or **cluster**) you are on. Don't get too excited: the tokens you get for free on the devnet cannot be used on Solana's mainnet. Nice try though 😉
+With some protocols, different networks (testnet, mainnet, etc) have different token names. For example with Polkadot, the mainnet token is **DOT** and the testnet token is **WND**. In the Solana world, the token is always called **SOL**, no matter what network (or **cluster**) you are on. Don't get too excited: the tokens you get for free on the devnet cannot be used on Solana's mainnet. Nice try though 😉
 
 ----------------------------------
 
-# Airdropping
+# 🪂 Airdropping
 
 To fund an account, we will do what is called an **airdrop** - some tokens will magically fall from the sky into our wallets! The cluster will provide us with some **SOL** so that we can test making transfers as well as view the transaction details on a block explorer.
 
@@ -12,10 +12,10 @@ To fund an account, we will do what is called an **airdrop** - some tokens will 
 
 ----------------------------------
 
-# The challenge
+# 🧑🏼‍💻 Challenge
 
 {% hint style="tip" %}
-In `pages/api/solana/fund.ts`, implement `fund()`. Convert the text input to an address and use `requestAirdrop`to get 1 **SOL**.
+In `pages/api/solana/fund.ts`, implement the `fund` function. Convert the text input to an address and use `requestAirdrop` to get 1 **SOL**. You must replace the instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out.**
@@ -23,46 +23,45 @@ In `pages/api/solana/fund.ts`, implement `fund()`. Convert the text input to an 
 ```typescript
 //..
   try {
-    const url = getSafeUrl();
-    const connection = new Connection(url, "confirmed")
-    const address = req.body.address as PublicKey;
-    const publicKey = undefined  
-    const hash = undefined
-    await undefined
-    res.status(200).json(hash)
+    const {network, address} = req.body;
+    const url = getNodeURL(network);
+    const connection = new Connection(url, "confirmed");
+    const publicKey = undefined;
+    const hash = undefined;
+    await undefined;
+    res.status(200).json(hash);
   }
 //..
-}
 ```
 
 **Need some help?** Here are a few hints.
 * [Create a publicKey from a string](https://solana-labs.github.io/solana-web3.js/classes/PublicKey.html#constructor)  
-* [`requestAirdrop()`documentation](https://solana-labs.github.io/solana-web3.js/classes/Connection.html#requestairdrop)
+* [`requestAirdrop` documentation](https://solana-labs.github.io/solana-web3.js/classes/Connection.html#requestairdrop)
 
 
 {% hint style="info" %}
-[You can **join us on Discord**, if you have questions](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 ----------------------------------
 
-# The solution
+# 👉 Solution
 
 ```typescript
+// solution
 //..
   try {
-    const url = getSafeUrl();
-    const connection = new Connection(url, "confirmed")
-    const address = req.body.address as PublicKey;
-    const publicKey = new PublicKey(address)  
-    const hash = await connection.requestAirdrop(publicKey, LAMPORTS_PER_SOL)
+    const {network, address} = req.body;
+    const url = getNodeURL(network);
+    const connection = new Connection(url, 'confirmed');
+    const publicKey = new PublicKey(address);
+    const hash = await connection.requestAirdrop(publicKey, LAMPORTS_PER_SOL);
     await connection.confirmTransaction(hash);
-    res.status(200).json(hash)
+    res.status(200).json(hash);
   }
 //..
-}
 ```
 
 **What happened in the code above?**
@@ -74,7 +73,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 ----------------------------------
 
-# Make sure it works
+# ✅ Make sure it works
 
 Once you have the code above saved:
 * Copy and paste the generated address into the text input.   
@@ -82,10 +81,30 @@ Once you have the code above saved:
 
 Let the magic happen: You're now 1 SOL richer on devnet!
 
-![](../../../.gitbook/assets/solana-fund-v3.gif)
+![](../../../.gitbook/assets/pathways/solana/solana-fund.gif)
 
 ----------------------------------
 
-# Next
+# 🧐 Anatomy of an Explorer page
+
+When viewing Transaction details on the Solana Explorer:
+
+1. You can click on the Cluster name in the top right corner to choose which Solana Cluster to view.
+
+![](https://user-images.githubusercontent.com/2707197/136968728-d5e28c87-48cb-4b80-974d-cae002af48fe.png)
+
+2. The Overview panel displays information such as the transaction signature, which block it was included in and what the fee amount for the transaction was.
+
+3. The Account Input(s) panel displays the accounts involved in the transaction, including the change in their SOL balance and details like which account paid the transaction fee, and which was responsible for signing the transaction.
+
+4. The Instruction(s) panel displays which Program instructions were used in the transaction. Most of the time this will be the Transfer instruction.
+
+5. The Program Log contains logging output which pertains to the execution of the Program. Log output can be useful for developers to assist in debugging their programs.
+
+More information about the terminology used on the Solana Explorer is available in the [terminology](https://docs.solana.com/terminology) section of the Solana docs.
+
+----------------------------------
+
+# 🏁 Conclusion
 
 Before we make our first transfer, let's check that that the account is actually funded by asking the cluster for our balance!

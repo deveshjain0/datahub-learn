@@ -1,6 +1,8 @@
 # Introduction
+A decentralised exchange is a network that allows anybody to swap cryptocurrency tokens over the blockchain by performing a transaction between two tokens, such as the AVAX-LINK pair. Centralized exchanges (CEX), such as [Binance](https://www.binance.com/en), are online trading platforms that use an orderbook to match buyers and sellers. They work in a similar fashion to online brokerage accounts, which is why they're so popular with investors.
+Decentralized exchanges (DEX), such as [PancakeSwap](https://pancakeswap.finance/) or [Uniswap](https://uniswap.org/), are self-contained financial protocols powered by smart contracts that let cryptocurrency traders to convert their holdings.
 
-A decentralized exchange is a network, where anyone can exchange cryptocurrency tokens over blockchain by executing a transaction between two respective tokens, say AVAX with LINK, DAI or DevToken.
+The major difference between centralised and decentralised exchanges is that the former maintains control over your funds while you interact on the trading platform, whereas the latter allows you to keep control of your cash when trading.
 
 # Prerequisites
 
@@ -14,6 +16,8 @@ You must have gone through this tutorial [Create a Local Test Network on Avalanc
 * Install [Metamask extension](https://metamask.io/download.html) in your browser.
 
 **Create AvaSwap directory and install dependencies**
+
+Avaswap is a decentralized exchange on the Avalanche protocol that enables peer-to-peer (P2P) cryptocurrency trades which get executed without order books or any centralized intermediary.
 
 Open a new terminal tab so we can create a directory and install some further dependencies.
 First, navigate to the directory within which you intend to create your working directory:
@@ -29,12 +33,6 @@ mkdir AvaSwap
 cd AvaSwap
 ```
 
-We'll be using the web3.js library to set up an HTTP provider so we can "talk" to the EVM. Install it as a dependency with the command:
-
-```text
-npm install web3 -s
-```
-
 Then, create a boilerplate truffle project:
 
 ```text
@@ -43,43 +41,135 @@ truffle init
 
 **Update truffle-config.js**
 
-`truffle-config.js` is the configuration file created when you run `truffle init`. Add the following to `truffle-config.js` to set up the web3.js connection to Avalanche:
+`truffle-config.js` is the configuration file created when you run `truffle init`. Add the following to `truffle-config.js` to set up the `HDWalletProvider` and DataHub Avalanche RPC connection.
 
 ```javascript
-const Web3 = require('web3');
-const protocol = "http";
-const ip = "localhost";
-const port = 9650;
+require('dotenv').config();
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+
+// Account credentials from which our contract will be deployed
+const mnemonic = process.env.MNEMONIC;
+
+// API key of your Datahub account for Avalanche Fuji test network
+const APIKEY = process.env.APIKEY;
+
 module.exports = {
   networks: {
-   development: {
-     provider: function() {
-      return new Web3.providers.HttpProvider(`${protocol}://${ip}:${port}/ext/bc/C/rpc`)
-     },
-     network_id: "*",
-     gas: 3000000,
-     gasPrice: 225000000000
-   }
+    fuji: {
+      provider: function() {
+            return new HDWalletProvider({mnemonic, providerOrUrl: `https://avalanche--fuji--rpc.datahub.figment.io/apikey/${APIKEY}/ext/bc/C/rpc`, chainId: "0xa869"})
+      },
+      network_id: "*",
+      gas: 3000000,
+      gasPrice: 470000000000,
+      skipDryRun: true
+    }
+  },
+  solc: {
+    optimizer: {
+      enabled: true,
+      runs: 200
+    }
   }
-};
+}
 ```
 
 Note that you can change the `protocol`, `ip` and `port` if you want to direct API calls to a different AvalancheGo node. Also, note that we're setting the `gasPrice` and `gas` to the appropriate values for the Avalanche C-Chain.
+
+# Add DevToken.sol
+
+In the contracts directory create `Devtoken.sol` and add the following block of code:
+
+```javascript
+// SPDX-License-Identifier: MIT
+
+pragma solidity >=0.5.0;
+
+// Define a contract named DevToken as per the ERC20 token standards
+contract DevToken {
+    string public name = "Dev Token";
+    string public symbol = "DEV";
+    uint256 public totalSupply = 1000000000000000000000000; // 1 million tokens
+    uint8 public decimals = 18;
+
+// Create an event which will be emitted when a token is tranferred 
+    event Transfer(address indexed _from, address indexed _to, uint256 _value);
+
+// Create an event which will be emitted when a token is approved 
+    event Approval(
+        address indexed _owner,
+        address indexed _spender,
+        uint256 _value
+    );
+
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
+
+// Create a contructor and set `balance = totalSuppy` i.e. 1 million tokens
+constructor() public {
+        balanceOf[msg.sender] = totalSupply;
+    }
+
+// Create a transfer function as per the ERC20 token standards
+    function transfer(address _to, uint256 _value)
+        public
+        returns (bool success)
+    {
+        require(balanceOf[msg.sender] >= _value);
+        balanceOf[msg.sender] -= _value;
+        balanceOf[_to] += _value;
+        emit Transfer(msg.sender, _to, _value);
+        return true;
+    }
+    
+// Create an approve function as per the ERC20 token standards
+    function approve(address _spender, uint256 _value)
+        public
+        returns (bool success)
+    {
+        allowance[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
+    }
+
+// Create a transferFrom function as per the ERC20 token standards
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _value
+    ) public returns (bool success) {
+        require(_value <= balanceOf[_from]);
+        require(_value <= allowance[_from][msg.sender]);
+        balanceOf[_from] -= _value;
+        balanceOf[_to] += _value;
+        allowance[_from][msg.sender] -= _value;
+        emit Transfer(_from, _to, _value);
+        return true;
+    }
+}
+```
 
 # Add AvaSwap.sol
 
 In the contracts directory add a new file called `AvaSwap.sol` and add the following block of code:
 
 ```javascript
+// SPDX-License-Identifier: MIT
+
 pragma solidity 0.6.7;
+
+// import the required contracts
 import "@chainlink/contracts/src/v0.6/interfaces/AggregatorV3Interface.sol";
 import './DevToken.sol';
+
+// Define a contract named Avaswap
 contract AvaSwap {
   string public name = "AvaSwap Network Exchange";
   DevToken public Token;
   uint public rate;
   AggregatorV3Interface internal priceFeed;
 
+// Create event which will be emitted when a token is purchased 
   event TokenPurchase(
     address account,
     address token,
@@ -87,6 +177,7 @@ contract AvaSwap {
     uint rate
   );
 
+// Create event which will be emitted when a token is sold
   event TokenSold(
     address account,
     address token,
@@ -94,13 +185,14 @@ contract AvaSwap {
     uint rate
   );
 
+// Create a contructor and pass `DevToken _Token` as parameter
   constructor(DevToken _Token) public {
     Token = _Token;
-    priceFeed = AggregatorV3Interface(0x22B58f1EbEDfCA50feF632bD73368b2FdA96D541);
+    priceFeed = AggregatorV3Interface(0x5498BB86BC934c8D34FDA08E81D444153d0D06aD);
     rate = uint256(getLatestPrice());
   }
 
-  // Returns the latest price
+  // Returns the latest price from Chainlink PriceFeed Oracle
   function getLatestPrice() public view returns (int) {
     (
       uint80 roundID,
@@ -114,6 +206,7 @@ contract AvaSwap {
     return 1e18/price;
   }
 
+// Calculate and buy token as per the token price
   function buyTokens() public payable {
     // Calculate number of tokens to buy:
     // Avax Amount * Redemption rate 
@@ -123,6 +216,7 @@ contract AvaSwap {
     emit TokenPurchase(msg.sender, address(Token), tokenAmount, rate);
   }
 
+// Calculate and sell token as per the token price
   function sellToken(uint _amount) public {
     // User can't sell more tokens than they have
     require(Token.balanceOf(msg.sender) >= _amount);
@@ -139,7 +233,7 @@ contract AvaSwap {
 }
 ```
 
-# Add new migration
+# Add a new migration
 
 Create a new file in the `migrations` directory named `2_deploy_contracts.js`, and add the following block of code. This handles deploying the `AvaSwap` smart contract to the blockchain.
 
@@ -158,7 +252,7 @@ module.exports = function (deployer) {
 };
 ```
 
-# Compile Contracts with Truffle
+# Compile contracts with Truffle
 
 Any time you make a change to `AvaSwap.sol` you must compile the contracts again.
 
@@ -223,7 +317,7 @@ This returns:
 true
 ```
 
-# Run Migrations
+# Run migrations
 
 Now everything is in place to run the migrations and deploy the contract:
 
@@ -312,19 +406,45 @@ Error:  *** Deployment Failed ***
 "Migrations" -- Returned error: authentication needed: password or unlock.
 ```
 
-# Interacting with your contract with React UI
+# UI interaction with smart contracts
 
-To interact with the contract, we will be using `Main.js`, `BuyForm.js` & `SellForm.js` components. Here are the details of the components:
+To interact with the contract, we will create a React app using [create-react-app](https://reactjs.org/docs/create-a-new-react-app.html).
+
+Create a boileplate project:
+```
+npx create-react-app my-app
+```
+
+Go to the project directory:
+```
+cd my-app
+```
+
+Start sample app:
+```
+npm start
+```
+You can now view AvaSwap in the browser.
+
+ ```
+ Local: http://localhost:3000/
+ ```
+
+![](/.gitbook/assets/avaswap.png)
+
+We will be using `Main.js`, `BuyForm.js` & `SellForm.js` components to build the UI and Smart Contract integration.
 
 **Main.js**
 
 In this file, we must import the `BuyForm` and `SellForm` components, then render them.
 
 ```javascript
+// Import required components and libraries
 import React, { Component } from "react";
 import BuyForm from "./BuyForm";
 import SellForm from "./SellForm";
 
+// Create a class named `Main` which inhherits `Component` imorted from `react`
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -333,10 +453,12 @@ class Main extends Component {
     };
   }
 
+// method to handle token change when tokens are switched like Link, Dai and DevToken
   handleTokenChange = (token) => {
     this.props.handleTokenChange(token);
   };
 
+// Display the components in render method and pass the required params
   render() {
     let content;
     if (this.state.currentForm === "buy")
@@ -402,21 +524,21 @@ export default Main;
 
 **Buy Tokens:**
 
-```javascript
-result = await avaSwap.buyTokens({ from : investor, value: web3.utils.toWei('1', 'Ether')})
-```
+![](/.gitbook/assets/avax-link-swap.png)
 
 In the BuyForm component, import the logos and ABIs of the AVAX, Dai & ChainLink tokens.
 
 BuyForm.js
 
 ```javascript
+// Import required components, assets and libraries
 import React, { Component } from "react";
 import avaxLogo from "../avax-logo.png";
 import tokenLogo from "../token-logo.png";
 import daiLogo from "../dai-logo.png";
 import chainLinkLogo from "../chainlink-link-logo.png";
 
+// Create a class named `BuyForm` which inhherits `Component` imorted from `React`
 class BuyForm extends Component {
   constructor(props) {
     super(props);
@@ -427,11 +549,13 @@ class BuyForm extends Component {
     };
   }
 
+// method to handle token change when tokens are switched like Link, Dai and DevToken
   handleChange = (event) => {
     this.setState({ selected: event.target.value });
     this.props.handleTokenChange(event.target.value);
   };
 
+// Display the form components in render method and pass the required states and props
   render() {
     let { selected, rate } = this.state;
     return (
@@ -537,27 +661,19 @@ export default BuyForm;
 
 **Sell Tokens:**
 
-The investor must approve the token before transaction :
-
-```javascript
-result = await Token.approve(avaSwap.address, tokens('100'), { from: investor})
-```
-
-The investor sells tokens :
-
-```javascript
-result = await avaSwap.sellToken(tokens('100'), { from: investor })
-```
+![](/.gitbook/assets/link-avax-swap.png)
 
 SellForm.js:
 
 ```javascript
+// Import required components, assets and libraries
 import React, { Component } from "react";
 import avaxLogo from "../avax-logo.png";
 import tokenLogo from "../token-logo.png";
 import daiLogo from "../dai-logo.png";
 import chainLinkLogo from "../chainlink-link-logo.png";
 
+// Create a class named `SellForm` which inhherits `Component` imorted from `react`
 class SellForm extends Component {
   constructor(props) {
     super(props);
@@ -567,11 +683,13 @@ class SellForm extends Component {
     };
   }
 
+// method to handle token change when tokens are switched like Link, Dai and DevToken
   handleChange = (event) => {
     this.setState({ selected: event.target.value });
     this.props.handleTokenChange(event.target.value);
   };
 
+// Display the form components in render method and pass the required states and props
   render() {
     let { selected } = this.state;
     return (
@@ -681,17 +799,9 @@ class SellForm extends Component {
 export default SellForm;
 ```
 
-Check AVAX balance:
+**Example Demo:**
 
-```javascript
-let AvaxBalance = await web3.eth.getBalance(avaSwap.address)
-```
-
-Check Token balance:
-
-```javascript
-let TokenBalance = await Token.balanceOf(avaSwap.address)
-```
+![](/.gitbook/assets/Awaswap_demo.gif)
 
 # Conclusion
 
@@ -710,3 +820,4 @@ If you had any difficulties following this tutorial or simply want to discuss Av
 - https://github.com/makerdao/dss
 - https://github.com/smartcontractkit/LinkToken
 - https://github.com/devilla/Avaswap
+- https://trustwallet.com/blog/trading-on-cex-vs-dex

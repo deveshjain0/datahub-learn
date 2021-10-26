@@ -64,7 +64,7 @@ Sounds simple enough? Great, let's get coding.
 
 The Substrate Developer Hub Node Template, which is used as the starting point for this tutorial, has a FRAME-based [runtime](https://substrate.dev/docs/en/knowledgebase/runtime/). [FRAME](https://substrate.dev/docs/en/knowledgebase/runtime/frame) is a library of code that allows you to build a Substrate runtime by composing modules called "pallets". You can think of these pallets as individual pieces of logic that define what your blockchain can do! Substrate provides you with a number of pre-built pallets for use in FRAME-based runtimes.
 
-![Runtime Composition](https://substrate.dev/docs/assets/tutorials/build-a-dapp/frame-runtime.png)
+![Runtime Composition](https://substrate.dev/docs/assets/frame-runtime.png)
 
 For example, FRAME includes a [Balances](https://substrate.dev/rustdocs/v3.0.0/pallet_balances/) pallet that controls the underlying currency of your blockchain by managing the _balance_ of all the accounts in your system.
 

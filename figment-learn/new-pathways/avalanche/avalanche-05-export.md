@@ -1,20 +1,20 @@
 Since Avalanche operates on 3 chains (X/P/C), it allows users to transfer tokens in each direction.
 
-AVAX tokens exist on the X-Chain, where they can be traded; on the P-Chain, where they can be provided as a stake when validating the Primary Network; and on the C-Chain, where they can be used in smart contracts or to pay for gas fees. Avalanche supports movement of AVAX between these chains. We'll be concentrating our efforts on X->C swaps, since the C-Chain is used for smart contract deployments. 
+AVAX tokens exist on the X-Chain, where they can be traded; on the P-Chain, where they can be provided as a stake when validating the Primary Network; and on the C-Chain, where they can be used in smart contracts or to pay for gas fees. Avalanche supports movement of AVAX between these chains. We'll be concentrating our efforts on X->C swaps, since the C-Chain is used for smart contract deployments.
 
 Inter-chain transfers are performed via a 2-step process:
 
-* Create the X-Chain export transaction -> (this tutorial)
-* Create the C-Chain import transaction
+- Create the X-Chain export transaction -> (this tutorial)
+- Create the C-Chain import transaction
 
 Here we will focus on the first part, the **X-Chain export transaction**.
 
-------------------------
+---
 
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/avalanche/export.ts`, complete the code of the function and try to create an export transaction from X-Chain to C-Chain. 
+In `pages/api/avalanche/export.ts`, implement the function and try to create an export transaction from X-Chain to C-Chain. You must replace any instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -22,8 +22,8 @@ In `pages/api/avalanche/export.ts`, complete the code of the function and try to
 ```typescript
 //...
   try {
-    const { secret } = req.body;
-    const client = getAvalancheClient();
+    const {secret, network} = req.body;
+    const client = getAvalancheClient(network);
 
     // Total amount we're transferring = 0.05 AVAX
     const amount = "50000000";
@@ -52,24 +52,26 @@ In `pages/api/avalanche/export.ts`, complete the code of the function and try to
 ```
 
 **Need some help?** Check out these links
-* [**Code examples**](https://github.com/ava-labs/avalanchejs/tree/master/examples/avm)  
-* [**Manage X-Chain Keys**](https://docs.avax.network/build/tools/avalanchejs/manage-x-chain-keys)
+
+- [**Code examples**](https://github.com/ava-labs/avalanchejs/tree/master/examples/avm)
+- [**Manage X-Chain Keys**](https://docs.avax.network/build/tools/avalanchejs/manage-x-chain-keys)
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
-------------------------
+---
 
 # Solution
 
 ```typescript
+// solution
 //...
   try {
-    const { secret } = req.body;
-    const client = getAvalancheClient();
+    const {secret, network} = req.body;
+    const client = getAvalancheClient(network);
     // Total amount we're transferring = 0.05 AVAX
     const amount = "50000000";
 
@@ -104,14 +106,15 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
-* First, we need to build our C-Chain keypair. This works exactly the same way for X-Chain.
-* Next, we determine the chainId.
-* Next, we build our transaction the same way as for a simple **AVAX** transfer:
-  * `cAddress` replacing `sender`.
-  * `chainId` replacing `assetId`.
-* Finally, we sign and send the transaction and return the transaction hash.
 
-------------------------
+- First, we need to build our C-Chain keypair. This works exactly the same way for X-Chain.
+- Next, we determine the chainId.
+- Next, we build our transaction the same way as for a simple **AVAX** transfer:
+  - `cAddress` replacing `sender`.
+  - `chainId` replacing `assetId`.
+- Finally, we sign and send the transaction and return the transaction hash.
+
+---
 
 # Make sure it works
 
@@ -119,8 +122,8 @@ Once the code is complete and the file is saved, Next.js will rebuild the API ro
 
 ![](../../../.gitbook/assets/pathways/avalanche/avalanche-export.gif)
 
------------------------------
+---
 
-# Next
+# Conclusion
 
 Our next topic is to process the import of the cross-chain transfer. Time to import the AVAX we just sent to C-Chain. Let's go!

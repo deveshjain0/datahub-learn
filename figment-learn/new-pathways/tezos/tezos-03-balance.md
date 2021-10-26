@@ -9,7 +9,7 @@ The native token on the **Tezos Blockchain** is **tez** indicated by the **ꜩ**
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/tezos/balance.ts`, complete the code of the function and try to return the current balance of the account.
+In `pages/api/tezos/balance.ts`, implement the function and try to return the current balance of the account. You must replace the instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -31,7 +31,7 @@ In `pages/api/tezos/balance.ts`, complete the code of the function and try to re
 * [**Get the current Tezos balance for an address`**](https://tezostaquito.io/docs/quick_start/#get-the-current-tezos-balance-for-an-address)
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -41,6 +41,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const { address } = req.body;
@@ -53,6 +54,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we create a new `TezosToolkit` instance.
 * Next, we call the `getBalance` method of the `tz` module, passing the address of the account we want to know the balance of.
 
@@ -72,6 +74,6 @@ Once the code is complete and the file is saved, Next.js will rebuild the API ro
 
 -----------------------------
 
-# Next
+# Conclusion
 
 Querying the balance information is fun, but being able to submit transactions and change the state of a blockchain is even better! In the next step, we will dive deeper and submit our first transactions on Tezos.

@@ -10,10 +10,10 @@ If you want to learn more about Celo smart contracts, follow the [**Deploy and I
 
 ----------------------------------
 
-# The challenge
+# Challenge
 
 {% hint style="tip" %}
-In `pages/api/celo/deploy.ts`, complete the code of the default function. Upload your first smart contract on the **Celo** network.
+In `pages/api/celo/deploy.ts`, implement the default function. Upload your first smart contract on the **Celo** network. You must replace any instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out.**
@@ -43,16 +43,17 @@ In `pages/api/celo/deploy.ts`, complete the code of the default function. Upload
 * [**Deploy a contract with ContractKit**](https://docs.celo.org/developer-guide/contractkit/usage#deploy-a-contract)  
 
 {% hint style="info" %}
-[You can **join us on Discord**, if you have questions](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 ----------------------------------
 
-# The solution
+# Solution
 
 ```tsx
+// solution
 //...
   try {
     const { secret, address } = req.body;
@@ -76,6 +77,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * We send a transaction using the `sendTransaction` method passing:
   * `from`, the address which will pay the fees for the transaction
   * `data`, the bytecode of our compiled contract using the `bytecode` property of the ABI stored in `contracts/celo/HelloWorld.json`. 
@@ -84,12 +86,12 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 # Make sure it works
 
-Once you have the code above saved, click on **Deploy Contract**
+Once you have the code above saved, click on **Deploy Contract**:
 
 ![](../../../.gitbook/assets/pathways/celo/celo-deploy.gif)
 
 ----------------------------------
 
-# Next
+# Conclusion
 
 Now that we have deployed a smart contract, let's learn how to interact with it. In the following tutorials, we will look at how to use both view and change functions.

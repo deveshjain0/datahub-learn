@@ -6,7 +6,7 @@ Celo offers mobile friendly development environment which includes mainnet and t
 * Create transaction
 * Sign transaction
 
-### Prerequisite
+# Prerequisite
 
 You should have some basic knowledge of javascript, react and solidity. Also, have following requirements installed:
 
@@ -18,7 +18,7 @@ You should have some basic knowledge of javascript, react and solidity. Also, ha
 
 As we are going to work with mobile app you should install expo mobile client and alfajores \(celo testnet wallet for mobile devices\). Make sure to fund your wallet with faucet.
 
-### Setup
+# Setup
 
 For setting up our development environment, create a new folder and run following command in that folder:
 
@@ -36,7 +36,7 @@ cd client
 yarn // isntalls dependencies for expo
 ```
 
-### Smart Contract
+# Smart Contract
 
 Copy the following smart contract code into `HelloWorld.sol` file inside of `contracts` folder and then rename the file to `Counter.sol`. We will not cover writing smart contracts or the Solidity language in this tutorial. The [Solidity documentation](https://docs.soliditylang.org/) is available as a resource to get started.
 
@@ -82,7 +82,7 @@ contract Counter {
 }
 ```
 
-#### Deploy smart contract
+# Deploy smart contract
 
 For deployment, we need to create a migration for the counter smart contract. Inside of the `migrations` folder go to `2_deploy_contracts.js` and change every `HelloWorld` to `Counter`.
 
@@ -197,7 +197,7 @@ Summary
 
 There should be two additional files now, inside of the `contracts` subdirectory of `client`: `Counter.json` and `Migrations.json`.
 
-### Mobile Dapp
+# Mobile Dapp
 
 As we have completed our smart contract part of tutorial, we can move to creating mobile dapp.
 

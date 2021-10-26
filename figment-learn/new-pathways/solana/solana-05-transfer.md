@@ -4,7 +4,7 @@ When a transaction is submitted to the **cluster**, the Solana runtime will exec
 
 ----------------------------------
 
-# The challenge
+# 👨‍💻 Challenge
 
 {% hint style="tip" %}
 In `pages/api/solana/transfer.ts` finish implementing the `transfer()` function.
@@ -14,21 +14,18 @@ In `pages/api/solana/transfer.ts` finish implementing the `transfer()` function.
 
 ```typescript
 //..
-  //... let's snip the beginning as it should be familiar for you by now!
-  // The secret key is stored in our state as a stringified array
-  const secretKey = Uint8Array.from(JSON.parse(secret as string));
+    //... let's snip the beginning as it should be familiar for you by now!
+    // Find the parameter to pass
+    const instructions = SystemProgram.transfer;
 
-  // Find the parameter to pass  
-  const instructions = SystemProgram.transfer
+    // How could you construct a signer array's
+    const signers = undefined;
 
-  // How could you construct a signer array's
-  const signers = 
+    // Maybe adding someting to a Transaction could be interesting ?
+    const transaction = new Transaction();
 
-  // Maybe adding someting to a Transaction could be interesting ?
-  const transaction = new Transaction()
-
-  const hash =// You should now what is expected here.
-  res.status(200).json(hash);
+    // We can send and confirm a transaction in one row.
+    const hash = undefined; 
 //..
 ```
 
@@ -38,41 +35,41 @@ In `pages/api/solana/transfer.ts` finish implementing the `transfer()` function.
 * [Anatomy of a `Transaction`](https://docs.solana.com/developing/programming-model/transactions)
 
 {% hint style="info" %}
-You can also [**join us on Discord**](https://discord.gg/fszyM7K) if you have questions.
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 ----------------------------------
 
-# The solution
+# 👉 Solution
 
 ```typescript
+// solution
 //..
-  //...
-  //... let's snip the beginning as it should be familiar for you by now!
-  const instructions = SystemProgram.transfer({
-    fromPubkey,
-    toPubkey,
-    lamports,
-  });
-  
-  const signers = [
-    {
-      publicKey: fromPubkey,
-      secretKey
-    }
-  ];
-  
-  const transaction = new Transaction().add(instructions);
-  
-  const hash = await sendAndConfirmTransaction(
-    connection,
-    transaction,
-    signers,
-  )
+    //... let's snip the beginning as it should be familiar for you by now!
+    const instructions = SystemProgram.transfer({
+      fromPubkey,
+      toPubkey,
+      lamports,
+    });
 
-  res.status(200).json(hash);
+    const signers = [
+      {
+        publicKey: fromPubkey,
+        secretKey,
+      },
+    ];
+
+    const transaction = new Transaction().add(instructions);
+
+    const hash = await sendAndConfirmTransaction(
+      connection,
+      transaction,
+      signers,
+    );
+
+    res.status(200).json(hash);
 //..
 ```
 
@@ -87,16 +84,30 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 ----------------------------------
 
-# Make sure it works
+# ✅ Make sure it works
 
 Once you've filled in the form with a value, click **Submit Transfer**: 
 
-![](../../../.gitbook/assets/solana-transfer-v3.gif)
+![](../../../.gitbook/assets/pathways/solana/solana-transfer.gif)
 
 **About the explorer**, it's very good practice to look over all the fields one by one to familiarize yourself with the structure of a transaction. This page features the transaction result (`SUCCESS`), status (`FINALIZED`), the amount sent, the `from` and `to` addresses, the block that included this transaction, the fee that was paid, etc.
 
 ----------------------------------
 
-# Next
+# 🧐 Anatomy of an Explorer page
+
+When viewing Account details on the Solana Explorer:
+
+1. The Account Overview panel displays information about the account including its address, balance, and information about whether or not there is a Program deployed at that address.
+
+![](https://user-images.githubusercontent.com/2707197/136972044-0a07ea2f-3061-4a4a-af05-aaee562c8f7f.png)
+
+2. The History tab displays the Transaction history for the selected account, which is a list of previous transactions that account has been involved in.
+
+3. The Tokens tab displays information regarding any tokens held by the account.
+
+----------------------------------
+
+# 🏁 Conclusion
 
 Now that you are comfortable with accounts and tokens, we will look at how to deploy a program written in the Rust language to the Solana cluster. Don't worry, this process is not as scary as it sounds 😇

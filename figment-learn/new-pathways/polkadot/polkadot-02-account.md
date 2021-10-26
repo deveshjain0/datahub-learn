@@ -49,7 +49,7 @@ In `pages/api/polkadot/account.ts`, implement the function and try to create you
 * [**Using address or publicKey**](https://polkadot.js.org/docs/keyring/start/sign-verify#verify-using-address-or-publickey)  
 
 {% hint style="info" %}
-[**Join us on Discord**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -59,6 +59,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const keyring = new Keyring({ type: "sr25519" });
@@ -86,6 +87,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we create a new `Keyring` instance of the `sr25519` type - This type parameter only applies to the default type of account created when no type is specified, it does not mean that the keyring can only store that type of account.
 * Next, we generate a new BIP39 mnemonic using the `mnemonicGenerate` method.
 * Next, we check if the mnemonic is valid using the `mnemonicValidate` method.

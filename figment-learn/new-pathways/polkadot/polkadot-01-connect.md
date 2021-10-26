@@ -30,7 +30,7 @@ In `pages/api/polkadot/connect.ts`, implement the function and try to establish 
 * [**Providers**](https://polkadot.js.org/docs/api/start/create#providers)  
 
 {% hint style="info" %}
-[**Join us on Discord**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -40,6 +40,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const url = getSafeUrl();
@@ -53,6 +54,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * The `getSafeUrl` helper function constructs a DataHub URL for either Mainnet or the Westend testnet using the API key provided in `.env.local` - It can also be used with the `force` option to return the public Westend RPC endpoint as a fallback.  
 * With the endpoint URL, we can create a new `WsProvider` instance.
 * Then we use `ApiPromise.create` to initialize the API, passing the provider as an object.

@@ -19,7 +19,7 @@ If you want to learn more about Tezos smart contracts, follow [**The Taco Shop S
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/tezos/deploy.ts`, complete the code of the function and try to deploy the compiled smart contract. 
+In `pages/api/tezos/deploy.ts`, implement the function and try to deploy the compiled smart contract. You must replace the instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -56,7 +56,7 @@ In `pages/api/tezos/deploy.ts`, complete the code of the function and try to dep
 * [**Class OriginateOperation method `contract`**](https://tezostaquito.io/typedoc/classes/_taquito_taquito.originationoperation.html#contract)
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -66,6 +66,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const { mnemonic, email, password, secret, amount } = req.body
@@ -96,9 +97,10 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we create a new `TezosToolkit` instance.
-* `importKey()` has the side effect of setting the TezosToolkit instance to use the `InMemorySigner` provider.
-* Next, we execute the `Tezos.contract.originate()` function. This deploys the Michelson contract code to the Tezos blockchain, from the `CONTRACT_JSON` in `counter.js`. The storage property is also set to `0`.
+* `importKey` has the side effect of setting the TezosToolkit instance to use the `InMemorySigner` provider.
+* Next, we execute the `Tezos.contract.originate` function. This deploys the Michelson contract code to the Tezos blockchain, from the `CONTRACT_JSON` in `counter.js`. The storage property is also set to `0`.
 * Next, the resulting operation ([`op`](https://opentezos.com/tezos-basics/operations/)) object is used to provide the contract address of the newly originated contract.
 
 ------------------------
@@ -107,11 +109,10 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 Once you have the code above saved, click on **Deploy Contract**
 
-![](../../../.gitbook/assets/pathways/tezos/tezos-deploy.png)
+![](../../../.gitbook/assets/pathways/tezos/tezos-deploy.gif)
 
 -----------------------------
 
-# Next
+# Conclusion
 
 Now that we have deployed a smart contract on Tezos, let's interact with it! In the following tutorials, we will look at how to use both view and change functions.
-

@@ -1,31 +1,32 @@
-At this point we have deployed a smart contract on the Polygon testnet we have set the value of its storage and we have a client side application that's ready to fetch some date from it. We just need to wire up that last part.
+At this point, we have deployed a smart contract on the Polygon testnet & set the value of its storage. We have a client-side application that's ready to fetch some data from it. We just need to wire up that last part.
 
 -------------------------------------
 
-# The Challenge
+# Challenge
 
 {% hint style="tip" %}
-**On the file `components/protocols/polygon/GeStorage.tsx` Implement the `getValue`**.    
+In the file `components/protocols/polygon/components/steps/Getter.tsx`, implement the `getValue` function.   
 {% endhint %}
 
 **Take a few minutes to figure this out.**
 
 ```typescript
-    const getValue = async () => {
-        try {
-            setFetchingGet(true)        
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-		    // try to figure out the expected parameters
-            const contract = new ethers.Contract(undefined)
-			// try to figure out the expected method 
-            const storage = undefined
-            setContractNumber(storage.toString())
-            setFetchingGet(false)
-        } catch(error) {
-            console.log(error)
-            setFetchingGet(false)
-        }
+  const getValue = async () => {
+    setFetching(true);
+    setContractNumber(null);
+    try {
+      setFetching(true);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // try to figure out the expected parameters
+      const contract = new ethers.Contract(undefined);
+      // try to figure out the expected method 
+      const storage = undefined;
+      setContractNumber(storage.toString());
+      setFetching(false);
+    } catch (error) {
+      setFetching(false);
     }
+  };
 ```
 
 Need some help? Check out these two tips/links  
@@ -35,36 +36,39 @@ Need some help? Check out these two tips/links
 * To read from the blockchain you don't need to spend any tokens so you can just use a provider to create a Contract instance. But to write you will need to create and sign a transaction through Metamask. Use a `signer` to create the Contract object!
 
 {% hint style="info" %}
-[Still not sure how to do this? **Join us on Discord** and someone will help!](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
+
+Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 -------------------------------------
 
-# The solution
+# Solution
 
 ```typescript
-    const getValue = async () => {
-        try {
-            setFetchingGet(true)        
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
-            const contract = new ethers.Contract(
-                SimpleStorageJson.networks['80001'].address,
-                SimpleStorageJson.abi,
-                provider
-            )
-            const storage = await contract.get();
-            setContractNumber(storage.toString())
-            setFetchingGet(false)
-        } catch(error) {
-            console.log(error)
-            setFetchingGet(false)
-        }
+// solution
+  const getValue = async () => {
+    try {
+      setFetching(true);
+      setContractNumber(null);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const contract = new ethers.Contract(
+        SimpleStorageJson.networks['80001'].address,
+        SimpleStorageJson.abi,
+        provider,
+      );
+      const storage = await contract.get();
+      setContractNumber(storage.toString());
+      setFetching(false);
+    } catch (error) {
+      setFetching(false);
     }
+  };
 ```
 
-What's happening in the code above?
+**What happened in the code above?**
 
-* We create Contract objects using
+* We create `Contract` objects using
   * The contract json's address
   * The contract json's abi
   * A web3 provider
@@ -76,18 +80,10 @@ What's happening in the code above?
 
 Once the code above save you can click and this is what the UI should look like!
 
-![](../../../.gitbook/assets/polygon-getter-v2.gif)
+![](../../../.gitbook/assets/pathways/polygon/polygon-getter.gif)
 
 -------------------------------------
 
 # Conclusion
 
-Congratulations! We have gone from zero to **Polygon**, covering all the most fundamental concepts needed for developers to succeed in using **Polygon**. From connecting to the network to interacting with smart contracts, you have completed coding challenges and created a functional yet basic dApp.   
-
-From here, there are many ways to increase your skills with web3 development. We recommend following some of the other Pathways on Learn, to learn about what makes the other netwrk protocols unique.
-
-If you are an experienced developer, you are welcome to contribute tutorials for **Polygon** and earn some **MATIC** tokens! Check out our tutorial [contribution guidelines](../../../other/tutorial-guidelines/) to get started.
-
-{% hint style="info" %}
-[**Please tell us what you think about this tutorial!**](https://docs.google.com/forms/d/e/1FAIpQLSc9taxobvDSdXprMEFhCXgfcwS_oA-lu-nbQdYEW6c57Ie6qg/viewform?usp=sf_link)
-{% endhint %}
+Now that we know how to interact with a smart contract we are going to learn how to retore an account from its mnemonic.

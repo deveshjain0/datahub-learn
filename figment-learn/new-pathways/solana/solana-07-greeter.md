@@ -8,10 +8,10 @@ Solana programs are stateless. To store values we must use a separate account.
 
 ----------------------------------
 
-# The challenge
+# 👨‍💻 Challenge
 
 {% hint style="tip" %}
-In `pages/api/solana/greeter.ts`, implement `greeter`. First, derive the **greeter** address from some values. Then create a transaction which instructs the blockchain to create the **greeter** account. 
+In `pages/api/solana/greeter.ts`, implement `greeter`. First, derive the **greeter** address from some values. Then create a transaction which instructs the blockchain to create the **greeter** account. You must replace the instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -42,27 +42,30 @@ In `pages/api/solana/greeter.ts`, implement `greeter`. First, derive the **greet
 * [Create an account from a seed](https://solana-labs.github.io/solana-web3.js/classes/SystemProgram.html#createAccountWithSeed)  
 
 {% hint style="info" %}
-[You can **join us on Discord**, if you have questions](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 ----------------------------------
 
-# The solution
+# 👉 Solution
 
 ```typescript
+// solution
 //...
-  const greetedPubkey = await PublicKey.createWithSeed(
+    const greetedPubkey = await PublicKey.createWithSeed(
       payer.publicKey,
       GREETING_SEED,
       programId,
     );
 
-  const lamports = await connection.getMinimumBalanceForRentExemption(GREETING_SIZE);
+    const lamports = await connection.getMinimumBalanceForRentExemption(
+      GREETING_SIZE,
+    );
 
-  const transaction = new Transaction().add(
-    SystemProgram.createAccountWithSeed({
+    const transaction = new Transaction().add(
+      SystemProgram.createAccountWithSeed({
         fromPubkey: payer.publicKey,
         basePubkey: payer.publicKey,
         seed: GREETING_SEED,
@@ -70,9 +73,11 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
         lamports,
         space: GREETING_SIZE,
         programId,
-    }),
-  );
-  const hash = await sendAndConfirmTransaction(connection, transaction, [payer])
+      }),
+    );
+    const hash = await sendAndConfirmTransaction(connection, transaction, [
+      payer,
+    ]);
 //...
 ```
 
@@ -96,14 +101,14 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 ----------------------------------
 
-# Make sure it works
+# ✅ Make sure it works
 
 Once you have the code above saved, click on **Create Greeter**:
 
-![](../../../.gitbook/assets/solana-greeter-v3.gif)
+![](../../../.gitbook/assets/pathways/solana/solana-greeter.gif)
 
 ----------------------------------
 
-# Next
+# 🏁 Conclusion
 
 Now we have an account owned by the program and dedicated to storing the program data. We are ready to go ahead and act on the data: the first natural action is to read the data. Ready?

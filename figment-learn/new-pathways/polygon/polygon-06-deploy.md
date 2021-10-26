@@ -1,6 +1,6 @@
-Solidity is a high level language. It is partly designed after ECMAScript and therefore it is said to be **similar to JavaScript**. But the similarity ends there. It gets compiled (not interpreted) and usually deployed on Blockchains that understand the Ethereum Virtual Machine (EVM), like Polygon! When a smart contract is deployed, it becomes immutable. This has both benefits and drawbacks, which we will discuss below. 
+Solidity is a high level language. It is partly designed after ECMAScript and therefore it is said to be **similar to JavaScript**. The similarity ends there because it gets compiled (not interpreted) and usually deployed on blockchains that understand the Ethereum Virtual Machine (EVM), like Polygon! When a smart contract is deployed, it becomes immutable. This has both benefits and drawbacks, which we will discuss below. 
 
-We can use [HardHat](https://hardhat.org) or [Truffle](https://trufflesuite.com) to ease development and deployment of our Solidity code. There are several existing guides for other EVM compatible networks available on Figment Learn (check out the tutorials for [Celo and Truffle](https://learn.figment.io/network-documentation/celo/tutorial/deploying-smart-contracts-on-celo-with-truffle), or [Celo and HardHat](https://learn.figment.io/network-documentation/celo/tutorial/celo-hardhat-deploy-and-nft-app) for example). We will focus on using Truffle in this tutorial. 
+We can use [HardHat](https://hardhat.org) or [Truffle](https://trufflesuite.com) to ease development and deployment of our Solidity code. There are several existing guides for other EVM compatible networks available on Figment Learn (check out the tutorials for [Celo and Truffle](https://learn.figment.io/tutorials/deploying-smart-contracts-on-celo-with-truffle), or [Celo and HardHat](https://learn.figment.io/tutorials/celo-hardhat-deploy-and-nft-app) for example). We will focus on using Truffle in this tutorial. 
 
 Run the following commands to get started: 
 
@@ -19,7 +19,6 @@ Also be sure to rename the file **`contracts/polygon/SimpleStorage/.secret.examp
 One of the most basic, non-trivial, types of smart contract is a **simple storage contract**.   
 This example was adapted from the [Solidity documentation](https://solidity.readthedocs.io/en/develop/introduction-to-smart-contracts.html).
 
-{% code title="contracts/polygon/SimpleStorage/contracts/SimpleStorage.sol" %}
 ```javascript
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -40,7 +39,6 @@ contract SimpleStorage {
     }
 }
 ```
-{% endcode %}
 
 The first line of a Solidity file should contain a comment which describes the type of license governing the source code. The `SPDX-License-Identifier` will most commonly be the MIT licence, although a comprehensive list can be found at [https://spdx.org/licenses/](https://spdx.org/licenses/). The Solidity compiler will issue a [warning](https://docs.soliditylang.org/en/v0.8.6/security-considerations.html#take-warnings-seriously) if this line is not present at compilation time.
 
@@ -128,7 +126,9 @@ If there is an error : `Error: Cannot find module '@truffle/hdwallet-provider'`.
 # Deploy the smart contract
 
 {% hint style="tip" %}
-Before we deploy, there is one last thing to prepare. Put the secret recovery phrase \(also known as a mnemonic seed phrase\) of the active Metamask account into the file **`contracts/polygon/SimpleStorage/.secret`**.   
+Before we deploy, there is one last thing to prepare. Put the secret recovery phrase \(also known as a mnemonic seed phrase\) of the active Metamask account into the file **`contracts/polygon/SimpleStorage/.secret`**.  
+{% endhint %}
+
 It should look like this, with all 12 words on a single line, no quotation marks :
 
 {% code title="/contracts/polygon/SimpleStorage/.secret" %}
@@ -136,7 +136,7 @@ It should look like this, with all 12 words on a single line, no quotation marks
 airport battle cargo daughter educate focus green honey immune jelly kick language
 ```
 {% endcode %}
-{% endhint %}
+
 
 Compiling Solidity with Truffle is a straightforward process, just make sure that your preferred configuration is set in `truffle-config.js` \(paths, compilers, networks, etc.\) and then run the command:
 
@@ -164,6 +164,6 @@ The ABI is considered an "[artifact](https://trufflesuite.github.io/artifact-upd
 
 -------------------------------------
 
-# Next Steps
+# Conclusion
 
-Now that we have a deployed and functioning smart contract, let's interact with it!
+Truffle is only one of several different ways to deploy smart contracts on Polygon. It is also possible to use the Ethereum [Remix IDE](https://remix.ethereum.org), or another smart contract development tool called [HardHat](https://hardhat.org). Now that we have a deployed and functioning smart contract on Polygon, let's interact with it!

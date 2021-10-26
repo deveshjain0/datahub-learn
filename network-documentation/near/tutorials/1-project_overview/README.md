@@ -1,3 +1,5 @@
+# Introduction
+
 I invite you to join me In this tutorial series and learn how to design, build, and monetize smart contracts on the NEAR platform. Learning is fun, applying what you learn to build is more fun, and making money from what you have built is rewarding. I believe in the philosophy of the "proof is in the pudding". In this tutorial series, we will be building a real-world smart contract called the [STAKE](https://github.com/oysterpack/oysterpack-near-stake-token) token. The goals for this tutorial series are:
 
 1. Showcase the [STAKE](https://github.com/oysterpack/oysterpack-near-stake-token) token project on how to monetize NEAR smart contracts
@@ -11,11 +13,11 @@ I invite you to join me In this tutorial series and learn how to design, build, 
 
 Regarding the last point, I welcome community participation in the [STAKE](https://github.com/oysterpack/oysterpack-near-stake-token) open source project.
 
-## NEAR Technology + Economics = Game Changer
+# NEAR Technology + Economics = Game Changer
 
 When I first discovered NEAR, what caught my attention was NEAR's economic model. It is well thought out and designed to provide economic incentive and value. Coupling that with NEAR's sharded scalability, speed, and low predictable operational cost provides a platform that can deliver real-world business and economic value. NEAR has the potential and all the key ingredients to becoming the first true economical decentralized cloud platform - to compete with centralized cloud platforms owned by a few big tech companies ...
 
-## You can have your STAKE and trade it too
+# You can have your STAKE and trade it too
 
 The STAKE token contract enables you to delegate your NEAR to stake, and in return, you are issued STAKE tokens. This enables you to trade your STAKE tokens while your NEAR is locked for staking and earning staking rewards. In addition, to earning staking rewards, the staked NEAR earns contract rewards from transaction fees. The STAKE token transforms your staked NEAR into a tradeable asset that is backed by revenue streams.
 
@@ -30,7 +32,7 @@ The STAKE token business model leverages the following from NEAR:
    * STAKE token contract distributes a share of its contract rewards through staking
    * STAKE token contract is also able to collect earnings from external contracts and distribute the funds through the staking mechanism
 
-## STAKE Token Contract High-Level Overview
+# STAKE Token Contract High-Level Overview
 
 ![](../../../../.gitbook/assets/oysterpack-near-stake-token-overview-1-.png)
 
@@ -42,7 +44,7 @@ The STAKE token business model leverages the following from NEAR:
 * Contract supports distributing contract rewards and earnings through the staking mechanism.
 * Contract supports adding liquidity for unstaking and withdrawals
 
-### What you will learn from the STAKE Token project from a technical perspective
+## What you will learn from the STAKE Token project from a technical perspective
 
 The STAKE token project is fairly complex and showcases the following
 
@@ -66,11 +68,11 @@ The STAKE token project is fairly complex and showcases the following
 
 Decentralized network platforms, such as NEAR, provide tremendous economic opportunity. To put it into perspective, Amazon's market capitalization is currently valued at 1.56 trillion USD and 2021 revenue estimates are in the 411 - 488 billion USD range. That is just scratching the service. How much do you think the global economy is worth? Decentralized and scalable global cloud platforms such as NEAR provides an opportunity for all to participate in the global economy.
 
-## It's a wrap, folks ...
+# Conclusion
 
 NEAR is a super-fast smart contract platform with super low transaction fees that is user and developer-friendly for building real-world applications for the Open Web. I am excited about NEAR, and I hope I have inspired you to learn with me on this thrilling journey.
 
-# Next Steps ...
+# Next Steps
 
 If you are wondering what is NEP-41, then you are in luck. In the next tutorial, we'll do a deep dive into the new and improved Fungible Token Core Standard NEP-141.
 

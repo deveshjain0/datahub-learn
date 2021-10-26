@@ -28,7 +28,7 @@ In `pages/api/polkadot/balance.ts`, implement the function and try to query the 
 * [**Basic queries**](https://polkadot.js.org/docs/api/start/api.query#basic-queries)  
 
 {% hint style="info" %}
-[**Join us on Discord**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -38,6 +38,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const { address } = req.body;
@@ -52,6 +53,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we need instantiate our connection to the Polkadot API.
 * Next, we destructure the data returned by the `query.system.account` method as `balance`.
 * Then we can access the available balance of our account via the `free` property, converting it into a number with `toNumber`.

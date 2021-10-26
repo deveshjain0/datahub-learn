@@ -5,7 +5,7 @@ Like with most Web 3 protocols, transactions on Secret happen between **accounts
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/secret/account.ts`, complete the code of the function to first create a **mnemonic**, then produce an **address** from the **public key** belonging to the **mnemonic**.
+In `pages/api/secret/account.ts`, implement the function to first create a **mnemonic**, then produce an **address** from the **public key** belonging to the **mnemonic**. You must replace the instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -27,7 +27,7 @@ In `pages/api/secret/account.ts`, complete the code of the function to first cre
 * [**Account example**](https://github.com/enigmampc/SecretJS-Templates/blob/master/2_creating_account/create_account.js)  
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -37,6 +37,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
   try {
     const mnemonic = Bip39.encode(Random.getBytes(16)).toString();
     const signingPen = await Secp256k1Pen.fromMnemonic(mnemonic)
@@ -47,6 +48,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First we create a random **mnemonic** using the `fromMnemonic` method of the `Secp256k1Pen` class.
 * Next we deduce the public key from it using the `encodeSecp256k1Pubkey` function.
 * Then we deduce the wallet address from it using the `pubkeyToAddress` function.
@@ -62,10 +64,9 @@ Do not forget to fund the newly created wallet using the [secret faucet](https:/
 
 Once the code is complete and the file is saved, Next.js will rebuild the API route. Now click on **Generate a Mnemonic** and you should see:
 
-![](../../../.gitbook/assets/pathways/secret/secret-account.png)
+![](../../../.gitbook/assets/pathways/secret/secret-account.gif)
 
 -----------------------------
 
-# Next
-
+# Conclusion
 Before we make our first transfer, let's check that that the account is actually funded by asking the cluster for our balance!

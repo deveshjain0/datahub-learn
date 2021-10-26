@@ -7,7 +7,7 @@ It’s time to create your first Celo account on the **Alfajores** testnet. With
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/celo/account.ts`, complete the code of the function to first create a **mnemonic**, then produce an **address** from the **public key** belonging to the **mnemonic**.
+In `pages/api/celo/account.ts`, implement the function to first create a **mnemonic**, then produce an **address** from the **public key** belonging to the **mnemonic**. You must replace any instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -33,7 +33,7 @@ try {
 * [**Account documentation**](https://web3js.readthedocs.io/en/v1.4.0/web3-eth-accounts.html)
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -43,6 +43,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
 try {
     const url = getSafeUrl();
@@ -60,8 +61,9 @@ try {
 ```
 
 **What happened in the code above?**
+
 * First, we create a new `kit` instance.
-* Next, using `web3.eth` we can access a proxy of the [**web3.js - Ethereum Javascript API**](https://web3js.readthedocs.io/en/v1.4.0/)
+* Next, using `web3.eth` we can access a proxy of the [**web3.js - Ethereum Javascript API**](https://web3js.readthedocs.io/en/v3.0.0-rc.5/)
 * Next, calling `create` from the `account` module, we can create a new account.
 * Finally to access: 
     * The address, using the `address` property.
@@ -81,6 +83,6 @@ Once the code is complete and the file is saved, Next.js will rebuild the API ro
 
 -----------------------------
 
-# Next
+# Conclusion
 
 Now that we have a Celo account created and funded with testnet tokens, let’s move on to querying a Celo node to get the current balance of our account!

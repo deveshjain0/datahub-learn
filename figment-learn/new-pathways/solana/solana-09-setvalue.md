@@ -2,10 +2,10 @@ Last but certainly not least, we'll need to modify the data stored into **greete
 
 ----------------------------------
 
-# The challenge
+# 👨‍💻 Challenge
 
 {% hint style="tip" %}
-In `pages/api/solana/callGreetings.ts`, complete `setGreetings`. First you'll have to create an instruction, then you'll have to send and confirm a transaction to store the data from.
+In `pages/api/solana/setter.ts`, complete `setter`. First you'll have to create an instruction, then you'll have to send and confirm a transaction to store the data from. You must replace the instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -29,16 +29,17 @@ In `pages/api/solana/callGreetings.ts`, complete `setGreetings`. First you'll ha
 * [Read about sendAndConfirmTransaction](https://solana-labs.github.io/solana-web3.js/modules.html#sendAndConfirmTransaction)  
 
 {% hint style="info" %}
-[You can **join us on Discord**, if you have questions](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 ----------------------------------
 
-# The solution
+# 👉 Solution
 
 ```typescript
+// solution
 //...
   const instruction = new TransactionInstruction({
     keys: [{pubkey: greeterPublicKey, isSigner: false, isWritable: true}],
@@ -67,15 +68,15 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 ----------------------------------
 
-# Make sure it works
+# ✅ Make sure it works
 
 Once you have the code above saved, click on **Send A Greeting** and watch the magic happen:
 
-![](../../../.gitbook/assets/solana-set-v3.gif)
+![](../../../.gitbook/assets/pathways/solana/solana-setter.gif)
 
 ----------------------------------
 
-# Conclusion
+# 🏁 Conclusion
 
 Congratulations on completing the Solana Pathway! We hope you had a fun time and learned a lot. Here are a few things you can check out when you are ready to go further:
 
@@ -84,6 +85,5 @@ Congratulations on completing the Solana Pathway! We hope you had a fun time and
 * [Read some programs written by Solana devs](https://github.com/solana-labs/solana-program-library/tree/master/examples)
 * [Look at the Solana's Token Swap program](https://github.com/solana-labs/solana-program-library/tree/master/token-swap)
 
-{% hint style="info" %}
-If you had any difficulty with this tutorial or simply want to discuss Solana with other developers, [join our community Forums](https://community.figment.io) today, or [join us on Discord](https://discord.gg/EBveT5xs9D)!
-{% endhint %}
+
+If you had any difficulties following this tutorial or simply want to discuss Solana with other developers you can join [our Discord](https://discord.gg/fszyM7K) or head over to our [community forums](https://community.figment.io).

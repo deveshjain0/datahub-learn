@@ -2,7 +2,7 @@ We must check our account balance to make sure we have sufficient **SOL** to per
 
 ----------------------------------
 
-# The challenge
+# 👨‍💻 Challenge
 
 {% hint style="tip" %}
 In `pages/api/solana/balance.ts`, implement `publicKey` & `balance`.
@@ -12,12 +12,17 @@ In `pages/api/solana/balance.ts`, implement `publicKey` & `balance`.
 
 ```typescript
 //...
-    const address = req.body.address as PublicKey;
-    const url = getSafeUrl();
-    const connection = new Connection(url, "confirmed");
+  try {
+    const {network, address} = req.body;
+    const url = getNodeURL(network);
+    const connection = new Connection(url, 'confirmed');
     const publicKey = undefined;
     const balance = undefined;
+    if (balance === 0 || balance === undefined) {
+      throw new Error('Account not funded');
+    }
     res.status(200).json(balance);
+  }
 //...
 ```
 
@@ -26,23 +31,29 @@ In `pages/api/solana/balance.ts`, implement `publicKey` & `balance`.
 * [Create a publicKey from a string](https://solana-labs.github.io/solana-web3.js/classes/PublicKey.html#constructor)  
 
 {% hint style="info" %}
-You can also [**join us on Discord**](https://discord.gg/fszyM7K) if you have questions.
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 ----------------------------------
 
-# The solution
+# 👉 Solution
 
 ```typescript
+// solution
 //...
-    const address = req.body.address as PublicKey;
-    const url = getSafeUrl();
-    const connection = new Connection(url);
+  try {
+    const {network, address} = req.body;
+    const url = getNodeURL(network);
+    const connection = new Connection(url, 'confirmed');
     const publicKey = new PublicKey(address);
     const balance = await connection.getBalance(publicKey);
+    if (balance === 0 || balance === undefined) {
+      throw new Error('Account not funded');
+    }
     res.status(200).json(balance);
+  }
 //...
 ```
 
@@ -54,16 +65,16 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 ----------------------------------
 
-# Make sure it works
+# ✅ Make sure it works
 
 * Save the code (Next.js will automatically rebuild the page)
 * Enter the address you just funded
 * Click on **Check Balance**
 
-![](../../../.gitbook/assets/solana-balance-v3.gif)
+![](../../../.gitbook/assets/pathways/solana/solana-balance.gif)
 
 ----------------------------------
 
-# Next
+# 🏁 Conclusion
 
 Now that we have an account that has been funded with **SOL** tokens, we are ready to make a transfer to another account!

@@ -1,55 +1,18 @@
-The following software is required to set up and complete the **Tezos** Pathway
+# 🧩 DataHub API keys
 
-* [**Node.js v14.17.5 or higher installed**](https://nodejs.org/)
-* [**`yarn` installed**](https://yarnpkg.com/getting-started/install)
-* [**`git` installed**](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+To make use of the Pathway content, you will require a DataHub account and a valid API key to access Tezos via DataHub's infrastructure.
+You will need to [sign up for a DataHub account](https://auth.figment.io/sign_up) and verify your email address.
 
-Start by [**cloning**](https://git-scm.com/docs/git-clone) the repository and installing the [**dependencies**](https://classic.yarnpkg.com/en/docs/managing-dependencies/) with `yarn` :
+To use your API key you must create a new file named `.env.local` in the project root directory `/learn-web3-dapp/`, copying the contents of the existing `.env.example` file. Your API key needs to be pasted into `.env.local` so that you can authenticate your connections with DataHub.
 
-```bash
-git clone https://github.com/figment-networks/learn-web3-dapp.git
-cd learn-web3-dapp
-yarn
-```
-
----------------------------
-
-# Set your API key
-
-{% hint style="info" %}
-If you have previously completed a Pathway, you may already have `.env.local`! Just add your Tezos API key in the appropriate place and remember to save the file _before_ starting the development server.
-{% endhint %}
-
-Create an `.env.local` file at the root of the directory. Copy and paste the contents of the existing `.env.example` into the new file and save it to disk (you could also rename `.env.example` to `.env.local`).
-
-The value for `DATAHUB_TEZOS_API_KEY` can be found on the [**DataHub Services Dashboard**](https://datahub.figment.io/services/secret). Click on the **Tezos** icon in the list of available protocols and then copy your key as shown below. You can now paste your personal API key into `.env.local`. This will authenticate you and enable you to make JSON-RPC requests to Secret via DataHub.
+Your personal API key can be found on the [**DataHub Services Dashboard**](https://datahub.figment.io/). Click on the **Tezos** icon in the list of available protocols and then copy your key as shown below:
 
 ![](../../../.gitbook/assets/pathways/tezos/tezos-setup.gif)
 
+You can then paste your personal API key into `.env.local`, as the value for the environment variable `DATAHUB_TEZOS_API_KEY`. This will authenticate you and enable you to make JSON-RPC requests to Tezos via DataHub:
+
+![API keys](https://user-images.githubusercontent.com/2707197/136927423-d4c0074a-ebaf-49b0-a37f-080feb19dea8.png)
+
 {% hint style="info" %}
-[**Join us on Discord**](https://discord.gg/fszyM7K), if you encounter any issues with the tutorial or have any questions!**
+[**Join us on Discord**](https://figment.io/devchat), if you encounter any issues with the tutorial or have any questions!
 {% endhint %}
-
----------------------------
-
-# Start the server
-
-With the API key in place, save the `.env.local` file and start the Next.js development server with:
-
-```bash
-yarn dev
-```
-
-Once the development server loads and compiles the application, open your default browser and navigate to `http://localhost:3000`:
-
-![](../../../.gitbook/assets/pathway-home.gif)
-
-{% hint style="warning" %}
-Did you know you can change the port? By default Next.js uses port 3000, but if you have another service already running on that port, use the `--port` flag, like `yarn dev --port 1122`.
-{% endhint %}
-
----------------------------
-
-# Next
-
-You can now move ahead to the next step by clicking on the "Next" button below on the right. There are also links to the instructions for each step on the UI.

@@ -8,17 +8,17 @@ You could experience some issues with the availability of the network [**Click h
 
 ----------------------------------
 
-# The challenge
+# Challenge
 
 {% hint style="tip" %}
-In `pages/api/secret/transfer.ts`, complete the code of the function. There is a lot to fill here, so be careful!
+In `pages/api/secret/transfer.ts`, implement the default function. There is a lot to fill here, so be careful!
 {% endhint %}
 
 **Take a few minutes to figure this out.**
 
 ```tsx
 //..
-  // 0. A very specific Secret features (allowing to made the transaction encrypted)
+  // 0. A very specific Secret feature (this allows us to make the transaction encrypted)
   const txEncryptionSeed = EnigmaUtils.GenerateNewSeed();
 
   // 1. The fees you'll need to pay to complete the transaction
@@ -47,16 +47,17 @@ In `pages/api/secret/transfer.ts`, complete the code of the function. There is a
 * [**Documentation of `secrectjs`**](https://github.com/enigmampc/SecretNetwork/tree/master/cosmwasm-js/packages/sdk)  
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 ----------------------------------
 
-# The solution
+# Solution
 
 ```tsx
+// solution
 //...
   // 1. Initialize a secure Secret client
   const client = new SigningCosmWasmClient(
@@ -77,6 +78,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we create a secure connection using `SigningCosmWasmClient`, passing:
   * The `url` of the network.
   * The `address` of our wallet. 
@@ -96,10 +98,10 @@ Once you have the code above saved:
 * Fill in the amount of **SCRT** you want to send to your favorite pizza maker (and as you realize, it was yourself).
 * Click on **Submit Transfer**.
 
-![](../../../.gitbook/assets/pathways/secret/secret-transfer.png)
+![](../../../.gitbook/assets/pathways/secret/secret-transfer.gif)
 
 ----------------------------------
 
-# Next
+# Conclusion
 
 Now that we have funded our account and made a transfer, let's move on to deploying some code (known as a "smart contract") to the **Secret** blockchain! Ready to take the plunge? Let's go... 

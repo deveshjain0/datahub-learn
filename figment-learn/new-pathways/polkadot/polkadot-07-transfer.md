@@ -34,7 +34,7 @@ In `pages/api/polkadot/transfer.ts`, implement the function and try to transfer 
 * [**Code examples**](https://polkadot.js.org/docs/api/examples/promise/)  
 
 {% hint style="info" %}
-[**Join us on Discord**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -44,6 +44,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
     // Initialize account from the mnemonic
     const keyring = new Keyring({type: 'sr25519'});
@@ -63,6 +64,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we need to instantiate our connection to the Polkadot API.
 * Next, we call the `transfer` method of the `tx.balances` module, passing:
   * The recipient's address, from a [dev account](https://polkadot.js.org/docs/keyring/start/suri#dev-accounts) named "Alice".
@@ -87,4 +89,4 @@ Congratulations! You have now completed the Polkadot Pathway!
 
 There are many things that are beyond the scope of this Pathway, but the links provided to expand on some of the concepts contained in the tutorials should at least provide ample starting points for further study. Consider refining and playing with the code from the Pathway, to see what can be built out of these foundational blocks of Polkadot.
 
-To get the most out of the collaborative experience at Learn, join the [Discord](https://discord.com/invite/fszyM7K) and check out the [Community Forum](https://community.figment.io) to stay up-to-date with the latest information and educational resources for Web 3 technologies.
+If you had any difficulties following this tutorial or simply want to discuss Polkadot with other developers you can join [our Discord](https://discord.gg/fszyM7K) or head over to our [community forums](https://community.figment.io).

@@ -1,6 +1,6 @@
 # Introduction
 
-In this tutorial we will be creating a token on the Solana blockchain with no coding needed. Tokens have many functionalties, such as a [social token](https://www.nasdaq.com/articles/social-tokens%3A-get-ready-for-the-next-massive-crypto-trend-2021-04-29), a [utility token](https://invao.org/token-classes-explained-coin-vs-utility-token-vs-security-token/), or a [coin](https://invao.org/token-classes-explained-coin-vs-utility-token-vs-security-token/). 
+In this tutorial, we will be creating a token on the Solana blockchain with no coding needed. Tokens have many functionalities, such as a [social token](https://www.nasdaq.com/articles/social-tokens%3A-get-ready-for-the-next-massive-crypto-trend-2021-04-29), a [utility token](https://invao.org/token-classes-explained-coin-vs-utility-token-vs-security-token/), or a [coin](https://invao.org/token-classes-explained-coin-vs-utility-token-vs-security-token/). 
 
 Solana has a [Token Program](https://spl.solana.com/token), written in [Rust](https://www.rust-lang.org/), that will allow us to create our own token. We will only need to use a simple command-line interface to create and send our tokens around.
 
@@ -28,9 +28,7 @@ If you have any difficulty following this tutorial or simply want to discuss Sol
 * [Rust](https://rustup.rs/) installed
 * [Solana Tool Suite](https://docs.solana.com/cli/install-solana-cli-tools) installed
 
-# Getting Started
-
-## Create a SOL wallet
+# Create a SOL wallet
 
 First we are going to create a SOL wallet to handle our transactions, using the command line.
 
@@ -78,7 +76,7 @@ The created JSON wallet file is located at `~/.config/solana/id.json` in your fi
 Write the seed phrase down somewhere safe!
 {% endhint %}
 
-## Fund the wallet
+# Fund the wallet
 
 We will now use that public key \(pubkey\) to fund our wallet with SOL. The SOL is needed to pay for transactions and any changes we make to the blockchain, for example, the transaction that creates our token.
 
@@ -96,7 +94,7 @@ solana balance 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi
 
 The returned balance should match the exact amount that you sent to the wallet.
 
-## Create the token
+# Create the token
 
 * Install the **spl-token** CLI
 
@@ -138,7 +136,7 @@ solana balance 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi
 Your balance will decrease, indicating the transaction fees and deployment cost have been paid.   
 Congratulations, your token is officially created 👍
 
-## Create an account to handle the tokens
+# Create an account to handle the tokens
 
 Now we need to create an [account](https://docs.solana.com/developing/programming-model/accounts) that can work with the tokens.
 
@@ -163,7 +161,7 @@ Signature: 42Sa5eK9dMEQyvD9GMHuKxXf55WLZ7tfjabUKDhNoZRAxj9MsnN7omriWMEHXLea3aYpj
 solana balance 7UX2i7SucgLMQcfZ75s3VXmZZY4YRUyJN9X1RgfMoDUi
 ```
 
-## Mint the tokens
+# Mint the tokens
 
 It's time to mint some tokens and practice transferring them around. For the **mintAmount**, you can specify any number. Why not try 💰 1,000,000 💰 just for fun? Normally this would be based on factors like how big you expect the tokens market cap to be and if you plan to airdrop any amount to users.
 
@@ -198,7 +196,7 @@ spl-token mint --help
 
 Go ahead and check your wallet balance after this transaction if you'd like. Once the tokens have finished minting, it's time to think about security: "What's stopping me from minting an infinite amount of these tokens?"
 
-## Limit supply to prevent unlimited minting
+# Limit supply to prevent unlimited minting
 
 It is crucial to prevent infinite minting of our token, once enough have been created.
 
@@ -224,7 +222,7 @@ AQoKYV7tYpTrFZN6P5oUufbQKAUr9mNYGe1TTJC9wajM  1000000
 
 Check the wallet balance too if you'd like. It will show the difference after the transaction.
 
-## Transfer token to a browser wallet
+# Transfer token to a browser wallet
 
 _This step is optional_, but now we are going to send all of the token from our command-line-created wallet to our browser wallet. You must have some SOL in your browser wallet so it can automatically add the token.
 
@@ -255,7 +253,7 @@ Signature: 5a3qbvoJQnTAxGPHCugibZTbSu7xuTgkxvF4EJupRjRXGgZZrnWFmKzfEzcqKF2ogCaF4
 
 After the transaction is confirmed on the Solana cluster, you should see your new token in your browser wallet! However, there's an obvious problem! It has no name...
 
-## Submit a pull request to Solana to register token
+# Submit a pull request to Solana to register token
 
 Our token is created and live on Solana, but is not yet officially recognized. We need to get all the required information for the token ready for submission.
 
@@ -354,7 +352,7 @@ We are now ready to create the pull request.
 
 Congratulations! Your token is now on the way to being official. Only if we could actually trade the token though...
 
-## BONUS: Add a market for your token on Serum
+# BONUS: Add a market for your token on Serum
 
 You've made it! Your token is live and has a name. It can now be sent around and used for whatever its utility may be. But, there is no trading pair for the token to be traded on. I did not make a market for my social token as I do not want it to be traded.
 

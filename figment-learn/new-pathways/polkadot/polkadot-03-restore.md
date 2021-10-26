@@ -29,7 +29,7 @@ In `pages/api/polkadot/restore.ts`, implement the function and try to restore yo
 * [**Using address or publicKey**](https://polkadot.js.org/docs/keyring/start/sign-verify#verify-using-address-or-publickey)  
 
 {% hint style="info" %}
-[**Join us on Discord**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -39,6 +39,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const { mnemonic } = req.body;  
@@ -51,6 +52,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we create a new `Keyring` instance of the `sr25519` type.
 * Then we can use the `addFromUri` method to add the supplied mnemonic to the keyring - this is the account.
 * We can now access the public address via the `address` property of the `account`.
@@ -65,6 +67,6 @@ When you have completed the code, click on **Restore Account**
 
 -----------------------------
 
-# Next
+# Conclusion
 
 The ability to restore an account without requiring a third party is a great feature of **Polkadot**. Now, we're ready to go further and prepare our first transaction. In the next tutorial, we're going to learn how to estimate the fees required to submit a simple transfer.

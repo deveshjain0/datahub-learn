@@ -11,7 +11,7 @@ Visit the [faucet](https://faucet.tzalpha.net/) to generate a mnemonic and get s
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/tezos/account.ts`, complete the code of the function and try to activate your first account on the Tezos network. 
+In `pages/api/tezos/account.ts`, implement the function and try to activate your first account on the Tezos network. You must replace the instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -36,7 +36,7 @@ In `pages/api/tezos/account.ts`, complete the code of the function and try to ac
 * [**Importing a Faucet Key**](https://tezostaquito.io/docs/quick_start/#importing-a-faucet-key)  
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -46,6 +46,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const { mnemonic, email, password, secret } = req.body
@@ -66,6 +67,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we create a new `TezosToolkit` instance.
 * Next, we call the `importKey` method in order to activate the account.
 
@@ -82,6 +84,6 @@ Once the code is complete and the file has been saved:
 
 -----------------------------
 
-# Next
+# Conclusion
 
-Nice work! In the next tutorial, we will query a Tezos node using DataHub on the Florence testnet, to determine the current balance of our account.
+Nice work! You now have a Tezos account on the Florence testnet. In the next tutorial, we will query a Tezos node using DataHub, to determine the current balance of our account.

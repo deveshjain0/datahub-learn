@@ -20,7 +20,7 @@ then run:
 
 Great! That's all we'll need for our smart contract testing.
 
-## Project setup
+# Project setup
 
 Next, we're going to setup our project. Let's create a folder called `celoTesting` and `cd` into the folder:
 
@@ -32,7 +32,7 @@ Now let's initialize Truffle:
 
 There should now be a handful of files and folders in your `celoTesting` directory. Let's open `celoTesting` with your favorite text editor and continue.
 
-## Writing the smart contract
+# Writing the smart contract
 
 Since this tutorial focuses on smart contract testing, we'll use a very simple Solidity contract in order to get our bearings.
 
@@ -56,7 +56,7 @@ contract HelloWorld {
 
 Great! This is just a simple smart contract which will either get the `name` variable by calling `getName()` or update the `name` variable by calling `setName()`. When the contract first runs, `name` will be "Celo".
 
-## Deployment
+# Deployment
 
 Now that we have a smart contract, let's deploy it to make sure it works. We'll be deploying it on the Ganache CLI, which is a command line tool for creating local blockchains. Ganache will create a local Ethereum blockchain for us to test on. Since Celo is a fork of Ethereum, they use the same environment.
 
@@ -99,7 +99,7 @@ The results should look like this:
 
 ![result](https://i.imgur.com/yIEBGSk.png)
 
-## Testing
+# Testing
 
 Truffle lets us test our smart contracts using both Javascript or Solidity. For this tutorial, we will write tests in Javascript.
 
@@ -201,7 +201,7 @@ Now we know how to write tests for our smart contracts. This skill will come in 
 
 Good luck! And as always, feel free to ask on the Figment Learn [Discord](https://discord.gg/f5YuEsQTAx) if you run into any problems.
 
-## Further reading
+# Further reading
 
 After following this tutorial, you should have a basis for writing tests for smart contracts. Unit testing is a entire subsection of development which has lots of discussion around it. If you'd like to read more, here are some additional resources:
 

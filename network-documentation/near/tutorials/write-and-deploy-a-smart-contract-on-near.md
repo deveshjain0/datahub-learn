@@ -4,9 +4,9 @@ In this tutorial, we are going to write and test a smart contract using Rust. Th
 
 Why Rust? Rust is the preferred programming language for writing smart contracts on NEAR. Rust offers many features like memory safety, small runtime, etc. This allows us to write a smart contract that doesn’t have memory bugs and consumes less storage on the blockchain.
 
-# Prerequisite
+# Prerequisites
 
-Please make sure that you have completed [NEAR Intro Pathway](https://learn.figment.io/network-documentation/near/tutorials/intro-pathway-write-and-deploy-your-first-near-smart-contract). Pathway covers the basics of NEAR development.
+Please make sure that you have completed [NEAR Pathway](https://learn.figment.io/pathways/near-pathway). The Pathway covers the basics of NEAR development.
 
 # Requirements
 
@@ -20,13 +20,13 @@ You should have the following requirements installed:
 
 To setup our project, we need to add the WASM \(WebAssembly\) target to our toolchain. To add that we need to run the following command in the terminal:
 
-```
+```text
 rustup target add wasm32-unknown-unknown
 ```
 
 The output in the terminal will be:
 
-```
+```text
 info: downloading component 'rust-std' for 'wasm32-unknown-unknown'
 info: installing component 'rust-std' for 'wasm32-unknown-unknown'
 info: using up to 500.0 MiB of RAM to unpack components 13.9 MiB /  13.9 MiB (100 %)  10.0 MiB/s in  1s ETA:  0s
@@ -34,7 +34,7 @@ info: using up to 500.0 MiB of RAM to unpack components 13.9 MiB /  13.9 MiB (10
 
 If target is already added, then output in the terminal will be:
 
-```
+```text
 info: component 'rust-std' for target 'wasm32-unknown-unknown' is up to date
 ```
 
@@ -44,26 +44,25 @@ Why do we need to add the WASM target? To deploy our smart contract on NEAR, we 
 
 Now, let’s create a directory called `key_value_storage`, then change into that directory and run the following command in the terminal:
 
-```
+```text
 cargo init --lib
 ```
 
 The output in the terminal will be:
 
-```
+```text
 Created library package
 ```
 
 Open the default `Cargo.toml` file which was generated, remove the existing contents and paste the following:
 
-```text
+```toml
 [package]
 name = "key_value_storage"
 version = "0.1.0"
 authors = ["Your Name <Your Email>"]
 edition = "2018"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
 crate-type = ["cdylib", "rlib"]
 
@@ -77,9 +76,11 @@ opt-level = "z"
 lto = true
 debug = false
 panic = "abort"
-# Opt into extra safety checks on arithmetic operations https://stackoverflow.com/a/64136471/249801
 overflow-checks = true
 ```
+> See more cargo manifest keys and their definitions at <https://doc.rust-lang.org/cargo/reference/manifest.html>
+> Use `overflow-checks = true` to opt into extra safety checks on arithmetic operations: <https://stackoverflow.com/a/64136471/249801>
+
 
 We are all set now! This can be used as a template and a starting point for any future project.
 
@@ -275,13 +276,13 @@ Just like in the first test, we will create our testing environment and `contrac
 
 Now, it is time to test our code. Run the following command in the terminal:
 
-```
+```text
 cargo test -- --nocapture
 ```
 
 The tests will pass only if the contract is working properly. As our smart contract is working properly, we will see the following output:
 
-```
+```text
 Finished test [unoptimized + debuginfo] target(s) in 1m 05s
      Running target/debug/deps/key_value_storage-958f616e81cf3269
 
@@ -302,9 +303,10 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 Now that we have written and tested the Rust smart contract, we will compile it into WebAssembly for deployment on NEAR. Run the following command in the terminal \(NOTE: Windows users will have to perform the two commands separately, `set` for the environment variables and then the `cargo build` command\):
 
-```
+```text
 // Linux and macOS users can use these commands:
-env 'RUSTFLAGS=-C link-arg=-s' cargo build --target wasm32-unknown-unknown --release
+env 'RUSTFLAGS=-C link-arg=-s' 
+cargo build --target wasm32-unknown-unknown --release
 
 // Windows users can use these commands:
 set RUSTFLAGS=-C link-arg=-s
@@ -313,7 +315,7 @@ cargo build --target wasm32-unknown-unknown --release
 
 The output from `cargo build` will be similar:
 
-```
+```text
 Compiling near-sdk v3.1.0
 Compiling key_value_storage v0.1.0 (/home/xqc/key_value_storage)
 Finished release [optimized] target(s) in 1m 00s
@@ -325,7 +327,7 @@ We have now generated an optimized WebAssembly file which we can deploy on NEAR,
 
 First you have to login into your account using `near-cli`. Run
 
-```
+```text
 near login
 ```
 
@@ -344,13 +346,13 @@ Once complete, you will now have your Access Key stored locally in a hidden dire
 
 Next, giving a name to our contract sound like a great idea. To achieve it, we'll use `near-cli` to create a new account belonging to our master account.
 
-```
+```text
 near create-account CONTRACT_NAME.ACCOUNT_ID --masterAcount ACCOUNT_ID --initialBalance 10
 ```
 
 The output will be:
 
-```
+```text
 Saving key to '/home/xxx/.near-credentials/testnet/CONTRACT_NAME.ACCOUNT_ID.json'
 Account CONTRACT_NAME.ACCOUNT_ID.testnet for network "testnet" was created.
 ```
@@ -363,13 +365,13 @@ Account CONTRACT_NAME.ACCOUNT_ID.testnet for network "testnet" was created.
 
 Now we can deploy our Rust smart contract to NEAR. Run the following command in the terminal \(NOTE: replace `YOUR_ACCOUNT_HERE` with your account name, ex. `example.near`\):
 
-```
+```text
 near deploy --wasmFile target/wasm32-unknown-unknown/release/key_value_storage.wasm --accountId CONTRACT_ID
 ```
 
 After the deployment is completed, you will see similar output in the terminal:
 
-```
+```text
 Starting deployment. Account id: CONTRACT_ID, node: https://rpc.testnet.near.org, helper: https://helper.testnet.near.org, file: target/wasm32-unknown-unknown/release/key_value_storage.wasm
 Transaction Id E4uT8wV5uXSgsJpB73Uox27iPgXztWfL3b5gzxfA3fHo
 To see the transaction in the transaction explorer, please open this url in your browser
@@ -387,13 +389,13 @@ We'll create a key-value pair and then read it.
 
 This command will create a key-value pair:
 
-```
+```text
 near call CONTRACT_ID create_update '{"k": "first_key", "v" : "1"}' --accountId ACCOUNT_ID
 ```
 
 The output will be:
 
-```
+```text
 Scheduling a call: CONTRACT_ID.create_update({"k": "first_key", "v" : "1"})
 Receipt: 6bCmuWuAbdiXWvPaTvidbJP4f3mSG4UVcE52g18ZWMq5
         Log [CONTRACT_ID]: created or updated
@@ -407,13 +409,13 @@ Function arguments must be provided as a JSON string after name of the method.
 
 Now, we will read the value of the first key:
 
-```
+```text
 near view CONTRACT_ID read '{"k": "first_key"}' --accountId ACCOUNT_ID
 ```
 
 The output will be:
 
-```
+```text
 View call: CONTRACT_ID.read({"k": "first_key"})
 Log [CONTRACT_ID]: read
 '1'
@@ -425,13 +427,13 @@ Log [CONTRACT_ID]: read
 
 Lastly, we will delete the key:
 
-```
+```text
 near call CONTRACT_ID delete '{"k": "first_key"}' --accountId ACCOUNT_ID
 ```
 
 The output will be:
 
-```
+```text
 Scheduling a call: CONTRACT_ID.delete({"k": "first_key"})
 Receipt: wp8YoFZC7CKUNty66VoYuaHMVej7UqcbLcK2FjpMZzk
         Log [CONTRACT_ID]: delete

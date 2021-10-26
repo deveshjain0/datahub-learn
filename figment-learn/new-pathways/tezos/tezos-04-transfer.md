@@ -7,7 +7,7 @@ The role of TezosToolkit here is to provide a simplified way of dealing with the
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/tezos/transfer.ts`, complete the code of the function and try to make your first transfer on the tezos network. 
+In `pages/api/tezos/transfer.ts`, implement the function and try to make your first transfer on the Tezos network. You must replace the instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -36,7 +36,7 @@ In `pages/api/tezos/transfer.ts`, complete the code of the function and try to m
 * [**Check out the `transfer` method's interface**](https://tezostaquito.io/typedoc/interfaces/_taquito_taquito.contractprovider.html#transfer)  
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -46,6 +46,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const { mnemonic, email, password, secret, amount, recipient } = req.body;
@@ -73,6 +74,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we create a new `TezosToolkit` instance.
 * Next, we import our wallet data using `importKey`.
 * Next, we create an transaction using the method `transfer` of the `contract` module, passing:
@@ -93,6 +95,6 @@ Once you have the code above saved:
 
 -----------------------------
 
-# Next
+# Conclusion
 
 Now that we have created our account and made a transfer, let's move on to deploying some code (known as a "smart contract") to the **Tezos** blockchain! Ready to take the plunge? Let's go... 

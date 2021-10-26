@@ -23,10 +23,10 @@ const GreetingSchema = new Map([
 
 ----------------------------------
 
-# The challenge
+# 👨‍💻 Challenge
 
 {% hint style="tip" %}
-In `pages/api/solana/getGreetings.ts`, complete the code for `getGreetings`. First deserialize the greeter data to a TypeScript class, then access the counter value and pass it to the response object using the `.json()` method as in all previous tutorials.
+In `pages/api/solana/getter.ts`, complete the code for `getter`. First deserialize the greeter data to a TypeScript class, then access the counter value and pass it to the response object using the `.json()` method as in all previous tutorials.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -52,16 +52,17 @@ In `pages/api/solana/getGreetings.ts`, complete the code for `getGreetings`. Fir
 * [Read about the deserialize method](https://npm.io/package/borsh)
 
 {% hint style="info" %}
-[You can **join us on Discord**, if you have questions](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 ----------------------------------
 
-# The solution
+# 👉 Solution
 
 ```typescript
+// solution
 //...
     if (accountInfo === null) {
       throw new Error('Error: cannot find the greeted account');
@@ -84,14 +85,14 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 ----------------------------------
 
-# Make sure it works
+# ✅ Make sure it works
 
 Once you have the code above saved, click on **Get Greeting** and watch the magic happen: 
 
-![](../../../.gitbook/assets/solana-get-v3.gif)
+![](../../../.gitbook/assets/pathways/solana/solana-getter.gif)
 
 ----------------------------------
 
-# Next
+# 🏁 Conclusion
 
 Simply getting the number of greetings is not enough, we'd like to also *send* a greeting to our contract. We're going to learn how to do it in the next step. Ready?

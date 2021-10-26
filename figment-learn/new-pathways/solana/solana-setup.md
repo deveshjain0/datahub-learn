@@ -1,12 +1,18 @@
-The following software is required to set up and complete the Solana Pathway
+# Requirements
 
-* [Node.js v14.17.0 or higher installed](https://nodejs.org/)
-* [yarn installed](https://yarnpkg.com/getting-started/install)
-* [git installed](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+Make sure you've installed the [Solana CLI](https://docs.solana.com/cli/install-solana-cli-tools)'s latest release.
 
-Start by cloning the repository and installing the dependencies with yarn :
+> **Windows Users:** There are known compatibility issues with the Solana BPF toolchain. You will need to use the Windows Subsystem for Linux. Please refer to the [installation guide](https://docs.figment.io/network-documentation/extra-guides/solana-setup-for-windows) we have provided. 
+>
+> **macOS Users:** If you are using any of the Apple Silicon products (M1 processor), you may need to build from source. [Refer to this GitHub PR for more information](https://github.com/solana-labs/solana/pull/16346/).
 
-```bash
+---------------------------
+
+# 🧑‍💻 Get started
+
+Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git), [Node](https://nodejs.org/en/) (you'll need `v14.17.0` or greater) and [yarn](https://yarnpkg.com/getting-started/install) installed. Then clone the repo and run the `yarn` command to install the dependencies:
+
+```text
 git clone https://github.com/figment-networks/learn-web3-dapp.git
 cd learn-web3-dapp
 yarn
@@ -14,38 +20,62 @@ yarn
 
 ---------------------------
 
-# Set your API key
+# 🧩 DataHub API keys
 
-Create an `.env.local` file at the root of the directory. Copy and paste the contents of the existing `.env.example` into the new file and save it to disk (alternatively, you can rename `.env.example`).
+To make use of the Pathway content, you will require a DataHub account and a valid API key to access Solana via DataHub's infrastructure.
+You will need to [sign up for a DataHub account](https://auth.figment.io/sign_up) and verify your email address.
 
-The value for `DATAHUB_SOLANA_API_KEY` can be found on the [DataHub Services Dashboard](https://datahub.figment.io/services/solana). Click on the Solana icon in the list of available protocols and then copy your key as shown below. You can now paste your personal API key into `.env.local` . This will authenticate you and enable you to make JSON-RPC requests to the Solana cluster via DataHub.
+To use your API key you must create a new file named `.env.local` in the project root directory `/learn-web3-dapp/`, copying the contents of the existing `.env.example` file. Your API key needs to be pasted into `.env.local` so that you can authenticate your connections with DataHub.
+
+> 💡 **Tip**: You can find the `.env.example` file in the root directory of the project which you just cloned: `/learn-web3-dapp/.env.example`
+
+Your personal API key can be found on the [**DataHub Services Dashboard**](https://datahub.figment.io/). Click on the **Solana** icon in the list of available protocols and then copy your key as shown below:
 
 ![](../../../.gitbook/assets/solana-setup-00.gif)
 
-{% hint style="info" %}
-[**Join us on Discord**, if you encounter any issues with the tutorial or have any questions!](https://discord.gg/fszyM7K)
-{% endhint %}
+You can then paste your personal API key into `.env.local`, as the value for the environment variable `DATAHUB_SOLANA_API_KEY`. This will authenticate you and enable you to make RPC requests to Solana via DataHub:
 
----------------------------
+![API keys](https://user-images.githubusercontent.com/2707197/136934560-086acda2-6bfe-4dc1-a75b-d9dbff036a12.png)
 
-# Start the server
 
-With the API key in place, save the `.env.local` file and start the React interface with :
+Now that your API key is in place, start the Next.js development server on the default port 3000 with:
 
-```bash
+```text
 yarn dev
 ```
 
-Once the development server loads and compiles the application, open your default browser and go to `http://localhost:3000` :
+---------------------------
 
-![](../../../.gitbook/assets/pathway-home.gif)
+# Using a Test Validator
 
-{% hint style="warning" %}
-Did you know you can change the port? By default Next.js uses port 3000, but if you have another service already running on that port, use the `--port` flag, like `yarn dev --port 1122`.
-{% endhint %}
+At some point it may be useful to run a Test Validator. For example, if can't get airdrops because the Devnet faucet is not working. To run a local Test Validator, use this command in its own terminal tab or window :
+
+```text
+solana-test-validator
+``` 
+
+Use `solana config set` to target a particular cluster. After setting a cluster target, any future subcommands will send/receive information from that cluster. To target a running Test Validator with the Solana CLI :
+
+```text
+solana config set --url https://localhost:8899
+```
+
+You can see which cluster the Solana command-line tool (CLI) is currently targeting and the paths to your keypair and configuration file with the command :
+
+```text
+solana config get
+```
 
 ---------------------------
 
-# Next
+# Keypair storage
 
-You can now move ahead to the next step by clicking on the "Next" button below on the right. There are also links to the instructions for each step on the UI.
+During the Pathway, you will need to generate a keypair for use in the tutorials. This information is kept in the localstorage of your web browser, and is distinct from any keypairs generated by the Solana CLI. It can be accessed or cleared via the blue "Keychain" button at the top right corner of the Pathway UI, as shown below:
+
+![](https://user-images.githubusercontent.com/2707197/136936571-22f19fdd-2a3b-4cd7-bf47-d441d8731cfb.png)
+
+---------------------------
+
+{% hint style="info" %}
+[**Join us on Discord**](https://figment.io/devchat), if you encounter any issues with the tutorial or have any questions!
+{% endhint %}

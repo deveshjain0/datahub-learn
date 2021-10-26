@@ -9,7 +9,7 @@ The Celo blockchain has two native assets, **CELO** (CELO) and the **Celo Dollar
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/celo/balance.ts`, complete the code of the **balance** function.
+In `pages/api/celo/balance.ts`, implement the **balance** function. You must replace any instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -42,7 +42,7 @@ In `pages/api/celo/balance.ts`, complete the code of the **balance** function.
 * [**Reading from Alfajores**](https://docs.celo.org/developer-guide/start/hellocelo#reading-alfajores)
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -52,6 +52,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const { address } = req.body
@@ -73,6 +74,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we create a new `kit` instance.
 * Next, we call the `getGoldToken` method of the `contracts` module to access CELO contract, then providing the input address to the `balanceOf` method, returning the balance of **CELO** token.
 * Next, we call the `getStableToken` method of the `contracts` module to access the cUSD contract, then providing the input address to the `balanceOf` method, returning the balance of **cUSD** token.
@@ -91,6 +93,6 @@ Once the code is complete and the file is saved, Next.js will rebuild the API ro
 
 -----------------------------
 
-# Next
+# Conclusion
 
 Querying the balance information is fun, but being able to submit transactions and change the state of a blockchain is even better! In the next step, we will dive deeper and submit our first transactions on Celo.

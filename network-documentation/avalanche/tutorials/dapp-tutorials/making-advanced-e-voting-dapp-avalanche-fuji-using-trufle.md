@@ -691,7 +691,7 @@ async function submitNewElection() {
 ```
 
 * We will be interacting with smart contracts using their ABIs. The `ABI` for `MainContract` and `Election` would be available on `/mainContractJSON` and `/electionJSON` respectively.
-* For interaction purposes, there will be 3 modules: `loadBlockchain.js`, `Election.js` and `loadElection.js`. Please refer to the image below to learn about the use of each file.
+* For interaction purposes, there will be 3 modules: `loadBlockchain.js`, `Election.js` and `loadElections.js`. Please refer to the image below to learn about the use of each file.
 
 ![dapp-truffle](https://i.imgur.com/huyZOYB.png)
 
@@ -846,7 +846,7 @@ async function submitNewElection() {
   }
   ```
 
-* loadElection.js \(ElectionData\) - This would create `Election` object for each available `deployed` elections and load election data on the UI. Now create `loadBlockchain.js` file in the `src` directory and put the following code in that.
+* loadElections.js \(ElectionData\) - This would create `Election` object for each available `deployed` elections and load election data on the UI. Now create `loadBlockchain.js` file in the `src` directory and put the following code in that.
 
   ```javascript
   import {Default} from './loadBlockchain.js';

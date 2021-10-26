@@ -23,10 +23,10 @@ Before focusing on altering a value on the smart contract, let's take a look at 
 
 ----------------------------------
 
-# The challenge
+# Challenge
 
 {% hint style="tip" %}
-In `pages/api/secret/setter.ts`, complete the code of the default function. 
+In `pages/api/secret/setter.ts`, implement the default function. You must replace the instances of `undefined` with working code to accomplish this.
 {% endhint %}
 
 **Take a few minutes to figure this out.**
@@ -44,16 +44,17 @@ In `pages/api/secret/setter.ts`, complete the code of the default function.
 * [**`execute()`**](https://github.com/enigmampc/SecretNetwork/blob/7adccb9a09579a564fc90173cc9509d88c46d114/cosmwasm-js/packages/sdk/src/signingcosmwasmclient.ts#L409)  
 
 {% hint style="info" %}
-[You can **join us on Discord**, if you have questions](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
 
 ----------------------------------
 
-# The solution
+# Solution
 
 ```tsx
+// solution
 //...
   // Increment the counter
   const handleMsg = { increment: {} };
@@ -62,6 +63,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * We're calling the `execute` method of the `SigningCosmWasmClient`, passing to it:
   * The `contract`, which is the contract address. 
   * The `{ increment: {} }` object which represents the name of the method we are calling and the parameters we're passing to it. Again, we are passing an empty object as there are no arguments.
@@ -72,16 +74,17 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 Once you have the code above saved, click the button and watch the magic happen:
 
-![](../../../.gitbook/assets/pathways/secret/secret-setter.png)
+![](../../../.gitbook/assets/pathways/secret/secret-setter.gif)
 
 ----------------------------------
 
 # Conclusion
 
-Congratulations! You have successfully deployed and interacted with a smart contract on the Secret Network Testnet using DataHub.
+Congratulations, you have completed the Secret Pathway! You have successfully deployed and interacted with a smart contract on the Secret Network testnet using DataHub.
 
 While we have only covered a very small area of contract development you are more than welcome to continue exploration and experiments on your own, feel free to check out the [**Secret Network Developers**](https://scrt.network/developers) site for more examples and tutorials.
 
 If you had any difficulties following this tutorial or simply want to discuss Secret Network and DataHub tech with us you can join [**our community**](https://discord.gg/fszyM7K) today!
 
-We also invite you to join the Secret community on their [Discord server](http://chat.scrt.network) and on the [Secret Forum](http://forum.scrt.network) to go deeper into Secret development.  
+
+If you had any difficulties following this tutorial or simply want to discuss Secret with other developers you can join [our Discord](https://discord.gg/fszyM7K) or head over to our [community forums](https://community.figment.io). We also invite you to join the Secret community on their [Discord server](http://chat.scrt.network) and on the [Secret Forum](http://forum.scrt.network) to go deeper into Secret development.

@@ -9,7 +9,7 @@ If you want to learn more about Tezos smart contracts, follow [**The Taco Shop S
 # Challenge
 
 {% hint style="tip" %}
-In `pages/api/tezos/getter.ts`, complete the code of the function and try to read the value of the counter stored in the smart contract. 
+In `pages/api/tezos/getter.ts`, implement the function and try to read the value of the counter stored in the smart contract. You must replace the instances of `undefined` with working code to accomplish this. 
 {% endhint %}
 
 **Take a few minutes to figure this out**
@@ -42,7 +42,7 @@ In `pages/api/tezos/getter.ts`, complete the code of the function and try to rea
 * [**Interface ContractProvider method `getStorage`**](https://tezostaquito.io/typedoc/interfaces/_taquito_taquito.contractprovider.html#getstorage)  
 
 {% hint style="info" %}
-[**You can join us on Discord, if you have questions**](https://discord.gg/fszyM7K)
+You can [**join us on Discord**](https://discord.gg/fszyM7K), if you have questions or want help completing the tutorial.
 {% endhint %}
 
 Still not sure how to do this? No problem! The solution is below so you don't get stuck.
@@ -52,6 +52,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 # Solution
 
 ```typescript
+// solution
 //...
   try {
     const { mnemonic, email, password, secret, contract } = req.body;
@@ -75,6 +76,7 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 ```
 
 **What happened in the code above?**
+
 * First, we create a new `TezosToolkit` instance.
 * Next, we import our wallet data using `importKey`.
 * Then, using the `getStorage` function of the `contract` module, we return the counter stored on the contract.
@@ -86,10 +88,10 @@ Still not sure how to do this? No problem! The solution is below so you don't ge
 
 Once you have the code above saved, click the button and watch the magic happen:
 
-![](../../../.gitbook/assets/pathways/tezos/tezos-getter.png)
+![](../../../.gitbook/assets/pathways/tezos/tezos-getter.gif)
 
 -----------------------------
 
-# Next
+# Conclusion
 
-Now it is time for the final challenge: Modify the state of the contract and thus the state of the blockchain. Let's go!
+Nicely done! You learned how to get a value from a smart contract's storage on the Tezos blockchain. Now it is time for the final challenge: Modify the state of the contract and thus the state of the blockchain. Let's go!
