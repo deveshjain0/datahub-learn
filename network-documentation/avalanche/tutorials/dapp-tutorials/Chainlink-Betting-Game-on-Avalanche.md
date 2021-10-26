@@ -6,13 +6,13 @@ This is a blockchain based betting game where you can bet on the outcome of a di
 Here is the application will work when the user connects to their web browser with metamask, they'll talk to a front-end application built in react.js and the application will talk directly to the ethereum blockchain and on the blockchain, we'll create a smart contract that implements the betting game and that's going to use the chainlink protocol which of course talked to the chainlink smart contacts. So the user flow is here. Is that they make a bet to directly with our smart contacts with the funded application. If they guess the number right, they will win twice the amount of cryptocurrency that they bet. 
 
 # Requirements 
-- Node.js 
-- Chainlink Oracles
-- Metamask 
+- [Node.js](https://nodejs.org/en/)
+- [Chainlink Oracles](https://chain.link/)
+- [Metamask](https://metamask.io/) 
 
 # Main game function
 
- Look at the chart, so basically the user makes a bet directly on our smart contract by calling the game function and what they do is they bet on a dice roll. And so they bet the lowest value or the highest value, which is going to be either one to three or three to six. They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not, then they lose the cryptocurrency. 
+ Look at the chart, so basically the user makes a bet directly on our smart contract by calling the game function and what they do is they bet on a dice roll. And so they bet the lowest value or the highest value, which is going to be either `one to three` or `three to six`. They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not, then they lose the cryptocurrency. 
 
 In this tutorial, we go through:
 - The Chainlink request & receive cycle
@@ -30,7 +30,7 @@ Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, y
 
 If the result of randomness is stored on-chain, any actor could see the value and predict the outcome. Instead, randomness must be requested from an oracle, which generates a number and a cryptographic proof then returns that result to the contract that requested it. This sequence is what's known as the [Request and Receive](https://docs.chain.link/docs/architecture-request-model/) cycle.
 
-## 2. Using Matic
+## 2. Using LINK
 
 In return for providing this service of generating a random number, Oracles need to be paid in Matic. This is paid by the contract that requests the randomness, and payment occurs during the request.
 
