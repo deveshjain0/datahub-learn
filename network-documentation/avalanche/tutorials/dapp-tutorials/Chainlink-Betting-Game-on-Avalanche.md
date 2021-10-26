@@ -73,8 +73,16 @@ uint256 internal fee;
 uint256 public randomResult;
 
 ```
-
 These will be initialized in the constructor.
+
+Constructor inherits VRFConsumerBase. 
+```cpp
+ constructor() VRFConsumerBase(VFRC_address, LINK_address) public {
+    fee = 0.1 * 10 ** 18; // 0.1 LINK
+    admin = msg.sender;
+    ethUsd = AggregatorV3Interface(0xF9680D99D6C9589e2a93a78A04A279e509205945);
+  }
+  ```  
 
 The contract will need to employ mappings to keep track of the addresses that roll the dice. Mappings are unique key => value pair data structures that act like hash tables.
 
@@ -90,9 +98,9 @@ mapping(uint256 => Game) public games;
 This is a special function defined within the VRFConsumerBase contract that ours extends from. It is the function that the coordinator sends the result back to, so we need to implement some functionality here to deal with the result.
 
 It should:
-. Transform the result to a number between 1 and 20 inclusively.
-. Assign the transformed value to the address in the s_results mapping variable.
-. Emit a DiceLanded event.
+- Transform the result to a number between 1 and 20 inclusively.
+- Assign the transformed value to the address in the s_results mapping variable.
+- Emit a DiceLanded event.
 
 ```cpp
   function getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
@@ -122,6 +130,19 @@ Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, y
     verdict(randomResult);
   }
   ```
+ ### 3e. Send rewards to the winners. 
+  
+  If the user wins, they will get 2x the amount they wagered.
+  
+ ```cpp    
+    if((random>=half && games[i].bet==1) || (random<half && games[i].bet==0)){
+        winAmount = games[i].amount*2;
+        games[i].player.transfer(winAmount);
+      }
+      emit Result(games[i].id, games[i].bet, games[i].seed, games[i].amount, games[i].player, winAmount, random, block.timestamp);
+    }
+  ```
+  
   
 # How to use chainlink 
 
