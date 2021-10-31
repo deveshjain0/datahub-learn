@@ -257,7 +257,9 @@ Blockexplorer URL: https://explorer.matic.network/
 
 You can see your account that you’re connected with here in the top right hand corner. Betting game application on top left hand corner and here it is our little dice game and we can play the game, well first we have got the max bet that’s the exact amount of ethereum cryptocurrency that we send to the smart contract. And the balance is your current wallet balance of your account which is connected to the metamask 
 
-Lets bet the 0.5 Matic and start playing.
+Lets bet the 1 Matic and start playing.
+
+![](/.gitbook/assets/chainlink-betting-game.gif)
 
 # About the author
 - [Devendra Yadav](https://community.figment.io/u/dev.koold)
