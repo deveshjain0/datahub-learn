@@ -19,7 +19,7 @@ Metamask Wallet
 
 # Let's start to build our DAO
 
-tep 1: Creating a new .sol file on REMIX
+Step 1: Creating a new .sol file on REMIX
 
 
 
@@ -38,8 +38,7 @@ Deposit governance tokens.
 Withdraw the tokens.
 Create a proposal.
 Vote.
-We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import IERC20 template from openzeppelin.
-https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol
+We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import IERC20 template from [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol)
 
 
 Step 3: Defining the proposal variables
@@ -57,7 +56,7 @@ For the voting options and the proposal status we will use an enums types.
 
 Enums can be used to create custom types with a finite set of 'constant values'.[see more about enums](https://docs.soliditylang.org/en/v0.8.7/types.html#enums)
 
-```
+```CPP
 enum VotingOptions { Yes, No }
 enum Status { Accepted, Rejected, Pending }
 ```
@@ -66,7 +65,7 @@ for the other proposal properties we can use an struct type.
 Structs alow us to define a custom group of properties. [see more about structs](https://docs.soliditylang.org/en/v0.8.7/types.html#structs)
 
 
-```
+```CPP
     struct Proposal {
         uint256 id;
         address author;
@@ -83,7 +82,7 @@ Structs alow us to define a custom group of properties. [see more about structs]
 Until this step our Dao contract looks like this:
 
 
-```
+```CPP
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >=0.7.0 <0.9.0;
@@ -110,8 +109,7 @@ contract MyDAO {
 Now we need to store all the proposals created for our DAO, we need to be sure that someone does not vote more than once, also set a period of vote for the proposals and set a minimum number of governance tokens to create a new proposal, we can take the number of governance tokens are deposited like a shares for an shareholder and give a proportional weight to their vote.
 
 
-```
-
+```CPP
 // store all proposals
 mapping(uint => Proposal) public proposals;
 // who already votes for who and to avoid vote twice
@@ -134,7 +132,7 @@ Step 4: Deposit and Withdraw function for the DAO
 We already have our necessary variables to create, save and vote a proposal in our DAO, now we need our user deposit his AVAX tokens to avoid that the same user can use the same amount of tokens for vote other option in the same proposal. To interact with AVAX as our token the governance we need to initialize the token address in the constructor.
 
 
-```
+```CPP
 constructor() {
     token = IERC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
 }```
@@ -144,7 +142,7 @@ For the deposit function.
 
 
 
-```
+```CPP
 function deposit(uint _amount) external {
     shares[msg.sender] += _amount;
     totalShares += _amount;
@@ -154,7 +152,7 @@ function deposit(uint _amount) external {
 
 And we need to allow our users to withdraw their tokens when the voting period is over.
 
-```
+```CPP
 
 function withdraw(uint _amount) external {
     require(shares[msg.sender] >= _amount, 'Not enough shares');
@@ -165,7 +163,7 @@ function withdraw(uint _amount) external {
 
 until this point our smart contract look like this:
 
-```
+```CPP
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >=0.7.0 <0.9.0;
@@ -224,7 +222,7 @@ Step 5: Create a Proposal and Vote functions
 
 For our createProposal function we will add the condition that if the user does not have minimum 25 AVAX tokens He cannot create a new proposal.
 
-```
+```CPP
 
 function createProposal(string memory name) external {
     // validate the user has enough shares to create a proposal
@@ -246,7 +244,7 @@ function createProposal(string memory name) external {
 For the Vote function we need to receive the id for the proposal and the vote choice, we will validate that the user has not voted already and the vote period is currently open.
 Also we validate if the proposal has more than fifty percent of votes in one option we need to change the proposal status to Accepted or Rejected.
 
-```
+```CPP
 function vote(uint _proposalId, VotingOptions _vote) external {
     Proposal storage proposal = proposals[_proposalId];
     require(votes[msg.sender][_proposalId] == false, 'already voted');
