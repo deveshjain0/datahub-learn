@@ -1,4 +1,4 @@
-# How to Create Your Own DAO with Avalanche
+# How to Create a DAO with Avalanche
 
 
 ## What is a Decentralized Autonomous Organization (DAO)?
@@ -28,32 +28,31 @@ Metamask Wallet
 On REMIX we click the new file icon and put some name, in my case my file name is MyDAO.sol
 
 
-and we add the basic lines of code:
+and we will add the basic lines of code:
 
 The first line tells you that the source code is licensed under the GPL version 3.0. Machine-readable license specifiers are important in a setting where publishing the source code is the default. `pragma` Specifies that the source code is written for Solidity version 0.7.0 or a newer version of the language up to, but not including version 0.9.0. `contract MyDAO {...}` specifies the name and a new block of code for our contract.
 
 ### Step 2: Defining our DAO functions
 
 Commonly the DAO's contract has four main functions:
-
-Deposit governance tokens.
-Withdraw the tokens.
-Create a proposal.
-Vote.
+- Deposit governance tokens.
+- Withdraw the tokens.
+- Create a proposal.
+- Vote.
 We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import IERC20 template from [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol)
 
 
 ### Step 3: Defining the proposal variables
 
 For the proposal format we defined a group with custom properties, the properties for our proposal are:
+- Author which is an address from the account that create a proposal.
+- Id that will help us to identify a proposal.
+- Name of the proposal.
+- Creation date, that allow us to set a period of time for allow the voting.
+- Voting options, in this case we will keep it simple(Yes / NO).
+- Number of Votes for Yes and Votes for No this will allow us set an status for the proposal when number of votes for any option be greater than fifty percent.
+- Status for the Proposal this options will be Accepted, Rejected, Pending.
 
-Author which is an address from the account that create a proposal.
-Id that will help us to identify a proposal.
-Name of the proposal.
-Creation date, that allow us to set a period of time for allow the voting.
-Voting options, in this case we will keep it simple(Yes / NO).
-Number of Votes for Yes and Votes for No this will allow us set an status for the proposal when number of votes for any option be greater than fifty percent.
-Status for the Proposal this options will be Accepted, Rejected, Pending.
 For the voting options and the proposal status we will use an enums types.
 
 Enums can be used to create custom types with a finite set of 'constant values'.[see more about enums](https://docs.soliditylang.org/en/v0.8.7/types.html#enums)
@@ -108,7 +107,7 @@ contract MyDAO {
 ```
 
 
-Now we need to store all the proposals created for our DAO, we need to be sure that someone does not vote more than once, also set a period of vote for the proposals and set a minimum number of governance tokens to create a new proposal, we can take the number of governance tokens are deposited like a shares for an shareholder and give a proportional weight to their vote.
+Now, we need to store all the proposals created for our DAO, we need to be sure that someone does not vote more than once, also set a period of vote for the proposals and set a minimum number of governance tokens to create a new proposal, we can take the number of governance tokens are deposited like a shares for an shareholder and give a proportional weight to their vote.
 
 
 ```CPP
