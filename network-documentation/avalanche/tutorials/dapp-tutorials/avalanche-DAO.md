@@ -28,7 +28,7 @@ This is possible because smart contracts are tamper-proof once they go live on E
 
 On REMIX we click the new file icon and put some name, in my case my file name is `MyDAO.sol`.
 
-[](/.gitbook/assets/AVAX-MYDAO-SOL.png)
+![](/.gitbook/assets/AVAX-MYDAO-SOL.png)
 
 and we will add the basic lines of code:
 
