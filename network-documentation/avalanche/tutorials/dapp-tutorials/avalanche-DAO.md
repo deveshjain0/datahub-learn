@@ -1,9 +1,12 @@
 # How to Create a DAO with Avalanche
 
+# Introduction
+
+In this tutorial, we will build a functioning Distributed Autonomous Organization (DAO) by first writing the Solidity smart contract code which will be deployed on the Avalanche network and then building a React Native App to interact with the smart contract.
 
 ## What is a Decentralized Autonomous Organization (DAO)?
 
-A Decentralized Autonomous Organization (DAO) cooperates according to a transparent set of rules encoded on a blockchain, eliminating the need for a centralized, administrative, and potentially malicious entity. The reason some entity would want to create a DAO is to fundraise, manage financial operations, and/or decentralize governance to the community.
+[Avalanche](https://support.avax.network/en/articles/4587123-what-is-a-decentralized-autonomous-organization-dao) Defines A Decentralized Autonomous Organization (DAO) cooperates according to a transparent set of rules encoded on a blockchain, eliminating the need for a centralized, administrative, and potentially malicious entity. The reason some entity would want to create a DAO is to fundraise, manage financial operations, and/or decentralize governance to the community.
 
 [](https://support.avax.network/en/articles/4587123-what-is-a-decentralized-autonomous-organization-dao)
 
@@ -14,18 +17,16 @@ The backbone of a DAO is its smart contract. The contract defines the rules of t
 
 This is possible because smart contracts are tamper-proof once they go live on Ethereum. You can't just edit the code (the DAOs rules) without people noticing because everything is public.
 
-## Requirements
+# Requirements
 
-REMIX IDE
-Metamask Wallet
+[REMIX IDE](https://remix.ethereum.org/)
+[Metamask Wallet](https://metamask.io/)
 
-## Let's start to build our DAO
+# Let's start to build our DAO
 
 ### Step 1: Creating a new .sol file on REMIX
 
-
-
-On REMIX we click the new file icon and put some name, in my case my file name is MyDAO.sol
+On REMIX we click the new file icon and put some name, in my case my file name is `MyDAO.sol`.
 
 
 and we will add the basic lines of code:
@@ -35,23 +36,24 @@ The first line tells you that the source code is licensed under the GPL version 
 ### Step 2: Defining our DAO functions
 
 Commonly the DAO's contract has four main functions:
-- Deposit governance tokens.
-- Withdraw the tokens.
-- Create a proposal.
-- Vote.
+- `Deposit governance tokens`.
+- `Withdraw the tokens`.
+- `Create a proposal`.
+- `Vote`.
+- 
 We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import IERC20 template from [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol)
 
 
 ### Step 3: Defining the proposal variables
 
 For the proposal format we defined a group with custom properties, the properties for our proposal are:
-- Author which is an address from the account that create a proposal.
-- Id that will help us to identify a proposal.
-- Name of the proposal.
-- Creation date, that allow us to set a period of time for allow the voting.
-- Voting options, in this case we will keep it simple(Yes / NO).
-- Number of Votes for Yes and Votes for No this will allow us set an status for the proposal when number of votes for any option be greater than fifty percent.
-- Status for the Proposal this options will be Accepted, Rejected, Pending.
+- `Author` which is an address from the account that create a proposal.
+- `Id` that will help us to identify a proposal.
+- `Name` of the proposal.
+- `Creation date` that allow us to set a period of time for allow the voting.
+- `Voting options` in this case we will keep it simple(Yes / NO).
+- `Number of Votes` for Yes and Votes for No this will allow us set an status for the proposal when number of votes for any option be greater than fifty percent.
+- `Status for the Proposal` this options will be Accepted, Rejected, Pending.
 
 For the voting options and the proposal status we will use an enums types.
 
@@ -129,6 +131,7 @@ uint public nextProposalId;
 
 
 ### Step 4: Deposit and Withdraw function for the DAO
+
 We already have our necessary variables to create, save and vote a proposal in our DAO, now we need our user deposit his AVAX tokens to avoid that the same user can use the same amount of tokens for vote other option in the same proposal. To interact with AVAX as our token the governance we need to initialize the token address in the constructor.
 
 
@@ -280,11 +283,12 @@ Finally our DAO contract looks like this.
 
 
 ### Step 6: Deploy our DAO contract on FUJI
-Now we need compile our contract, I'm using the 0.8.0 version compiler, and click on the Compile button.
 
-In the environment section we choose the Injected Web3 option, in account we chose an account from our metamask plugin in the FUJI network, make sure that your account have the necessary avax for the deploy and the minimum for create a proposal.
+Now we need compile our contract, I'm using the 0.8.0 version compiler, and click on the `Compile` button.
+
+In the environment section we choose the `Injected Web3` option, in account we chose an account from our metamask plugin in the FUJI network, make sure that your account have the necessary avax for the deploy and the minimum for create a proposal.
 [Here you can find the Faucet](https://faucet.avax-test.network/).
-Click on the Deploy button and confirm the transaction in REMIX and Metamask and await for a few seconds.
+Click on the `Deploy` button and `confirm` the transaction in REMIX and Metamask and await for a few seconds.
 
 
 
