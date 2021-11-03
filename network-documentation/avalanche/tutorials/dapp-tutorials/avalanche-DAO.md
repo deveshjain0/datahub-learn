@@ -2,7 +2,7 @@
 
 # Introduction
 
-In this tutorial, we will build a functioning Distributed Autonomous Organization (DAO) by first writing the Solidity smart contract code which will be deployed on the Avalanche network and then building a React Native App to interact with the smart contract.
+In this tutorial, we will explain how build DAO works and build the Solidity smart contract code which will be deployed on the Avalanche blockchain. Also, we will build the User Interface to interect with the smart contacts.
 
 ## What is a Decentralized Autonomous Organization (DAO)?
 
