@@ -291,7 +291,7 @@ In the environment section we choose the `Injected Web3` option, in account we c
 [Here you can find the Faucet](https://faucet.avax-test.network/).
 Click on the `Deploy` button and `confirm` the transaction in REMIX and Metamask and await for a few seconds.
 
-[](/.gitbook/assets/avalanche-my-DAO.gif)
+![](/.gitbook/assets/avalanche-my-DAO.gif)
 
 
 
