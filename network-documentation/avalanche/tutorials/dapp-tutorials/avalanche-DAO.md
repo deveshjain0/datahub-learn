@@ -19,8 +19,8 @@ This is possible because smart contracts are tamper-proof once they go live on E
 
 # Requirements
 
-[REMIX IDE](https://remix.ethereum.org/)
-[Metamask Wallet](https://metamask.io/)
+- [REMIX IDE](https://remix.ethereum.org/)
+- [Metamask Wallet](https://metamask.io/)
 
 # Let's start to build our DAO
 
@@ -41,7 +41,7 @@ Commonly the DAO's contract has four main functions:
 - `Create a proposal`.
 - `Vote`.
 - 
-We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import IERC20 template from [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol)
+We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import ARC-20 template from [Avalanche](https://docs.avax.network/build/references/coreth-arc20s)
 
 
 ### Step 3: Defining the proposal variables
