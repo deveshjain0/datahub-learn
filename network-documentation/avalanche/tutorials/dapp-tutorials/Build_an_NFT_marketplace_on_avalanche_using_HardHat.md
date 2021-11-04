@@ -8,27 +8,28 @@ In this guide you'll learn how to build, deploy, and test out a full stack NFT m
 
 To be successful in this guide, you must have the following:
 
-- Node.js installed on your machine
-- Metamask wallet extension installed as a browser extension
+- `Node.js` installed on your machine
+- `Metamask` wallet extension installed as a browser extension
 
 # Requirements
 
-- Node.js 
-- HardHat is the framework we will be using for developing our smart contracts.
-- MetaMask for interacting with the blockchain.
+- `Node.js` 
+- `HardHa`t is the framework we will be using for developing our smart contracts.
+- `MetaMask` for interacting with the blockchain.
 
 # About the project
+
 The project that we will be building will be Metaverse Marketplace - a digital marketplace.
 
 When a user puts an item for sale, the ownership of the item will be transferred from the creator to the marketplace. When a user purchases an item, the purchase price will be transferred from the buyer to the seller and the item will be transferred from the marketplace to the buyer. The marketplace owner will be able to set a listing fee. This fee will be taken from the seller and transferred to the contract owner upon completion of any sale, enabling the owner of the marketplace to earn recurring revenue from any sale transacted in the marketplace.
 
 The marketplace logic will consist of two smart contracts:
-- NFT Contract - This contract allows users to mint unique digital assets.
-- Marketplace Contract - This contract allows users to put their digital assets for sale on an open market.
+- `NFT Contract` - This contract allows users to mint unique digital assets.
+- `Marketplace Contract` - This contract allows users to put their digital assets for sale on an open market.
 
 # Project setup
 
-To get started, we'll create a new Next.js app. To do so, open your terminal. Create or change into a new empty directory and run the following command:
+To get started, we'll create a new `Next.js` app. To do so, open your terminal. Create or change into a new empty directory and run the following command:
 
 ```CPP
 npx create-next-app digital-marketplace
@@ -64,11 +65,13 @@ npx tailwindcss init -p
 ````
 
 Finally, delete the code in styles/globals.css and update it with the following:
+
 ```CPP
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 ```
+
 ### Configuring Hardhat
 
 Next, initialize a new Hardhat development environment from the root of your project:
@@ -82,12 +85,13 @@ npx hardhat
 
 Now you should see the following files and folders created for you in your root directory:
 
-- hardhat.config.js - The entirety of your Hardhat setup (i.e. your config, plugins, and custom tasks) is contained in this file.
-- scripts - A folder containing a script named sample-script.js that will deploy your smart contract when executed
-- test - A folder containing an example testing script
-- contracts - A folder holding an example Solidity smart contract
+- `hardhat.config.js` - The entirety of your Hardhat setup (i.e. your config, plugins, and custom tasks) is contained in this file.
+- `scripts` - A folder containing a script named sample-script.js that will deploy your smart contract when executed
+- `test` - A folder containing an example testing script
+- `contracts` - A folder holding an example Solidity smart contract
 
 Next, update the configuration at hardhat.config.js with the following:
+
 ```CPP
 /* hardhat.config.js */
 require("@nomiclabs/hardhat-waffle")
@@ -114,14 +118,16 @@ module.exports = {
       }
     }
   }
-}```
+}
+```
 
 In this configuration, we've configured the local Hardhat development environment as well as the.............
 
 # Smart Contracts
+
 Next, we'll create our smart contracts! We'll start with the NFT contract for the unique digital assets.
 
-Create a new file in the contracts directory named NFT.sol. Here, add the following code:
+Create a new file in the contracts directory named `NFT.sol`. Here, add the following code:
 
 ```CPP
 // contracts/NFT.sol
@@ -152,7 +158,8 @@ contract NFT is ERC721URIStorage {
         setApprovalForAll(contractAddress, true);
         return newItemId;
     }
-}```
+}
+```
 
 This is a pretty straightforward NFT smart contract that allows users to mint unique digital assets and have ownership of them.
 
@@ -160,7 +167,7 @@ In this contract we are inheriting from the [ERC721 standard](https://eips.ether
 
 Next, we'll create the contract for the Marketplace. This is a much larger smart contract. I've done my best to document what each function is doing.
 
-Create a new file in the contracts directory named Market.sol:
+Create a new file in the contracts directory named `Market.sol`:
 
 ```CPP
 // contracts/Market.sol
@@ -497,7 +504,8 @@ contract NFTMarket is ReentrancyGuard {
     }
     return items;
   }
-}```
+}
+```
 
 Now the smart contract code and environment is complete and we can try testing it out.
 
@@ -555,7 +563,8 @@ describe("NFTMarket", function() {
     }))
     console.log('items: ', items)
   })
-})```
+})
+```
 
 To run the test, `run npx hardhat` test from your command line:
 
@@ -615,6 +624,7 @@ The navigation has links for the home route as well as a page to sell a digital 
 ## Querying the contract for marketplace items
 
 The next page we'll update is pages/index.js. This is the main entry-point of the app, and will be the view where we query for the digital assets for sale and render them to the screen.
+
 ```CPP
 /* pages/index.js */
 import { ethers } from 'ethers'
@@ -705,7 +715,8 @@ export default function Home() {
         </div>
       </div>
     </div>
-  )```
+  )
+  ```
 
 When the page loads, we query the smart contract for any items that are still for sale and render them to the screen along with metadata about the items and a button for purchasing them.
 
@@ -714,11 +725,12 @@ Next, let's create the page that allows users to create and list digital assets.
 
 There are a few things happening in this page:
 
- 1. The user is able to upload and save files to IPFS
- 2. The user is able to create a new unique digital item (NFT)
- 3. The user is able to set metadata and price of item and list it for sale on the marketplace
+1. The user is able to upload and save files to IPFS
+2. The user is able to create a new unique digital item (NFT)
+3. The user is able to set metadata and price of item and list it for sale on the marketplace
  
 After the user creates and lists an item, they are re-routed to the main page to view all of the items for sale.
+
 ```CPP
 /* pages/create-item.js */
 import { useState } from 'react'
@@ -833,14 +845,16 @@ export default function CreateItem() {
       </div>
     </div>
   )
-}```
+}
+```
 
 ### Viewing only the items purchased by the user
-In the Market.sol smart contract, we created a function named fetchMyNFTs that only returns the items owned by the user.
 
-In pages/my-assets.js, we will use that function to fetch and render them.
+In the `Market.sol` smart contract, we created a function named `fetchMyNFTs` that only returns the items owned by the user.
 
-This functionality is different than the query main pages/index.js page because we need to ask the user for their address and use it in the contract, so the user will have to sign the transaction for it to be able to fetch them properly.
+In **pages/my-assets.js**, we will use that function to fetch and render them.
+
+This functionality is different than the query main **pages/index.js** page because we need to ask the user for their address and use it in the contract, so the user will have to sign the transaction for it to be able to fetch them properly.
 
 ```CPP
 /* pages/my-assets.js */
@@ -910,16 +924,19 @@ export default function MyAssets() {
       </div>
     </div>
   )
-}```
+}
+```
 
 ### Creator dashboard
+
 The final page we will be creating is the creator dashboard that will allow them to view both all of the items they have created as well as the items they have sold.
 
-This page will be using the fetchItemsCreated function from the Market.sol smart contract which returns only the items that match the address of the user making the function call.
+This page will be using the `fetchItemsCreated` function from the **Market.sol** smart contract which returns only the items that match the address of the user making the function call.
 
 On the client, we use the sold boolean to filter the items into another separate array to show the user only the items that have been sold.
 
-Create a new file called creator-dashboard.js in the pages directory with the following code:
+Create a new file called **creator-dashboard.js** in the **pages** directory with the following code:
+
 ```CPP
 /* pages/creator-dashboard.js */
 import { ethers } from 'ethers'
@@ -1015,17 +1032,21 @@ export default function CreatorDashboard() {
         </div>
     </div>
   )
-}```
+}
+```
 
 ### Running the project
+
 To run the project, we will need to have a deploy script to deploy the smart contracts to the blockchain network.
 
-Deploying the contracts to a local network
-When we created the project, Hardhat created an example deployment script at scripts/sample-script.js.
+#### Deploying the contracts to a local network
 
-To make the purpose of this script more clear, update the name of scripts/sample-script.js to scripts/deploy.js.
+When we created the project, Hardhat created an example deployment script at **scripts/sample-script.js**.
 
-Next, update the main function in scripts/deploy.js with the following code:
+To make the purpose of this script more clear, update the name of **scripts/sample-script.js** to **scripts/deploy.js**.
+
+Next, update the main function in **scripts/deploy.js** with the following code:
+
 ```CPP
 async function main() {
   const NFTMarket = await hre.ethers.getContractFactory("NFTMarket");
@@ -1037,16 +1058,19 @@ async function main() {
   const nft = await NFT.deploy(nftMarket.address);
   await nft.deployed();
   console.log("nft deployed to:", nft.address);
-}```
+}
+```
 
 his script will deploy both contracts to the blockchain network.
 
 We will first test this on a local network, then deploy it to the Mumbai testnet.
 
 To spin up a local network, open your terminal and run the following command:
+
 ```CPP
 npx hardhat node
 ```
+
 This should create a local network with 19 accounts.
 
 (PHOTO).....
@@ -1071,6 +1095,7 @@ export const nftaddress = "market-contract-address"
 ```
 
 ### Importing accounts into MetaMask
+
 You can import the accounts created by the node into your Metamask wallet to try out in the app.
 
 Each of these accounts is seeded with 10000 ETH.
@@ -1083,12 +1108,15 @@ Running the app
 Now we can test out the app!
 
 To start the app, run the following command in your CLI:
+
 ```CPP
 npm run dev
 ```
+
 To test everything out, try listing an item for sale, then switching to another account and purchasing it.
 
-# Deploying to Polygon
+# Deploying to Avalanche
+
 Now that we have the project up and running and tested locally, let's deploy to Polygon. We'll start by deploying to Mumbai, the Matic test network.
 
 The first thing we will need to do is save one of our private keys from our wallet to the .secrets file.
