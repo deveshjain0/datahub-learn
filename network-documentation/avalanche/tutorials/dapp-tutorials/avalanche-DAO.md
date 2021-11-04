@@ -2,7 +2,7 @@
 
 # Introduction
 
-In this tutorial, we will explain how build DAO works and build the Solidity smart contract code which will be deployed on the Avalanche blockchain. Also, we will build the User Interface to interect with the smart contacts.
+In this tutorial, We'll go over how to create a DAO and how to build the Solidity smart contract code that will be deployed on the Avalanche blockchain. We'll also create a user interface that works with smart contacts.
 
 ## What is a Decentralized Autonomous Organization (DAO)?
 
