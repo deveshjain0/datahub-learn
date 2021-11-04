@@ -6,14 +6,14 @@ In this tutorial, we'll go over how to create a DAO and how to build the Solidit
 
 ## What is a Decentralized Autonomous Organization (DAO)?
 
-[Avalanche](https://support.avax.network/en/articles/4587123-what-is-a-decentralized-autonomous-organization-dao) Defines that, A Decentralized Autonomous Organization (DAO) cooperates according to a transparent set of rules encoded on a blockchain, eliminating the need for a centralized, administrative, and potentially malicious entity. The reason some entity would want to create a DAO is to fundraise, manage financial operations, and/or decentralize governance to the community.
+[Avalanche](https://support.avax.network/en/articles/4587123-what-is-a-decentralized-autonomous-organization-dao) defines that, a Decentralized Autonomous Organization (DAO) cooperates according to a transparent set of rules encoded on a blockchain, eliminating the need for a centralized, administrative, and potentially malicious entity. The reason some entity would want to create a DAO is to fundraise, manage financial operations, and/or decentralize governance to the community.
 
 [](https://support.avax.network/en/articles/4587123-what-is-a-decentralized-autonomous-organization-dao)
 
 
 ## How do DAOs work?
 
-[Ethereum](https://ethereum.org/en/dao/) Defines that, The backbone of a DAO is its smart contract. The contract defines the rules of the organisation and holds the group's treasury. Once the contract is live on Ethereum, no one can change the rules except by a vote. If anyone tries to do something that's not covered by the rules and logic in the code, it will fail. And because the treasury is defined by the smart contract too, that means no one can spend the money without the group's approval either. This means that DAOs don't need a central authority. Instead, the group makes decisions collectively and payments are authorised automatically when votes pass.
+[Ethereum](https://ethereum.org/en/dao/) defines that, The backbone of a DAO is its smart contract. The contract defines the rules of the organisation and holds the group's treasury. Once the contract is live on Ethereum, no one can change the rules except by a vote. If anyone tries to do something that's not covered by the rules and logic in the code, it will fail. And because the treasury is defined by the smart contract too, that means no one can spend the money without the group's approval either. This means that DAOs don't need a central authority. Instead, the group makes decisions collectively and payments are authorised automatically when votes pass.
 
 This is possible because smart contracts are tamper-proof once they go live on Ethereum. You can't just edit the code (the DAO rules) without people noticing, because everything is public.
 
@@ -26,10 +26,9 @@ This is possible because smart contracts are tamper-proof once they go live on E
 # Requirements
 
 - NodeJS >= 10.16 and npm >= 5.6 installed.
-- Truffle, which can be installed globally with `npm install -g truffle`.
 - Metamask extension added to the browser, which must only be obtained from the official [Metamask website](https://metamask.io). Do not download Metamask from an unofficial source.
 
-# Let's start to build our DAO
+# Let's start building our DAO
 
 ### Step 1: Creating a new .sol file on REMIX
 
@@ -97,8 +96,6 @@ Until this step our DAO contract looks like this:
 
 pragma solidity >=0.7.0 <0.9.0;
 
-import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol';
-
 contract MyDAO {
     
     enum VotingOptions { Yes, No }
@@ -137,13 +134,12 @@ uint public nextProposalId;
 
 
 
-### Step 4: Deposit and Withdraw function for the DAO
-
+### Step 4: The Deposit and Withdraw function for the DAO
 We already have all of the variables we need to create, save, and vote on a proposal in our DAO. Now we just need our user to deposit his AVAX tokens to prevent the same user from voting on the same proposal with the same number of tokens. We need to establish the token address in the function Object() { [native code] } to connect with AVAX as our token for governance.
 
 ```CPP
 constructor() {
-    token = IERC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
+    token = ARC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
 }
 ```
 
@@ -178,8 +174,6 @@ Until now, our smart contract has looked like this:
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >=0.7.0 <0.9.0;
-
-import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol';
 
 contract MyDAO {
     
@@ -229,7 +223,7 @@ contract MyDAO {
 ```
 
 
-### Step 5: Create a Proposal and Vote functions
+### Step 5: Create a Proposal and Voting Features
 
 We'll add a condition to our create Proposal function that states the user can't create a new proposal unless he has at least 25 AVAX tokens.
 
@@ -276,14 +270,91 @@ function vote(uint _proposalId, VotingOptions _vote) external {
 
 Finally our DAO contract looks like this.
 
+```cpp
+// SPDX-License-Identifier: GPL-3.0
 
+pragma solidity >=0.7.0 <0.9.0;
 
+contract MyDAO {
+    
+    enum VotingOptions { Yes, No }
+    enum Status { Accepted, Rejected, Pending }
+    struct Proposal {
+        uint256 id;
+        address author;
+        string name;
+        uint256 createdAt;
+        uint256 votesForYes;
+        uint256 votesForNo;
+        Status status;
+    }
 
-
-
-
-
-
+    // store all proposals
+    mapping(uint => Proposal) public proposals;
+    // who already votes for who and to avoid vote twice
+    mapping(address => mapping(uint => bool)) public votes;
+    // one share for governance tokens
+    mapping(address => uint256) public shares;
+    uint public totalShares;
+    // the IERC20 allow us to use avax like our governance token.
+    IERC20 public token;
+    // the user need minimum 25 AVAX to create a proposal.
+    uint constant CREATE_PROPOSAL_MIN_SHARE = 25 * 10 ** 18;
+    uint constant VOTING_PERIOD = 7 days;
+    uint public nextProposalId;
+    
+    constructor() {
+        token = IERC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); //AVAX address
+    }
+    
+    function deposit(uint _amount) external {
+        shares[msg.sender] += _amount;
+        totalShares += _amount;
+        token.transferFrom(msg.sender, address(this), _amount);
+    }
+    
+    function withdraw(uint _amount) external {
+        require(shares[msg.sender] >= _amount, 'Not enough shares');
+        shares[msg.sender] -= _amount;
+        totalShares -= _amount;
+        token.transfer(msg.sender, _amount);
+    }
+    
+    function createProposal(string memory name) external {
+        // validate the user has enough shares to create a proposal
+        require(shares[msg.sender] >= CREATE_PROPOSAL_MIN_SHARE, 'Not enough shares to create a proposal');
+        
+        proposals[nextProposalId] = Proposal(
+            nextProposalId,
+            msg.sender,
+            name,
+            block.timestamp,
+            0,
+            0,
+            Status.Pending
+        );
+        nextProposalId++;
+    }
+    
+    function vote(uint _proposalId, VotingOptions _vote) external {
+        Proposal storage proposal = proposals[_proposalId];
+        require(votes[msg.sender][_proposalId] == false, 'already voted');
+        require(block.timestamp <= proposal.createdAt + VOTING_PERIOD, 'Voting period is over');
+        votes[msg.sender][_proposalId] = true;
+        if(_vote == VotingOptions.Yes) {
+            proposal.votesForYes += shares[msg.sender];
+            if(proposal.votesForYes * 100 / totalShares > 50) {
+                proposal.status = Status.Accepted;
+            }
+        } else {
+            proposal.votesForNo += shares[msg.sender];
+            if(proposal.votesForNo * 100 / totalShares > 50) {
+                proposal.status = Status.Rejected;
+            }
+        }
+    }
+}
+```
 
 ### Step 6: Deploy our DAO contract on FUJI
 
