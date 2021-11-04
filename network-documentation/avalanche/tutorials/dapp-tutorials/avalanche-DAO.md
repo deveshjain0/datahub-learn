@@ -196,15 +196,15 @@ contract MyDAO {
     // one share for governance tokens
     mapping(address => uint256) public shares;
     uint public totalShares;
-    // the IERC20 allow us to use avax like our governance token.
-    IERC20 public token;
+    // the ARC20 allow us to use avax like our governance token.
+    ARC20 public token;
     // the user need minimum 25 AVAX to create a proposal.
     uint constant CREATE_PROPOSAL_MIN_SHARE = 25 * 10 ** 18;
     uint constant VOTING_PERIOD = 7 days;
     uint public nextProposalId;
     
     constructor() {
-        token = IERC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
+        token = ARC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
     }
     
     function deposit(uint _amount) external {
@@ -296,15 +296,15 @@ contract MyDAO {
     // one share for governance tokens
     mapping(address => uint256) public shares;
     uint public totalShares;
-    // the IERC20 allow us to use avax like our governance token.
-    IERC20 public token;
+    // the ARC20 allow us to use avax like our governance token.
+    ARC20 public token;
     // the user need minimum 25 AVAX to create a proposal.
     uint constant CREATE_PROPOSAL_MIN_SHARE = 25 * 10 ** 18;
     uint constant VOTING_PERIOD = 7 days;
     uint public nextProposalId;
     
     constructor() {
-        token = IERC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); //AVAX address
+        token = ARC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); //AVAX address
     }
     
     function deposit(uint _amount) external {
