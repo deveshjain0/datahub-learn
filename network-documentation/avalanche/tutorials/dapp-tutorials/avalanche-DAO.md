@@ -16,8 +16,18 @@ In this tutorial, we will explain how build DAO works and build the Solidity sma
 [ETHEREUM](https://ethereum.org/en/dao/) Defines that, The backbone of a DAO is its smart contract. The contract defines the rules of the organisation and holds the group's treasury. Once the contract is live on Ethereum, no one can change the rules except by a vote. If anyone tries to do something that's not covered by the rules and logic in the code, it will fail. And because the treasury is defined by the smart contract too that means no one can spend the money without the group's approval either. This means that DAOs don't need a central authority. Instead the group makes decisions collectively and payments are authorised automatically when votes pass.
 
 This is possible because smart contracts are tamper-proof once they go live on Ethereum. You can't just edit the code (the DAOs rules) without people noticing because everything is public.
+
+# Prerequisites
+
+- Basic familiarity with [How do I set up MetaMask on Avalanche?](https://support.avax.network/en/articles/4626956-how-do-i-set-up-metamask-on-avalanche)
+- Basic familiarity with [Avalanche's architecture](https://docs.avax.network/learn/platform-overview) and smart contracts.
+- Basic familiarity with [ReactJS](https://reactjs.org/).
+ 
 # Requirements
 
+- NodeJS >= 10.16 and npm >= 5.6 installed.
+- Truffle, which can be installed globally with `npm install -g truffle`
+- Metamask extension added to the browser, which must only be obtained from the official [Metamask website](https://metamask.io). Do not download Metamask from an unofficial source.
 - [REMIX IDE](https://remix.ethereum.org/)
 - [Metamask Wallet](https://metamask.io/)
 
