@@ -2,34 +2,32 @@
 
 # Introduction
 
-In this tutorial, We'll go over how to create a DAO and how to build the Solidity smart contract code that will be deployed on the Avalanche blockchain. We'll also create a user interface that works with smart contacts.
+In this tutorial, we'll go over how to create a DAO and how to build the Solidity smart contract code that will be deployed on the Avalanche blockchain. We'll also create a user interface that works with smart contacts.
 
 ## What is a Decentralized Autonomous Organization (DAO)?
 
-[Avalanche](https://support.avax.network/en/articles/4587123-what-is-a-decentralized-autonomous-organization-dao) Defines A Decentralized Autonomous Organization (DAO) cooperates according to a transparent set of rules encoded on a blockchain, eliminating the need for a centralized, administrative, and potentially malicious entity. The reason some entity would want to create a DAO is to fundraise, manage financial operations, and/or decentralize governance to the community.
+[Avalanche](https://support.avax.network/en/articles/4587123-what-is-a-decentralized-autonomous-organization-dao) Defines that, A Decentralized Autonomous Organization (DAO) cooperates according to a transparent set of rules encoded on a blockchain, eliminating the need for a centralized, administrative, and potentially malicious entity. The reason some entity would want to create a DAO is to fundraise, manage financial operations, and/or decentralize governance to the community.
 
 [](https://support.avax.network/en/articles/4587123-what-is-a-decentralized-autonomous-organization-dao)
 
 
 ## How do DAOs work?
 
-[ETHEREUM](https://ethereum.org/en/dao/) Defines that, The backbone of a DAO is its smart contract. The contract defines the rules of the organisation and holds the group's treasury. Once the contract is live on Ethereum, no one can change the rules except by a vote. If anyone tries to do something that's not covered by the rules and logic in the code, it will fail. And because the treasury is defined by the smart contract too that means no one can spend the money without the group's approval either. This means that DAOs don't need a central authority. Instead the group makes decisions collectively and payments are authorised automatically when votes pass.
+[Ethereum](https://ethereum.org/en/dao/) Defines that, The backbone of a DAO is its smart contract. The contract defines the rules of the organisation and holds the group's treasury. Once the contract is live on Ethereum, no one can change the rules except by a vote. If anyone tries to do something that's not covered by the rules and logic in the code, it will fail. And because the treasury is defined by the smart contract too, that means no one can spend the money without the group's approval either. This means that DAOs don't need a central authority. Instead, the group makes decisions collectively and payments are authorised automatically when votes pass.
 
-This is possible because smart contracts are tamper-proof once they go live on Ethereum. You can't just edit the code (the DAOs rules) without people noticing because everything is public.
+This is possible because smart contracts are tamper-proof once they go live on Ethereum. You can't just edit the code (the DAO rules) without people noticing, because everything is public.
 
 # Prerequisites
 
-- Basic familiarity with [How do I set up MetaMask on Avalanche?](https://support.avax.network/en/articles/4626956-how-do-i-set-up-metamask-on-avalanche)
+- Basic familiarity with [How do I set up MetaMask on Avalanche?](https://support.avax.network/en/articles/4626956-how-do-i-set-up-metamask-on-avalanche).
 - Basic familiarity with [Avalanche's architecture](https://docs.avax.network/learn/platform-overview) and smart contracts.
 - Basic familiarity with [ReactJS](https://reactjs.org/).
  
 # Requirements
 
 - NodeJS >= 10.16 and npm >= 5.6 installed.
-- Truffle, which can be installed globally with `npm install -g truffle`
+- Truffle, which can be installed globally with `npm install -g truffle`.
 - Metamask extension added to the browser, which must only be obtained from the official [Metamask website](https://metamask.io). Do not download Metamask from an unofficial source.
-- [REMIX IDE](https://remix.ethereum.org/)
-- [Metamask Wallet](https://metamask.io/)
 
 # Let's start to build our DAO
 
@@ -41,17 +39,17 @@ On REMIX we click on the new file icon and put some name, in my case my file nam
 
 and we will add the basic lines of code:
 
-The first line declares that the source code is GPL version 3.0 licenced. In a situation where publishing the source code is the default, machine-readable licencing specifiers are critical. `pragma` The source code is written for Solidity 0.7.0 or a newer version of the language up to but not including version 0.9.0. `contract MyDAO...` gives the name of our contract as well as a new block of code.
+The first line declares that the source code is GPL version 3.0 licenced. In a situation where publishing the source code is the default, machine-readable licencing specifiers are critical. 'pragma' The source code is written for Solidity 0.7.0 or a newer version of the language up to but not including version 0.9.0. contract MyDAO... gives the name of our contract as well as a new block of code.
 
 ### Step 2: Defining our DAO functions
 
 Commonly the DAO's contract has four main functions:
-- `Deposit governance tokens`.
-- `Withdraw the tokens`.
-- `Create a proposal`.
-- `Vote`.
+- `Deposit governance tokens`
+- `Withdraw the tokens`
+- `Create a proposal`
+- `Vote`
 
-We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import ARC-20 template from [Avalanche](https://docs.avax.network/build/references/coreth-arc20s)
+We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import ARC-20 template from [Avalanche](https://docs.avax.network/build/references/coreth-arc20s).
 
 
 ### Step 3: Defining the proposal variables
@@ -67,7 +65,7 @@ For the proposal format we defined a group with custom properties, the propertie
 
 For the voting options and the proposal status we will use an enums types.
 
-Enums are useful for creating custom types with a finite number of `constant values`.[see more about enums](https://docs.soliditylang.org/en/v0.8.7/types.html#enums)
+Enums are useful for creating custom types with a finite number of `constant values`. [see more about enums](https://docs.soliditylang.org/en/v0.8.7/types.html#enums)
 
 ```CPP
 enum VotingOptions { Yes, No }
@@ -289,8 +287,8 @@ Finally our DAO contract looks like this.
 
 ### Step 6: Deploy our DAO contract on FUJI
 
-Now we need compile our contract, I'm using the 0.8.0 version compiler, and click on the `Compile` button.
-In the environment section, we select Injected Web3, and in the account , we select our FUJI network in metamask plugin. Make sure your account has the required avax for the deploy and the minimum for creating a proposal.
+Now we need to compile our contract. I'm using the 0.8.0 version of the compiler, and clicking on the `Compile` button.
+In the environment section, we select `Injected Web3`, and in the account, we select our FUJI network in the metamask plugin. Make sure your account has the required avax for the deployment and the minimum for creating a proposal.
 [Here you can find the Faucet](https://faucet.avax-test.network/).
 Click on the `Deploy` button and `confirm` the transaction in REMIX and when the Metamask window appers, click on the `Estimated Gas fee` and change the `Gas price` from 25 to 225 (GWEI) and then click `confirm`.
 
@@ -299,8 +297,15 @@ If the contract is deployed successfully on FUJI we can see the succes transacti
 ![](/.gitbook/assets/create-avax-DAO.gif)
 
 
+# About the author
+- [Devendra Yadav](https://community.figment.io/u/dev.koold)
+- [Devesh Jain](https://community.figment.io/u/deveshjain08)
 
-
+# References
+- https://support.avax.network/en/articles/4587123-what-is-a-decentralized-autonomous-organization-dao
+- https://ethereum.org/en/dao/
+- https://support.avax.network/en/articles/4626956-how-do-i-set-up-metamask-on-avalanche
+- https://docs.avax.network/learn/platform-overview
 
 
 
