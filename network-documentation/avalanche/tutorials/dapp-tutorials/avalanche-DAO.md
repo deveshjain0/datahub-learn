@@ -50,7 +50,7 @@ Commonly the DAO's contract has four main functions:
 - `Withdraw the tokens`.
 - `Create a proposal`.
 - `Vote`.
-- 
+
 We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import ARC-20 template from [Avalanche](https://docs.avax.network/build/references/coreth-arc20s)
 
 
@@ -294,9 +294,11 @@ In the environment section, we select Injected Web3, and in the account , we sel
 [Here you can find the Faucet](https://faucet.avax-test.network/).
 Click on the `Deploy` button and `confirm` the transaction in REMIX and when the Metamask window appers, click on the `Estimated Gas fee` and change the `Gas price` from 25 to 225 (GWEI) and then click `confirm`.
 
+If the contract is deployed successfully on FUJI we can see the succes transaction on the REMIX inspector.
+
 ![](/.gitbook/assets/create-avax-DAO.gif)
 
-If the contract is deployed successfully on FUJI we can see the succes transaction on the REMIX inspector.
+
 
 
 
