@@ -13,7 +13,7 @@ In this tutorial, we'll go over how to create a DAO and how to build the Solidit
 
 ## How do DAOs work?
 
-[Ethereum](https://ethereum.org/en/dao/) defines that, The backbone of a DAO is its smart contract. The contract defines the rules of the organisation and holds the group's treasury. Once the contract is live on Ethereum, no one can change the rules except by a vote. If anyone tries to do something that's not covered by the rules and logic in the code, it will fail. And because the treasury is defined by the smart contract too, that means no one can spend the money without the group's approval either. This means that DAOs don't need a central authority. Instead, the group makes decisions collectively and payments are authorised automatically when votes pass.
+[Ethereum](https://ethereum.org/en/dao/) defines that, the backbone of a DAO is its smart contract. The contract defines the rules of the organisation and holds the group's treasury. Once the contract is live on Ethereum, no one can change the rules except by a vote. If anyone tries to do something that's not covered by the rules and logic in the code, it will fail. And because the treasury is defined by the smart contract too, that means no one can spend the money without the group's approval either. This means that DAOs don't need a central authority. Instead, the group makes decisions collectively and payments are authorised automatically when votes pass.
 
 This is possible because smart contracts are tamper-proof once they go live on Ethereum. You can't just edit the code (the DAO rules) without people noticing, because everything is public.
 
@@ -59,7 +59,7 @@ For the proposal format we defined a group with custom properties, the propertie
 - `Name` of the proposal.
 - `Creation date` is a feature that allows us to specify a time limit for voting.
 - `Voting options` in this case we will keep it simple(Yes / NO).
-- `Number of Votes` for Yes and Votes for No this will allow us set a status for the proposal when number of votes for any option be greater than fifty percent.
+- `Number of Votes for Yes and Votes for No` this will allow us set a status for the proposal when number of votes for any option be greater than fifty percent.
 - `Status for the Proposal` this options will be Accepted, Rejected and Pending.
 
 For the voting options and the proposal status we will use an enums types.
