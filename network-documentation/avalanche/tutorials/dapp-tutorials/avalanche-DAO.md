@@ -13,10 +13,9 @@ In this tutorial, we will explain how build DAO works and build the Solidity sma
 
 ## How do DAOs work?
 
-The backbone of a DAO is its smart contract. The contract defines the rules of the organisation and holds the group's treasury. Once the contract is live on Ethereum, no one can change the rules except by a vote. If anyone tries to do something that's not covered by the rules and logic in the code, it will fail. And because the treasury is defined by the smart contract too that means no one can spend the money without the group's approval either. This means that DAOs don't need a central authority. Instead the group makes decisions collectively and payments are authorised automatically when votes pass.
+[ETHEREUM](https://ethereum.org/en/dao/) Defines that, The backbone of a DAO is its smart contract. The contract defines the rules of the organisation and holds the group's treasury. Once the contract is live on Ethereum, no one can change the rules except by a vote. If anyone tries to do something that's not covered by the rules and logic in the code, it will fail. And because the treasury is defined by the smart contract too that means no one can spend the money without the group's approval either. This means that DAOs don't need a central authority. Instead the group makes decisions collectively and payments are authorised automatically when votes pass.
 
 This is possible because smart contracts are tamper-proof once they go live on Ethereum. You can't just edit the code (the DAOs rules) without people noticing because everything is public.
-
 # Requirements
 
 - [REMIX IDE](https://remix.ethereum.org/)
@@ -26,13 +25,13 @@ This is possible because smart contracts are tamper-proof once they go live on E
 
 ### Step 1: Creating a new .sol file on REMIX
 
-On REMIX we click the new file icon and put some name, in my case my file name is `MyDAO.sol`.
+On REMIX we click on the new file icon and put some name, in my case my file name is `MyDAO.sol`.
 
 ![](/.gitbook/assets/AVAX-MYDAO-SOL.png)
 
 and we will add the basic lines of code:
 
-The first line tells you that the source code is licensed under the GPL version 3.0. Machine-readable license specifiers are important in a setting where publishing the source code is the default. `pragma` Specifies that the source code is written for Solidity version 0.7.0 or a newer version of the language up to, but not including version 0.9.0. `contract MyDAO {...}` specifies the name and a new block of code for our contract.
+The first line declares that the source code is GPL version 3.0 licenced. In a situation where publishing the source code is the default, machine-readable licencing specifiers are critical. `pragma` The source code is written for Solidity 0.7.0 or a newer version of the language up to but not including version 0.9.0. `contract MyDAO...` gives the name of our contract as well as a new block of code.
 
 ### Step 2: Defining our DAO functions
 
@@ -51,22 +50,22 @@ For the proposal format we defined a group with custom properties, the propertie
 - `Author` which is an address from the account that create a proposal.
 - `Id` that will help us to identify a proposal.
 - `Name` of the proposal.
-- `Creation date` that allow us to set a period of time for allow the voting.
+- `Creation date` is a feature that allows us to specify a time limit for voting.
 - `Voting options` in this case we will keep it simple(Yes / NO).
-- `Number of Votes` for Yes and Votes for No this will allow us set an status for the proposal when number of votes for any option be greater than fifty percent.
-- `Status for the Proposal` this options will be Accepted, Rejected, Pending.
+- `Number of Votes` for Yes and Votes for No this will allow us set a status for the proposal when number of votes for any option be greater than fifty percent.
+- `Status for the Proposal` this options will be Accepted, Rejected and Pending.
 
 For the voting options and the proposal status we will use an enums types.
 
-Enums can be used to create custom types with a finite set of 'constant values'.[see more about enums](https://docs.soliditylang.org/en/v0.8.7/types.html#enums)
+Enums are useful for creating custom types with a finite number of `constant values`.[see more about enums](https://docs.soliditylang.org/en/v0.8.7/types.html#enums)
 
 ```CPP
 enum VotingOptions { Yes, No }
 enum Status { Accepted, Rejected, Pending }
 ```
 
-for the other proposal properties we can use an struct type.
-Structs alow us to define a custom group of properties. [see more about structs](https://docs.soliditylang.org/en/v0.8.7/types.html#structs)
+We can use a struct type for the remaining proposal properties.
+Structs allow us to define a custom group of properties. [see more about structs](https://docs.soliditylang.org/en/v0.8.7/types.html#structs)
 
 
 ```CPP
@@ -82,7 +81,7 @@ Structs alow us to define a custom group of properties. [see more about structs]
 ```
 
 
-Until this step our Dao contract looks like this:
+Until this step our DAO contract looks like this:
 
 
 ```CPP
@@ -109,8 +108,7 @@ contract MyDAO {
 }
 ```
 
-
-Now, we need to store all the proposals created for our DAO, we need to be sure that someone does not vote more than once, also set a period of vote for the proposals and set a minimum number of governance tokens to create a new proposal, we can take the number of governance tokens are deposited like a shares for an shareholder and give a proportional weight to their vote.
+Now we need to store all of the proposals that have been created for our DAO, make sure that no one votes twice, set a voting period for the proposals, and set a minimum number of governance tokens to create a new proposal. We can take the number of governance tokens that have been deposited like shares for an investor and give their vote a proportional weight.
 
 
 ```CPP
@@ -133,8 +131,7 @@ uint public nextProposalId;
 
 ### Step 4: Deposit and Withdraw function for the DAO
 
-We already have our necessary variables to create, save and vote a proposal in our DAO, now we need our user deposit his AVAX tokens to avoid that the same user can use the same amount of tokens for vote other option in the same proposal. To interact with AVAX as our token the governance we need to initialize the token address in the constructor.
-
+We already have all of the variables we need to create, save, and vote on a proposal in our DAO. Now we just need our user to deposit his AVAX tokens to prevent the same user from voting on the same proposal with the same number of tokens. We need to establish the token address in the function Object() { [native code] } to connect with AVAX as our token for governance.
 
 ```CPP
 constructor() {
@@ -146,7 +143,6 @@ constructor() {
 For the deposit function.
 
 
-
 ```CPP
 function deposit(uint _amount) external {
     shares[msg.sender] += _amount;
@@ -156,7 +152,7 @@ function deposit(uint _amount) external {
 ```
 
 
-And we need to allow our users to withdraw their tokens when the voting period is over.
+When the voting time is over, we must allow our users to withdraw their tokens.
 
 ```CPP
 
@@ -168,7 +164,7 @@ function withdraw(uint _amount) external {
 }
 ```
 
-until this point our smart contract look like this:
+Until now, our smart contract has looked like this:
 
 ```CPP
 // SPDX-License-Identifier: GPL-3.0
@@ -227,8 +223,7 @@ contract MyDAO {
 
 ### Step 5: Create a Proposal and Vote functions
 
-
-For our createProposal function we will add the condition that if the user does not have minimum 25 AVAX tokens He cannot create a new proposal.
+We'll add a condition to our create Proposal function that states the user can't create a new proposal unless he has at least 25 AVAX tokens.
 
 ```CPP
 function createProposal(string memory name) external {
@@ -248,9 +243,8 @@ function createProposal(string memory name) external {
 }
 ```
 
-
-For the Vote function we need to receive the id for the proposal and the vote choice, we will validate that the user has not voted already and the vote period is currently open.
-Also we validate if the proposal has more than fifty percent of votes in one option we need to change the proposal status to Accepted or Rejected.
+We'll need the proposal's id and the vote option for the Voting function, and we'll validate that the user hasn't voted yet and that the vote period is still open.
+Also, if the proposal receives more than half of the votes in one option, the proposal status must be changed to Accepted or Rejected.
 
 ```CPP
 function vote(uint _proposalId, VotingOptions _vote) external {
@@ -286,14 +280,13 @@ Finally our DAO contract looks like this.
 ### Step 6: Deploy our DAO contract on FUJI
 
 Now we need compile our contract, I'm using the 0.8.0 version compiler, and click on the `Compile` button.
-
-In the environment section we choose the `Injected Web3` option, in account we chose an account from our metamask plugin in the FUJI network, make sure that your account have the necessary avax for the deploy and the minimum for create a proposal.
+In the environment section, we select Injected Web3, and in the account , we select our FUJI network in metamask plugin. Make sure your account has the required avax for the deploy and the minimum for creating a proposal.
 [Here you can find the Faucet](https://faucet.avax-test.network/).
-Click on the `Deploy` button and `confirm` the transaction in REMIX and Metamask and await for a few seconds.
+Click on the `Deploy` button and `confirm` the transaction in REMIX and when the Metamask window appers, click on the `Estimated Gas fee` and change the `Gas price` from 25 to 225 (GWEI) and then click `confirm`.
 
 ![](/.gitbook/assets/create-avax-DAO.gif)
 
-
+If the contract is deployed successfully on FUJI we can see the succes transaction on the REMIX inspector.
 
 
 
