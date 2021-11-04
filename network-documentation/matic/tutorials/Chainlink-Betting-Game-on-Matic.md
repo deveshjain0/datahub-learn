@@ -269,4 +269,4 @@ Lets bet the 1 Matic and start playing.
 - https://learn.figment.io/tutorials/deploying-and-debugging-smart-contracts-on-polygon
 - https://data.chain.link/ethereum/mainnet/crypto-usd/matic-usd
 - https://blog.chain.link/random-number-generation-solidity/
-- https://github.com/dappuniversity/chainlink_betting_game
+- https://github.com/deveshjain0/chainlink_betting_game
