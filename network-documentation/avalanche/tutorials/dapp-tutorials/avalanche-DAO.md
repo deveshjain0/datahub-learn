@@ -66,7 +66,7 @@ For the voting options and the proposal status we will use an enums types.
 
 Enums are useful for creating custom types with a finite number of `constant values`. [see more about enums](https://docs.soliditylang.org/en/v0.8.7/types.html#enums)
 
-```CPP
+```text
 enum VotingOptions { Yes, No }
 enum Status { Accepted, Rejected, Pending }
 ```
@@ -75,7 +75,7 @@ We can use a struct type for the remaining proposal properties.
 Structs allow us to define a custom group of properties. [see more about structs](https://docs.soliditylang.org/en/v0.8.7/types.html#structs)
 
 
-```CPP
+```text
     struct Proposal {
         uint256 id;
         address author;
@@ -91,7 +91,7 @@ Structs allow us to define a custom group of properties. [see more about structs
 Until this step our DAO contract looks like this:
 
 
-```CPP
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >=0.7.0 <0.9.0;
@@ -118,7 +118,7 @@ contract MyDAO {
 Now we need to store all of the proposals that have been created for our DAO, make sure that no one votes twice, set a voting period for the proposals, and set a minimum number of governance tokens to create a new proposal. We can take the number of governance tokens that have been deposited like shares for an investor and give their vote a proportional weight.
 
 
-```CPP
+```solidity
 // store all proposals
 mapping(uint => Proposal) public proposals;
 // who already votes for who and to avoid vote twice
@@ -139,7 +139,7 @@ uint public nextProposalId;
 ### Step 4: The Deposit and Withdraw function for the DAO
 We already have all of the variables we need to create, save, and vote on a proposal in our DAO. Now we just need our user to deposit his AVAX tokens to prevent the same user from voting on the same proposal with the same number of tokens. We need to establish the token address in the function Object() { [native code] } to connect with AVAX as our token for governance.
 
-```CPP
+```solidity
 constructor() {
     token = IERC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
 }
@@ -149,7 +149,7 @@ constructor() {
 For the deposit function.
 
 
-```CPP
+```solidity
 function deposit(uint _amount) external {
     shares[msg.sender] += _amount;
     totalShares += _amount;
@@ -160,7 +160,7 @@ function deposit(uint _amount) external {
 
 When the voting time is over, we must allow our users to withdraw their tokens.
 
-```CPP
+```solidity
 
 function withdraw(uint _amount) external {
     require(shares[msg.sender] >= _amount, 'Not enough shares');
@@ -172,7 +172,7 @@ function withdraw(uint _amount) external {
 
 Until now, our smart contract has looked like this:
 
-```CPP
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >=0.7.0 <0.9.0;
@@ -231,7 +231,7 @@ contract MyDAO {
 
 We'll add a condition to our create Proposal function that states the user can't create a new proposal unless he has at least 25 AVAX tokens.
 
-```CPP
+```solidity
 function createProposal(string memory name) external {
     // validate the user has enough shares to create a proposal
     require(shares[msg.sender] >= CREATE_PROPOSAL_MIN_SHARE, 'Not enough shares to create a proposal');
@@ -252,7 +252,7 @@ function createProposal(string memory name) external {
 We'll need the proposal's id and the vote option for the Voting function, and we'll validate that the user hasn't voted yet and that the vote period is still open.
 Also, if the proposal receives more than half of the votes in one option, the proposal status must be changed to Accepted or Rejected.
 
-```CPP
+```solidity
 function vote(uint _proposalId, VotingOptions _vote) external {
     Proposal storage proposal = proposals[_proposalId];
     require(votes[msg.sender][_proposalId] == false, 'already voted');
@@ -274,7 +274,7 @@ function vote(uint _proposalId, VotingOptions _vote) external {
 
 Finally our DAO contract looks like this.
 
-```cpp
+```solidity
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >=0.7.0 <0.9.0;
