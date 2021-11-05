@@ -1,9 +1,9 @@
 # Chainlink Betting Game on Polygon
 
 # Introduction 
-This is a blockchain based betting game where you can bet on the outcome of a dice roll with cryptocurrency and if you guess right, then you double your money. This game is powered by smart contacts that run on the polygon blockchain. And we're going to use the chainlink protocol to implement randomness for our dice roll. 
+This is a blockchain based betting game where you can bet on the outcome of a dice roll with cryptocurrency and if you guess right, then you double your money. This game is powered by smart contacts that run on the Polygon blockchain. We're going to use the Chainlink protocol to implement randomness for our dice roll. 
 
-The application will work when the user connects to their web browser with metamask, they'll talk to a front-end application built in react.js and the application will talk directly to the blockchain. Where we'll create a smart contract `BettingGame.sol` that implements the betting game and that's going to use the chainlink protocol which of course interact with the chainlink smart contacts. So the user flow here, is that they make a bet to directly with our smart contacts with the funded application. If they guess the number right, they will win twice the amount of cryptocurrency that they bet.
+The application will work when the user connects to the website with their crypto wallet (probably Metamask), they'll talk to a front-end application built in React.js and the application will talk directly to the blockchain. We'll create a smart contract, `BettingGame.sol`, that implements the betting game which will use the Chainlink protocol to interact with the Chainlink oracle smart contacts. Users will make a bet directly with our smart contracts with the funded application. If they guess the number right, they will win twice the amount of cryptocurrency that they bet.
 
 # Requirements 
 
@@ -15,14 +15,13 @@ The application will work when the user connects to their web browser with metam
 
 # How to use Chainlink 
 
-Chainlink is an external data provider for the polygon blockchain, so it's an oracle service which means that it provides real-world data to smart contacts. 
-In this, chainlink is used to provide price feeds to smart contracts. We are also focussing on chainlink ability to provide randomness to smart contracts which is an essential feature for the betting game. 
+Chainlink is an external data provider for the Polygon blockchain, so it's an oracle service which means that it provides real-world data to smart contacts. In this tutorial, Chainlink is used to provide price feeds to smart contracts. We are also focusing on Chainlink's ability to provide randomness to smart contracts, which is an essential feature for the betting game.
 
 # Betting game functionality
 
- So basically the user makes a bet directly on our smart contract by calling the game function and what they do is they bet on a dice roll. And so they bet the lowest value or the highest value, which is going to be either `one to three` or `three to six`. They provide a random seed for that number and if they win twice the amount of cryptocurrency that they bet. And if not, then they lose the cryptocurrency. 
+So basically the user makes a bet directly on our smart contract by calling the game function and what they do is they bet on a dice roll. They bet the lowest value or the highest value, which is going to be either **one to three** or **three to six**. They provide a random seed for that number and if they win, twice the amount of cryptocurrency that they bet is sent to them. If their bet is unsuccessful, then they lose the cryptocurrency.
 
-In this tutorial, we go through:
+We will go through:
 - The Chainlink request & receive cycle
 - Using the LINK token
 - How to use request & receive with Chainlink Oracles
@@ -40,7 +39,7 @@ If the result of randomness is stored on-chain, any actor could see the value an
 
 ## 2. Using MATIC
 
-In return for providing this service of generating a random number, Oracles need to be paid in Matic tokens. This is paid by the contract that requests the randomness, and payment occurs during the request.
+In return for providing this service of generating a random number, Oracles need to be paid in MATIC tokens. This is paid by the contract that requests the randomness, and payment occurs during the request.
 
 ## 3. Interacting with Chainlink VRF
 
@@ -52,11 +51,16 @@ The Chainlink VRF (Verifiable Random Function) provides a fair and verifiable so
 
 When rolling the dice, it will accept an address variable to track which address is assigned to each house.
 The contract will have the following functions:
-- rollDice: This submits a randomness request to Chainlink VRF
-- fulfillRandomness: The function that is used by the Oracle to send the result back to
-- house: To see the assigned house of an address.
+- `rollDice`: This submits a randomness request to Chainlink VRF
+- `fulfillRandomness`: The function that is used by the Oracle to send the result back to
+- `house`: To see the assigned house of an address.
 
 ## Create a truffle project
+
+Create a working directory:
+```
+mkdir workspace
+```
 
 Install Truffle:
 ```
@@ -79,7 +83,7 @@ npm i
 ```
 Now we will open `BettingGame.sol` in the `/contracts` directory.
 
-### Importing VRFConsumerBase
+## Importing VRFConsumerBase
 Chainlink maintains a contract library that simplifies oracle data consumption. We use VRFConsumerBase for Chainlink VRF, which need to be imported and expanded from.
 
 ```cpp
@@ -122,9 +126,9 @@ address payable public admin;
 mapping(uint256 => Game) public games;
 ```
 
-### fulfillRandomness functionLink to this section
+## fulfillRandomness functionLink to this section
 
-This is a special function defined within the VRFConsumerBase contract that ours extends from. It is the function that the coordinator sends the result back to, so we need to implement some functionality here to deal with the result.
+This is a special function defined within the `VRFConsumerBase` contract that ours extends from. It is the function that the coordinator sends the result back to, so we need to implement some functionality here to deal with the result.
 
 It should:
 - Transform the result to a number between 1 and 20 inclusively.
@@ -137,7 +141,7 @@ It should:
     return requestRandomness(keyHash, fee, userProvidedSeed);
   }
 ```
-### Random Number Consumer
+## Random Number Consumer
 
 Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, your contract should inherit from VRFConsumerBase.
 
@@ -174,14 +178,14 @@ Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, y
 
 ## Compile and migrate
 
-Open `truffle console` to run a local blockchain in your terminal at `http://127.0.0.1:9545/`:
+Start the truffle console to run a local blockchain in your terminal at `http://127.0.0.1:9545/` with the command:
 ```
 truffle develop
 ```
 
 This will and display `Account addresses` along with their `Private Keys` and `Mnemonic` required for deploying the smart contracts.
 
-In the `truffle console` compile the smart contracts:
+In the truffle console, compile the smart contracts:
 
 ```cpp
 truffle(develop)> compile
@@ -195,7 +199,8 @@ Compiling your contracts...
    - solc: 0.5.0+commit.1d4f565a.Emscripten.clang
 ```
 
-Now, `migrate` the compiled smart contracts:
+Now, **migrate** the compiled smart contracts:
+
 ```
 truffle(develop)> migrate --network matic
 ```
@@ -232,21 +237,24 @@ Summary
 # Using the UI 
 
 All the code is going to be inside the source directory (src).
-inside the Components directory is the application UI code written, there are three the main app component like `navbar.js` and `main.js` and `app.js`. 
+Inside the Components directory is where the the application UI code is written, there are three main app components: `navbar.js` , `main.js` and `app.js`.
 
-Open another terminal. 
+Open another terminal, and change into the project directory:
+
 ```
 cd chainlink_betting_game 
 ```
-Then Type 
+Then use the node package manager to run the start script contained in the chainlink_betting_game's package.json:
+
 ```
 npm run start 
 ```
+
 This will run the web server on localhost.
 
-Once its done you can see the application loaded in your browser here. Metamask extension will automatically popup and connect your app to the metamask.
+Once the server has started, you can view the application in your browser. The Metamask extension will automatically pop up and let you connect to the app.
 
-In the browser extention metamask, you have to make sure that you’re connected to the Polygon test network or otherwise create a Custom Network with the following:
+You have to make sure that you’re connected to the Polygon Mumbai testnet in Metamask, or otherwise add a custom RPC with the following parameters:
 
 ```cpp
 New RPC URL: https://rpc-cometh-mainnet.maticvigil.com/v1/0937c004ab133135c86586b55ca212a6c9ecd224
@@ -255,11 +263,14 @@ Symbol: MATIC
 Blockexplorer URL: https://explorer.matic.network/
 ```
 
-You can see your account that you’re connected with here in the top right hand corner. Betting game application on top left hand corner and here it is our little dice game and we can play the game, well first we have got the max bet that’s the exact amount of ethereum cryptocurrency that we send to the smart contract. And the balance is your current wallet balance of your account which is connected to the metamask 
+You can see the account that you’re connected with here in the top right-hand corner. Betting game application on the top left-hand corner and here it is our little dice game. To play the game, well first we have got the max bet that’s the exact amount of MATIC cryptocurrency that we send to the smart contract. And the balance is the current wallet balance of your account which is connected to Metamask.
 
-Lets bet the 1 Matic and start playing.
+Go ahead and bet 1 MATIC to start playing.
 
 ![](/.gitbook/assets/chainlink-betting-game.gif)
+
+# Conclusion
+
 
 # About the author
 - [Devendra Yadav](https://community.figment.io/u/dev.koold)
