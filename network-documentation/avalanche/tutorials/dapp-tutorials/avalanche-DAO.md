@@ -19,34 +19,34 @@ This is possible because smart contracts are tamper-proof once they go live on E
 
 # Prerequisites
 
-- Basic familiarity with [How do I set up MetaMask on Avalanche?](https://support.avax.network/en/articles/4626956-how-do-i-set-up-metamask-on-avalanche).
+- Basic familiarity with [How do I set up MetaMask on Avalanche?](https://support.avax.network/en/articles/4626956-how-do-i-set-up-metamask-on-avalanche)
 - Basic familiarity with [Avalanche's architecture](https://docs.avax.network/learn/platform-overview) and smart contracts.
 - Basic familiarity with [ReactJS](https://reactjs.org/).
  
 # Requirements
 
 - NodeJS >= 10.16 and npm >= 5.6 installed.
-- Metamask extension added to the browser, which must only be obtained from the official [Metamask website](https://metamask.io). Do not download Metamask from an unofficial source.
+- Metamask extension added to the browser, which must only be obtained from the official [Metamask website](https://metamask.io). Metamask should not be downloaded from an unofficial website.
 
 # Let's start building our DAO
 
 ### Step 1: Creating a new .sol file on REMIX
 
-On REMIX we click on the new file icon and put some name, in my case my file name is `MyDAO.sol`.
+On REMIX we click on the new file icon and put some name, in my case my file name is `MYDAO.sol`.
 
 ![](/.gitbook/assets/AVAX-MYDAO-SOL.png)
 
 and we will add the basic lines of code:
 
-The first line declares that the source code is GPL version 3.0 licenced. In a situation where publishing the source code is the default, machine-readable licencing specifiers are critical. 'pragma' The source code is written for Solidity 0.7.0 or a newer version of the language up to but not including version 0.9.0. contract MyDAO... gives the name of our contract as well as a new block of code.
+The first line states that the source code is licenced under the **GPL version 3.0**. In a situation where publishing the source code is the default, machine-readable licencing specifiers are critical. **pragma** The source code is written for **Solidity** 0.7.0 or a newer version of the language up to but not including version 0.9.0. **contract MyDAO{..}** gives the name of our contract as well as a new block of code.
 
 ### Step 2: Defining our DAO functions
 
-Commonly the DAO's contract has four main functions:
-- `Deposit governance tokens`
-- `Withdraw the tokens`
-- `Create a proposal`
-- `Vote`
+The DAO's contract typically has four main functions:
+- Deposit governance tokens
+- Withdraw the tokens
+- Create a proposal
+- Vote
 
 We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import IERC20 template from [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sols).
 
@@ -66,7 +66,7 @@ For the voting options and the proposal status we will use an enums types.
 
 Enums are useful for creating custom types with a finite number of `constant values`. [see more about enums](https://docs.soliditylang.org/en/v0.8.7/types.html#enums)
 
-```text
+```solidity
 enum VotingOptions { Yes, No }
 enum Status { Accepted, Rejected, Pending }
 ```
@@ -75,7 +75,7 @@ We can use a struct type for the remaining proposal properties.
 Structs allow us to define a custom group of properties. [see more about structs](https://docs.soliditylang.org/en/v0.8.7/types.html#structs)
 
 
-```text
+```solidity
     struct Proposal {
         uint256 id;
         address author;
@@ -137,7 +137,8 @@ uint public nextProposalId;
 
 
 ### Step 4: The Deposit and Withdraw function for the DAO
-We already have all of the variables we need to create, save, and vote on a proposal in our DAO. Now we just need our user to deposit his AVAX tokens to prevent the same user from voting on the same proposal with the same number of tokens. We need to establish the token address in the function Object() { [native code] } to connect with AVAX as our token for governance.
+
+We already have all of the variables we need to create, save, and vote on a proposal in our DAO,now we just need our user to deposit his AVAX tokens to prevent the same user from voting on the same proposal with the same number of tokens. To interact with AVAX as our token the governance we need to initialize the token address in the constructor.
 
 ```solidity
 constructor() {
