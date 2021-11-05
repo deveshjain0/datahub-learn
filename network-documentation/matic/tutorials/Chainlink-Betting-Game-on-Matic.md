@@ -5,6 +5,11 @@ This is a blockchain based betting game where you can bet on the outcome of a di
 
 The application will work when the user connects to the website with their crypto wallet (probably Metamask), they'll talk to a front-end application built in React.js and the application will talk directly to the blockchain. We'll create a smart contract, `BettingGame.sol`, that implements the betting game which will use the Chainlink protocol to interact with the Chainlink oracle smart contacts. Users will make a bet directly with our smart contracts with the funded application. If they guess the number right, they will win twice the amount of cryptocurrency that they bet.
 
+# Prerequisites
+
+- Basic familiarity with [Setting up MetaMask for Matic](https://medium.com/stakingbits/setting-up-metamask-for-polygon-matic-network-838058f6d844#:~:text=Setup%20MetaMask%20to%20connect%20to,Network%20Name%3A%20Polygon).
+- Basic familiarity with [ReactJS](https://reactjs.org/).
+
 # Requirements 
 
 - [Node.js](https://nodejs.org/en/)
@@ -23,7 +28,7 @@ So basically the user makes a bet directly on our smart contract by calling the 
 
 We will go through:
 - The Chainlink request & receive cycle
-- Using the LINK token
+- Using the MATIC token
 - How to use request & receive with Chainlink Oracles
 - Consuming random numbers with Chainlink VRF in smart contracts
 
@@ -57,36 +62,42 @@ The contract will have the following functions:
 
 ## Create a truffle project
 
-Create a working directory:
-```
+Create a working directory: 
+
+```text
 mkdir workspace
 ```
 
 Install Truffle:
-```
+
+```text
 npm i -g truffle
 ```
 
 Clone this [Git Repository](https://github.com/deveshjain0/chainlink_betting_game) and read the [Deploying and Debugging Smart Contracts on Polygon](https://learn.figment.io/tutorials/deploying-and-debugging-smart-contracts-on-polygon) tutorial to setup Truffle network config and learn about the deployment on the Polygon network.
 
-```
+```text
 git clone https://github.com/deveshjain0/chainlink_betting_game
 ```
+
 Go to the repository:
-```
+
+```text
 cd chainlink_betting_game
 ```
 
 Install the required depencencies:
-```
+
+```text
 npm i
 ```
 Now we will open `BettingGame.sol` in the `/contracts` directory.
 
 ## Importing VRFConsumerBase
+
 Chainlink maintains a contract library that simplifies oracle data consumption. We use VRFConsumerBase for Chainlink VRF, which need to be imported and expanded from.
 
-```cpp
+```solidity
 pragma solidity 0.6.6;
 
 import "https://raw.githubusercontent.com/smartcontractkit/chainlink/master/evm-contracts/src/v0.6/VRFConsumerBase.sol";
@@ -97,29 +108,28 @@ contract BettingGame is VRFConsumerBase {
 }
 ```
 
-### Contract variables
+## Contract variables
 
 A number of items will be stored in the contract. To begin, it must store variables that tell the oracle about the request. Each Oracle job has its own Key Hash, which is used to identify which tasks it should perform. To use in the request, the contract will store the Key Hash that identifies Chainlink VRF, as well as the fee amount.
 
-```cpp 
-
+```solidity 
 uint256 internal fee;
 uint256 public randomResult;
-
 ```
+
 Constructor inherits VRFConsumerBase and inside it initialize the `fee` as `0.1 LINK`, `admin` as `msg.sender` , `ethUsd` as `AggregatorV3Interface` value of [price feed](https://data.chain.link/ethereum/mainnet/crypto-usd/matic-usd) in USD.
 
-```cpp
+```solidity
  constructor() VRFConsumerBase(VFRC_address, LINK_address) public {
     fee = 0.1 * 10 ** 18; // 0.1 LINK
     admin = msg.sender;
     ethUsd = AggregatorV3Interface(0xF9680D99D6C9589e2a93a78A04A279e509205945);
   }
-  ```  
+```  
 
 The contract will need to employ mappings to keep track of the addresses that roll the dice. Mappings are unique key => value pair data structures that act like hash tables.
 
-```cpp 
+``` solidity
 uint256 public gameId;
 uint256 public lastGameId;
 address payable public admin;
@@ -135,7 +145,7 @@ It should:
 - Assign the transformed value to the address in the s_results mapping variable.
 - Emit a DiceLanded event.
 
-```cpp
+```solidity
   function getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
     require(LINK.balanceOf(address(this)) > fee, "Error, not enough LINK - fill contract with faucet");
     return requestRandomness(keyHash, fee, userProvidedSeed);
@@ -147,7 +157,7 @@ Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, y
 
  1. requestRandomness, which makes the initial request for randomness.
 
-   ```cpp
+   ```solidity
   function getRandomNumber(uint256 userProvidedSeed) internal returns (bytes32 requestId) {
     require(LINK.balanceOf(address(this)) > fee, "Error, not enough LINK - fill contract with faucet");
     return requestRandomness(keyHash, fee, userProvidedSeed);
@@ -155,39 +165,40 @@ Chainlink VRF follows the Request & Receive Data cycle. To consume randomness, y
 ```
  2. fulfillRandomness, which is the function that receives and does something with verified randomness.
 
-   ```cpp
+   ```solidity
   function fulfillRandomness(bytes32 requestId, uint256 randomness) internal override {
     randomResult = randomness;
 
     //send final random value to the verdict();
     verdict(randomResult);
   }
-  ```
- ### Send rewards to the winners. 
+```
+ ## Send rewards to the winners. 
   
   If the user wins, they will get 2x the amount they wagered.
   
- ```cpp    
+ ```solidity
     if((random>=half && games[i].bet==1) || (random<half && games[i].bet==0)){
         winAmount = games[i].amount*2;
         games[i].player.transfer(winAmount);
       }
       emit Result(games[i].id, games[i].bet, games[i].seed, games[i].amount, games[i].player, winAmount, random, block.timestamp);
     }
-  ```
+```
 
 ## Compile and migrate
 
 Start the truffle console to run a local blockchain in your terminal at `http://127.0.0.1:9545/` with the command:
-```
+
+```text
 truffle develop
 ```
 
-This will and display `Account addresses` along with their `Private Keys` and `Mnemonic` required for deploying the smart contracts.
+This will display **Account addresses** along with their **Private Keys** and **Mnemonic** required for deploying the smart contracts.
 
 In the truffle console, compile the smart contracts:
 
-```cpp
+```text
 truffle(develop)> compile
 
 Compiling your contracts...
@@ -201,12 +212,12 @@ Compiling your contracts...
 
 Now, **migrate** the compiled smart contracts:
 
-```
+```text
 truffle(develop)> migrate --network matic
 ```
 BettingGame.sol smart contract is deployed succesfully. 
 
-```cpp 
+```text
  Deploying 'BettingGame'
    -----------------------
    > transaction hash:    0x232be40e9171c62f74585c52e15492a8a8653b8a65eb9f97f6e57ccdcb0eec66
@@ -241,12 +252,12 @@ Inside the Components directory is where the the application UI code is written,
 
 Open another terminal, and change into the project directory:
 
-```
+```text
 cd chainlink_betting_game 
 ```
 Then use the node package manager to run the start script contained in the chainlink_betting_game's package.json:
 
-```
+```text
 npm run start 
 ```
 
@@ -256,11 +267,12 @@ Once the server has started, you can view the application in your browser. The M
 
 You have to make sure that you’re connected to the Polygon Mumbai testnet in Metamask, or otherwise add a custom RPC with the following parameters:
 
-```cpp
-New RPC URL: https://rpc-cometh-mainnet.maticvigil.com/v1/0937c004ab133135c86586b55ca212a6c9ecd224
-Chain ID: 137
-Symbol: MATIC
-Blockexplorer URL: https://explorer.matic.network/
+```text
+Network Name: Mumbai Testnet
+New RPC URL: https://rpc-mumbai.matic.today
+Chain ID: 80001
+Currency Symbol: MATIC
+Block Explorer URL: https://explorer-mumbai.maticvigil.com/
 ```
 
 You can see the account that you’re connected with here in the top right-hand corner. Betting game application on the top left-hand corner and here it is our little dice game. To play the game, well first we have got the max bet that’s the exact amount of MATIC cryptocurrency that we send to the smart contract. And the balance is the current wallet balance of your account which is connected to Metamask.
