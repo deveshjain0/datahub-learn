@@ -44,7 +44,7 @@ If the result of randomness is stored on-chain, any actor could see the value an
 
 ## 2. Using MATIC
 
-In return for providing this service of generating a random number, Oracles need to be paid in MATIC tokens. This is paid by the contract that requests the randomness, and payment occurs during the request.
+In return for providing this service of generating a random number, Oracles need to be paid in MATIC tokens. This is paid by the contract that requests the randomness and payment occurs during the request.
 
 ## 3. Interacting with Chainlink VRF
 
