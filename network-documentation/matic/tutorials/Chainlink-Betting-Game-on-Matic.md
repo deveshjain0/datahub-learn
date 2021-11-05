@@ -3,7 +3,7 @@
 # Introduction 
 This is a blockchain based betting game where you can bet on the outcome of a dice roll with cryptocurrency and if you guess right, then you double your money. This game is powered by smart contacts that run on the Polygon blockchain. We're going to use the Chainlink protocol to implement randomness for our dice roll. 
 
-The application will work when the user connects to the website with their crypto wallet (probably Metamask), they'll talk to a front-end application built in React.js and the application will talk directly to the blockchain. We'll create a smart contract, `BettingGame.sol`, that implements the betting game which will use the Chainlink protocol to interact with the Chainlink oracle smart contacts. Users will make a bet directly with our smart contracts with the funded application. If they guess the number right, they will win twice the amount of cryptocurrency that they bet.
+The application will work when the user connects to the website with their crypto wallet (probably Metamask). They'll talk to a front-end application built in React.js and the application will talk directly to the blockchain. We'll create a smart contract, `BettingGame.sol`, that implements the betting game which will use the Chainlink protocol to interact with the Chainlink oracle smart contacts. Users will make a bet directly with our smart contracts with the funded application. If they guess the number right, they will win twice the amount of cryptocurrency that they bet.
 
 # Prerequisites
 
@@ -283,6 +283,9 @@ Go ahead and bet 1 MATIC to start playing.
 
 # Conclusion
 
+Now you know about creating a blockchain based betting game with Truffle Suite and ReactJS on the Polygon network.
+
+If you had any difficulties following this tutorial or simply want to discuss Polygon tech with us you can [join our community today](https://community.figment.io/) or [Join our discord channel](https://discord.com/channels/741351331222126663/741354026670751764)!
 
 # About the author
 - [Devendra Yadav](https://community.figment.io/u/dev.koold)
