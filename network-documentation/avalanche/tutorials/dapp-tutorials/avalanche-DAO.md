@@ -48,7 +48,7 @@ Commonly the DAO's contract has four main functions:
 - `Create a proposal`
 - `Vote`
 
-We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import ARC-20 template from [Avalanche](https://docs.avax.network/build/references/coreth-arc20s).
+We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import IERC20 template from [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sols).
 
 
 ### Step 3: Defining the proposal variables
@@ -96,6 +96,8 @@ Until this step our DAO contract looks like this:
 
 pragma solidity >=0.7.0 <0.9.0;
 
+import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol';
+
 contract MyDAO {
     
     enum VotingOptions { Yes, No }
@@ -139,7 +141,7 @@ We already have all of the variables we need to create, save, and vote on a prop
 
 ```CPP
 constructor() {
-    token = ARC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
+    token = IERC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
 }
 ```
 
@@ -175,6 +177,8 @@ Until now, our smart contract has looked like this:
 
 pragma solidity >=0.7.0 <0.9.0;
 
+import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol';
+
 contract MyDAO {
     
     enum VotingOptions { Yes, No }
@@ -196,15 +200,15 @@ contract MyDAO {
     // one share for governance tokens
     mapping(address => uint256) public shares;
     uint public totalShares;
-    // the ARC20 allow us to use avax like our governance token.
-    ARC20 public token;
+    // the IERC20 allow us to use avax like our governance token.
+    IERC20 public token;
     // the user need minimum 25 AVAX to create a proposal.
     uint constant CREATE_PROPOSAL_MIN_SHARE = 25 * 10 ** 18;
     uint constant VOTING_PERIOD = 7 days;
     uint public nextProposalId;
     
     constructor() {
-        token = ARC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
+        token = IERC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); // AVAX address
     }
     
     function deposit(uint _amount) external {
@@ -275,6 +279,8 @@ Finally our DAO contract looks like this.
 
 pragma solidity >=0.7.0 <0.9.0;
 
+import 'https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sol';
+
 contract MyDAO {
     
     enum VotingOptions { Yes, No }
@@ -296,15 +302,15 @@ contract MyDAO {
     // one share for governance tokens
     mapping(address => uint256) public shares;
     uint public totalShares;
-    // the ARC20 allow us to use avax like our governance token.
-    ARC20 public token;
+    // the IERC20 allow us to use avax like our governance token.
+    IERC20 public token;
     // the user need minimum 25 AVAX to create a proposal.
     uint constant CREATE_PROPOSAL_MIN_SHARE = 25 * 10 ** 18;
     uint constant VOTING_PERIOD = 7 days;
     uint public nextProposalId;
     
     constructor() {
-        token = ARC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); //AVAX address
+        token = IERC20(0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70); //AVAX address
     }
     
     function deposit(uint _amount) external {
