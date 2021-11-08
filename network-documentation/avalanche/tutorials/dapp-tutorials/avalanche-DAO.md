@@ -30,7 +30,7 @@ This is possible because smart contracts are tamper-proof once they go live on E
 
 # Let's start building our DAO
 
-### Step 1: Creating a new .sol file on REMIX
+## Step 1: Creating a new .sol file on REMIX
 
 On REMIX we click on the new file icon and put some name, in my case my file name is `MYDAO.sol`.
 
@@ -40,7 +40,7 @@ and we will add the basic lines of code:
 
 The first line states that the source code is licenced under the **GPL version 3.0**. In a situation where publishing the source code is the default, machine-readable licencing specifiers are critical. **pragma** The source code is written for **Solidity** 0.7.0 or a newer version of the language up to but not including version 0.9.0. **contract MyDAO{..}** gives the name of our contract as well as a new block of code.
 
-### Step 2: Defining our DAO functions
+## Step 2: Defining our DAO functions
 
 The DAO's contract typically has four main functions:
 - Deposit governance tokens
@@ -51,16 +51,16 @@ The DAO's contract typically has four main functions:
 We use AVAX our governance token. FUJI contract address: 0xA048B6a5c1be4b81d99C3Fd993c98783adC2eF70 and we need import IERC20 template from [openzeppelin](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC20/IERC20.sols).
 
 
-### Step 3: Defining the proposal variables
+## Step 3: Defining the proposal variables
 
 For the proposal format we defined a group with custom properties, the properties for our proposal are:
-- `Author` which is an address from the account that create a proposal.
-- `Id` that will help us to identify a proposal.
-- `Name` of the proposal.
-- `Creation date` is a feature that allows us to specify a time limit for voting.
-- `Voting options` in this case we will keep it simple(Yes / NO).
-- `Number of Votes for Yes and Votes for No` this will allow us set a status for the proposal when number of votes for any option be greater than fifty percent.
-- `Status for the Proposal` this options will be Accepted, Rejected and Pending.
+- `Author`- which is an address from the account that create a proposal.
+- `Id`- that will help us to identify a proposal.
+- `Name`- of the proposal.
+- `Creation date`- is a feature that allows us to specify a time limit for voting.
+- `Voting options`- in this case we will keep it simple(Yes / NO).
+- `Number of Votes for Yes and Votes for No`- this will allow us set a status for the proposal when number of votes for any option be greater than fifty percent.
+- `Status for the Proposal`- this options will be Accepted, Rejected and Pending.
 
 For the voting options and the proposal status we will use an enums types.
 
@@ -74,7 +74,6 @@ enum Status { Accepted, Rejected, Pending }
 We can use a struct type for the remaining proposal properties.
 Structs allow us to define a custom group of properties. [see more about structs](https://docs.soliditylang.org/en/v0.8.7/types.html#structs)
 
-
 ```solidity
     struct Proposal {
         uint256 id;
@@ -87,9 +86,7 @@ Structs allow us to define a custom group of properties. [see more about structs
     }
 ```
 
-
-Until this step our DAO contract looks like this:
-
+Until this step, our DAO contract looks like this:
 
 ```solidity
 // SPDX-License-Identifier: GPL-3.0
@@ -117,7 +114,6 @@ contract MyDAO {
 
 Now we need to store all of the proposals that have been created for our DAO, make sure that no one votes twice, set a voting period for the proposals, and set a minimum number of governance tokens to create a new proposal. We can take the number of governance tokens that have been deposited like shares for an investor and give their vote a proportional weight.
 
-
 ```solidity
 // store all proposals
 mapping(uint => Proposal) public proposals;
@@ -134,9 +130,7 @@ uint constant VOTING_PERIOD = 7 days;
 uint public nextProposalId;
 ```
 
-
-
-### Step 4: The Deposit and Withdraw function for the DAO
+## Step 4: The Deposit and Withdraw function for the DAO
 
 We already have all of the variables we need to create, save, and vote on a proposal in our DAO,now we just need our user to deposit his AVAX tokens to prevent the same user from voting on the same proposal with the same number of tokens. To interact with AVAX as our token the governance we need to initialize the token address in the constructor.
 
@@ -146,9 +140,7 @@ constructor() {
 }
 ```
 
-
 For the deposit function.
-
 
 ```solidity
 function deposit(uint _amount) external {
@@ -158,11 +150,9 @@ function deposit(uint _amount) external {
 }
 ```
 
-
 When the voting time is over, we must allow our users to withdraw their tokens.
 
 ```solidity
-
 function withdraw(uint _amount) external {
     require(shares[msg.sender] >= _amount, 'Not enough shares');
     shares[msg.sender] -= _amount;
@@ -227,8 +217,7 @@ contract MyDAO {
 }
 ```
 
-
-### Step 5: Create a Proposal and Voting Features
+## Step 5: Create a Proposal and Voting Features
 
 We'll add a condition to our create Proposal function that states the user can't create a new proposal unless he has at least 25 AVAX tokens.
 
@@ -363,7 +352,7 @@ contract MyDAO {
 }
 ```
 
-### Step 6: Deploy our DAO contract on FUJI
+## Step 6: Deploy our DAO contract on FUJI
 
 Now we need to compile our contract. I'm using the 0.8.0 version of the compiler, and clicking on the `Compile` button.
 In the environment section, we select `Injected Web3`, and in the account, we select our FUJI network in the metamask plugin. Make sure your account has the required avax for the deployment and the minimum for creating a proposal.
@@ -374,6 +363,11 @@ If the contract is deployed successfully on FUJI we can see the succes transacti
 
 ![](/.gitbook/assets/create-avax-DAO.gif)
 
+# Conclusion
+
+Now you know about creating a DAO and how to build the Solidity smart contract code that will be deployed on the Avalanche blockchain.
+
+If you had any difficulties following this tutorial or simply want to discuss Polygon tech with us you can [join our community today](https://community.figment.io/) or [Join our discord channel](https://discord.com/channels/741351331222126663/741354026670751764)!
 
 # About the author
 - [Devendra Yadav](https://community.figment.io/u/dev.koold)
