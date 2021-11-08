@@ -2,7 +2,7 @@
 
 # Introduction
 
-In this tutorial, we'll go over how to create a DAO and how to build the Solidity smart contract code that will be deployed on the Avalanche blockchain. We'll also create a user interface that works with smart contacts.
+In this tutorial, we'll go over how to create a DAO and how to build the Solidity smart contract code that will be deployed on the Avalanche blockchain.
 
 ## What is a Decentralized Autonomous Organization (DAO)?
 
@@ -365,7 +365,7 @@ If the contract is deployed successfully on FUJI we can see the succes transacti
 
 # Conclusion
 
-Now you know about creating a DAO and how to build the Solidity smart contract code that will be deployed on the Avalanche blockchain.
+Now you know about creating a DAO and to build the Solidity smart contract code that will be deployed on the Avalanche blockchain.
 
 If you had any difficulties following this tutorial or simply want to discuss Polygon tech with us you can [join our community today](https://community.figment.io/) or [Join our discord channel](https://discord.com/channels/741351331222126663/741354026670751764)!
 
