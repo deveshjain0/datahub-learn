@@ -25,7 +25,7 @@ This is possible because smart contracts are tamper-proof once they go live on E
  
 # Requirements
 
-- NodeJS >= 10.16 and npm >= 5.6 installed.
+- [Remix - Ethereum IDE](https://remix.ethereum.org/).
 - Metamask extension added to the browser, which must only be obtained from the official [Metamask website](https://metamask.io). Metamask should not be downloaded from an unofficial website.
 
 # Let's start building our DAO
