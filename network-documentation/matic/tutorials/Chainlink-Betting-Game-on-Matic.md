@@ -7,7 +7,7 @@ The application will work when the user connects to the website with their crypt
 
 # Prerequisites
 
-- Basic familiarity with [Setting up MetaMask for Matic](https://medium.com/stakingbits/setting-up-metamask-for-polygon-matic-network-838058f6d844#:~:text=Setup%20MetaMask%20to%20connect%20to,Network%20Name%3A%20Polygon).
+- Basic familiarity with [Setting up MetaMask for Matic](https://learn.figment.io/tutorials/transfer-erc20-tokens-between-polygon-and-ethereum).
 - Basic familiarity with [ReactJS](https://reactjs.org/).
 
 # Requirements 
@@ -267,13 +267,11 @@ Once the server has started, you can view the application in your browser. The M
 
 You have to make sure that you’re connected to the Polygon Mumbai testnet in Metamask, or otherwise add a custom RPC with the following parameters:
 
-```text
 Network Name: Mumbai Testnet
 New RPC URL: https://rpc-mumbai.matic.today
 Chain ID: 80001
 Currency Symbol: MATIC
 Block Explorer URL: https://explorer-mumbai.maticvigil.com/
-```
 
 You can see the account that you’re connected with here in the top right-hand corner. Betting game application on the top left-hand corner and here it is our little dice game. To play the game, well first we have got the max bet that’s the exact amount of MATIC cryptocurrency that we send to the smart contract. And the balance is the current wallet balance of your account which is connected to Metamask.
 
@@ -283,13 +281,14 @@ Go ahead and bet 1 MATIC to start playing.
 
 # Conclusion
 
-Now you know about creating a blockchain based betting game with Truffle Suite and ReactJS on the Polygon network.
+Congratulations! By completing this tutorial you learned about creating a blockchain based betting game with Truffle Suite and ReactJS on the Polygon network.
 
-If you had any difficulties following this tutorial or simply want to discuss Polygon tech with us you can [join our community today](https://community.figment.io/) or [Join our discord channel](https://discord.com/channels/741351331222126663/741354026670751764)!
+If you run into any problems, feel free to ask on the [Figment Learn Discord](https://discord.gg/f5YuEsQTAx). You can also view the source code [here](https://github.com/deveshjain0/chainlink_betting_g).
+
+A Betting Game powered by Chainlink Randomness is created by the [DAPP University](https://github.com/dappuniversity).
 
 # About the author
-- [Devendra Yadav](https://community.figment.io/u/dev.koold)
-- [Devesh Jain](https://community.figment.io/u/deveshjain08)
+This tutorial was created by [Devendra Yadav](https://community.figment.io/u/dev.koold) and [Devesh Jain](https://community.figment.io/u/deveshjain08)
 
 # References
 - https://learn.figment.io/tutorials/deploying-and-debugging-smart-contracts-on-polygon
