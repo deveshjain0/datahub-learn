@@ -283,15 +283,15 @@ Go ahead and bet 1 MATIC to start playing.
 
 Congratulations! By completing this tutorial you learned about creating a blockchain based betting game with Truffle Suite and ReactJS on the Polygon network.
 
-If you run into any problems, feel free to ask on the [Figment Learn Discord](https://discord.gg/f5YuEsQTAx). You can also view the source code [here](https://github.com/deveshjain0/chainlink_betting_g).
+If you had any difficulties following this tutorial or simply want to discuss Polygon tech with us you can join the Figment Learn [community forums](https://community.figment.io/) or join our [Discord community](https://figment.io/devchat)!
 
-A Betting Game powered by Chainlink Randomness is created by the [DAPP University](https://github.com/dappuniversity).
-
-# About the author
+# About the authors
 This tutorial was created by [Devendra Yadav](https://community.figment.io/u/dev.koold) and [Devesh Jain](https://community.figment.io/u/deveshjain08)
 
 # References
 - https://learn.figment.io/tutorials/deploying-and-debugging-smart-contracts-on-polygon
 - https://data.chain.link/ethereum/mainnet/crypto-usd/matic-usd
 - https://blog.chain.link/random-number-generation-solidity/
-- https://github.com/deveshjain0/chainlink_betting_game
+- https://docs.chain.link/docs/get-a-random-number
+- https://github.com/dappuniversity/chainlink_betting_game
+- https://docs.chain.link/
