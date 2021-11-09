@@ -267,11 +267,11 @@ Once the server has started, you can view the application in your browser. The M
 
 You have to make sure that you’re connected to the Polygon Mumbai testnet in Metamask, or otherwise add a custom RPC with the following parameters:
 
-Network Name: Mumbai Testnet
-New RPC URL: https://rpc-mumbai.matic.today
-Chain ID: 80001
-Currency Symbol: MATIC
-Block Explorer URL: https://explorer-mumbai.maticvigil.com/
+- Network Name: Mumbai Testnet
+- New RPC URL: https://rpc-mumbai.matic.today
+- Chain ID: 80001
+- Currency Symbol: MATIC
+- Block Explorer URL: https://explorer-mumbai.maticvigil.com/
 
 You can see the account that you’re connected with here in the top right-hand corner. Betting game application on the top left-hand corner and here it is our little dice game. To play the game, well first we have got the max bet that’s the exact amount of MATIC cryptocurrency that we send to the smart contract. And the balance is the current wallet balance of your account which is connected to Metamask.
 
